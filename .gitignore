@@ -1,12 +1,13 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
+/dienstplaner/dist
 /tmp
 /out-tsc
 
 # dependencies
 /dienstplaner/node_modules
+/dienstplaner/documentation
 
 # IDEs and editors
 /.idea
