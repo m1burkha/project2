@@ -6,17 +6,17 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './components/app/app.component';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
-import {DevBarComponent} from './components/dev-bar/dev-bar.component';
+import {DevModule} from './components/dev/dev.module';
 
 
 @NgModule({
     declarations: [
-        AppComponent,
-        DevBarComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
+        DevModule,
         AngularFireModule.initializeApp(environment.firebase)
     ],
     providers: [],
