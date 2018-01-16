@@ -1,0 +1,16 @@
+
+.dev-bar {
+  position: absolute;
+  padding: .2rem .4rem;
+  left: 1rem;
+  bottom: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  color: white;
+
+  span, a {
+    padding: .2rem .4rem;
+    color: white;
+    text-decoration: none;
+  }
+}

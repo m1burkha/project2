@@ -3,14 +3,16 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 
-import {AppComponent} from './app.component';
+import {AppComponent} from './components/app/app.component';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
+import {DevBarComponent} from './components/dev-bar/dev-bar.component';
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        DevBarComponent
     ],
     imports: [
         BrowserModule,
