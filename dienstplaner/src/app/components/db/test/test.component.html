@@ -1,0 +1,22 @@
+
+<div *ngIf="userService.authState | async as user; else showLogin">
+  <h1>Hello {{ user.displayName }} !</h1>
+  <div>({{ user.uid }})</div>
+  <button (click)="logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+  <p>Please login.</p>
+  <button (click)="login()">Login with Google</button>
+</ng-template>
+
+<div><button (click)="create()">create</button></div>
+<div><button (click)="signin()">signin</button></div>
+<input type="text" [(value)]="username" />
+<div><button (click)="updateUser()">update</button></div>
+<div><button (click)="createShiftScheduling()">create shift scheduling</button></div>
+
+<ul>
+  <li class="text" *ngFor="let item of items | async">
+    {{item.name}} {{item.prename}}
+  </li>
+</ul>
