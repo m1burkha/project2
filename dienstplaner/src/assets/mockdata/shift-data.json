@@ -1,0 +1,112 @@
+{
+  "results": [
+    {
+      "name": "1",
+      "date": 35703,
+      "branch": "2014-04-10",
+      "shiftTime": 11800,
+      "shiftGroup": "15 Days",
+      "hours": 12175,
+      "status": "California"
+    },
+    {
+      "name": "4",
+      "date": 35711,
+      "branch": "2014-01-12",
+      "shiftTime": 16050,
+      "shiftGroup": "15 Days",
+      "hours": 16550,
+      "status": "California"
+    },
+    {
+      "name": "5",
+      "date": 35714,
+      "branch": "2014-01-22",
+      "shiftTime": 14750,
+      "shiftGroup": "15 Days",
+      "hours": 15250,
+      "status": "Nevada"
+    },
+    {
+      "name": "7",
+      "date": 35983,
+      "branch": "2014-02-07",
+      "shiftTime": 3725,
+      "shiftGroup": "15 Days",
+      "hours": 3850,
+      "status": "Colorado"
+    },
+    {
+      "name": "9",
+      "date": 36987,
+      "branch": "2014-03-11",
+      "shiftTime": 14200,
+      "shiftGroup": "15 Days",
+      "hours": 14800,
+      "status": "Utah"
+    },
+    {
+      "name": "11",
+      "date": 38466,
+      "branch": "2014-03-01",
+      "shiftTime": 7800,
+      "shiftGroup": "15 Days",
+      "hours": 8200,
+      "status": "California"
+    },
+    {
+      "name": "15",
+      "date": 39874,
+      "branch": "2014-02-04",
+      "shiftTime": 9050,
+      "shiftGroup": "30 Days",
+      "hours": 19100,
+      "status": "Nevada"
+    },
+    {
+      "name": "18",
+      "date": 42847,
+      "branch": "2014-02-15",
+      "shiftTime": 20400,
+      "shiftGroup": "30 Days",
+      "hours": 20800,
+      "status": "Wyoming"
+    },
+    {
+      "name": "19",
+      "date": 43982,
+      "branch": "2014-05-29",
+      "shiftTime": 6050,
+      "shiftGroup": "30 Days",
+      "hours": 6250,
+      "status": "Utah"
+    },
+    {
+      "name": "29",
+      "date": 56272,
+      "branch": "2014-02-06",
+      "shiftTime": 15850,
+      "shiftGroup": "30 Days",
+      "hours": 16350,
+      "status": "Utah"
+    },
+    {
+      "name": "30",
+      "date": 57429,
+      "branch": "2013-12-31",
+      "shiftTime": 11050,
+      "shiftGroup": "30 Days",
+      "hours": 11400,
+      "status": "Arizona"
+    },
+    {
+      "name": "32",
+      "date": 58292,
+      "branch": "2014-05-13",
+      "shiftTime": 13500,
+      "shiftGroup": "15 Days",
+      "hours": 13800,
+      "status": "California"
+    }
+  ]
+}
