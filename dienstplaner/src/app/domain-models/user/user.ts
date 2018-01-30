@@ -1,4 +1,6 @@
 /** The user login credentials model used by user login */
+
+
 export class User {
 
   constructor(firstname: string,

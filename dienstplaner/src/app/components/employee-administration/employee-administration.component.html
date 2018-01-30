@@ -1,0 +1,7 @@
+<p>
+  employee-administration works!
+</p>
+
+<button (click)="create()">add</button>
+
+<div *ngFor="let employee of employees | async">{{employee.caption}} <button (click)="delete(employee.id)">delete</button></div>

@@ -18,6 +18,9 @@ import {TestComponent} from './components/db/test/test.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from './services/user/user.service';
 import {ShiftSchedulingService} from '@services/shift-scheduling/shift-scheduling.service';
+import { UserAdministrationComponent } from './components/user-administration/user-administration.component';
+import { EmployeeAdministrationComponent } from './components/employee-administration/employee-administration.component';
+import {EmployeeService} from '@services/employee/employee.service';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import {ShiftSchedulingService} from '@services/shift-scheduling/shift-schedulin
         AppComponent,
         LoginComponent,
         ShiftSchedulingComponent,
-        TestComponent
+        TestComponent,
+        UserAdministrationComponent,
+        EmployeeAdministrationComponent
     ],
     imports: [
         BrowserModule,
@@ -41,7 +46,8 @@ import {ShiftSchedulingService} from '@services/shift-scheduling/shift-schedulin
         AuthenticationService,
         fakeBackendProvider,
         UserService,
-        ShiftSchedulingService
+        ShiftSchedulingService,
+        EmployeeService
     ],
     bootstrap: [AppComponent]
 })
