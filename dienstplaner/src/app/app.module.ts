@@ -17,12 +17,12 @@ import {TestComponent} from './components/db/test/test.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from './services/user/user.service';
 import {ShiftSchedulingService} from '@services/shift-scheduling/shift-scheduling.service';
-<<<<<<< HEAD
+import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
+import {ShiftPlannerRoutingModule} from '@components/shift-planner/shift-planner-routing.module';
 import { UserAdministrationComponent } from './components/user-administration/user-administration.component';
-import { EmployeeAdministrationComponent } from './components/employee-administration/employee-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
-
+import {ShiftSchedulingComponent} from '@components/shift-planner/shift-scheduling/shift-scheduling.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +41,9 @@ import {EmployeeAdministrationModule} from '@components/employee-administration/
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireAuthModule,
-        EmployeeAdministrationModule
+        EmployeeAdministrationModule,
+        ShiftPlannerModule,
+        ShiftPlannerRoutingModule,
     ],
     providers: [
         AuthenticationService,
@@ -51,37 +53,6 @@ import {EmployeeAdministrationModule} from '@components/employee-administration/
         EmployeeService
     ],
     bootstrap: [AppComponent]
-=======
-import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
-import {ShiftPlannerRoutingModule} from '@components/shift-planner/shift-planner-routing.module';
-
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    TestComponent
-  ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    DevModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    ShiftPlannerModule,
-    ShiftPlannerRoutingModule,
-    AppRoutingModule
-  ],
-  providers: [
-    AuthenticationService,
-    fakeBackendProvider,
-    UserService,
-    ShiftSchedulingService
-  ],
-  bootstrap: [AppComponent]
->>>>>>> development
 })
 export class AppModule {
 }

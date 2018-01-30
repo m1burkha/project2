@@ -1,33 +1,22 @@
-<<<<<<< HEAD
-import { Component } from '@angular/core';
-=======
-import {Component, OnInit} from '@angular/core';
->>>>>>> development
+import {Component} from '@angular/core';
 
 /**
  * dev bar component
  */
 @Component({
-  selector: 'app-dev-bar',
-  templateUrl: './dev-bar.component.html',
-  styleUrls: ['./dev-bar.component.scss']
+    selector: 'app-dev-bar',
+    templateUrl: './dev-bar.component.html',
+    styleUrls: ['./dev-bar.component.scss']
 })
-<<<<<<< HEAD
 export class DevBarComponent {
-=======
-export class DevBarComponent implements OnInit {
+    /** bypass login */
+    bypassLogin: Boolean = false;
 
-  bypassLogin: Boolean = false;
+    /**
+     * toggles bypass login
+     */
+    toggleLoginBypass() {
+        this.bypassLogin = !this.bypassLogin;
+    }
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  toggleLoginBypass() {
-    this.bypassLogin = !this.bypassLogin;
-  }
-
->>>>>>> development
 }
