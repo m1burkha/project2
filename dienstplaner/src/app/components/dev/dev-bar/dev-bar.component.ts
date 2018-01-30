@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-dev-bar',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DevBarComponent implements OnInit {
 
-  constructor() { }
+  bypassLogin: Boolean = false;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  toggleLoginBypass() {
+    this.bypassLogin = !this.bypassLogin;
   }
 
 }
