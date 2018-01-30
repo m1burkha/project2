@@ -21,6 +21,7 @@ import {ShiftSchedulingService} from '@services/shift-scheduling/shift-schedulin
 import { UserAdministrationComponent } from './components/user-administration/user-administration.component';
 import { EmployeeAdministrationComponent } from './components/employee-administration/employee-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
+import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 
 
 @NgModule({
@@ -29,8 +30,7 @@ import {EmployeeService} from '@services/employee/employee.service';
         LoginComponent,
         ShiftSchedulingComponent,
         TestComponent,
-        UserAdministrationComponent,
-        EmployeeAdministrationComponent
+        UserAdministrationComponent
     ],
     imports: [
         BrowserModule,
@@ -40,7 +40,8 @@ import {EmployeeService} from '@services/employee/employee.service';
         DevModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        EmployeeAdministrationModule
     ],
     providers: [
         AuthenticationService,

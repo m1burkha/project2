@@ -10,7 +10,7 @@ const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'shiftlist', component: ShiftSchedulingComponent, canActivate: [LoginGuard]},
-    {path: 'employees', component: EmployeeAdministrationComponent},
+    {path: 'employees', loadChildren: 'app/components/employee-administration/employee-administration.module#EmployeeAdministrationModule'},
     {path: 'db/test', component: TestComponent}
 ];
 
