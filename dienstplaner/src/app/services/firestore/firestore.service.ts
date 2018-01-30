@@ -37,8 +37,8 @@ export class FirestoreService<T> {
             throw Error('collection not set');
         }
         // return this.collection.add(object);
-        return this.collection.add(object).then(e => {
-            if (object.hasOwnProperty('id')) {
+        return this.collection.add(JSON.parse(JSON.stringify(object))).then(e => {
+            if (object.hasOwnProperty('id') && (object['id'] == null || object['id'] === '')) {
                 object['id'] = e.id;
                 this.update(e.id, object);
             }
@@ -79,7 +79,7 @@ export class FirestoreService<T> {
         if (!this.collection) {
             throw Error('collection not set');
         }
-        return this.collection.doc(id).set(object);
+        return this.collection.doc(id).set(JSON.parse(JSON.stringify(object)));
     }
 
     /**
