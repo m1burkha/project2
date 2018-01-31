@@ -83,6 +83,19 @@ export class FirestoreService<T> {
     }
 
     /**
+     * updates a document
+     * @param {string} id id of document
+     * @param {T} object content of document
+     * @returns {Promise<void>} update status
+     */
+    public updatePartial(id: string, object: Partial<T>): Promise<void> {
+        if (!this.collection) {
+            throw Error('collection not set');
+        }
+        return this.collection.doc(id).update(object);
+    }
+
+    /**
      * deletes a document
      * @param {string} id id of document
      * @returns {Promise<void>} delete status

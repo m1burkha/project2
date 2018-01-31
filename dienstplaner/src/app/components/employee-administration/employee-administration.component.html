@@ -1,7 +1,24 @@
-<p>
-  employee-administration works!
-</p>
+<dx-data-grid
+        id="gridContainer"
+        [dataSource]="employees | async"
+        keyExpr="id"
+        [allowColumnReordering]="true"
+        (onRowInserting)="insert($event)"
+        (onRowUpdating)="update($event)"
+        (onRowRemoving)="delete($event)">
 
-<button (click)="create()">add</button>
+  <dxo-paging [enabled]="true"></dxo-paging>
+  <dxo-editing
+          mode="row"
+          [allowUpdating]="true"
+          [allowDeleting]="true"
+          [allowAdding]="true">
+  </dxo-editing>
 
-<div *ngFor="let employee of employees | async">{{employee.caption}} <button (click)="delete(employee.id)">delete</button></div>
+  <dxi-column dataField="id" caption="ID" [allowEditing]="false"></dxi-column>
+  <dxi-column dataField="caption" caption="Mitarbeiter"></dxi-column>
+  <dxi-column dataField="department" caption="Abteilung"></dxi-column>
+  <dxi-column dataField="weekHours" caption="Wochenstunden"></dxi-column>
+  <dxi-column dataField="workLoad" caption="Pensum"></dxi-column>
+  <dxi-column dataField="vacationDays" caption="Urlaubstage"></dxi-column>
+</dx-data-grid>

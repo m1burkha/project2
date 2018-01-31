@@ -7,11 +7,11 @@ import {ShiftSchedulingComponent} from '@components/shift-planner/shift-scheduli
 import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: 'login', component: LoginComponent},
 //  {path: 'shiftlist', loadChildren: 'app/components/shift-planner/shift-planner.module#ShiftPlannerModule'},
-  {path: 'db/test', component: TestComponent}
-
+    {path: 'employees', loadChildren: 'app/components/employee-administration/employee-administration.module#EmployeeAdministrationModule'},
+    {path: 'db/test', component: TestComponent}
 ];
 
 @NgModule({
