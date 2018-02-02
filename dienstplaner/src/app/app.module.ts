@@ -16,43 +16,39 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {TestComponent} from './components/db/test/test.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from './services/user/user.service';
-import {ShiftSchedulingService} from '@services/shift-scheduling/shift-scheduling.service';
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
-import {ShiftPlannerRoutingModule} from '@components/shift-planner/shift-planner-routing.module';
-import { UserAdministrationComponent } from './components/user-administration/user-administration.component';
+import {UserAdministrationComponent} from './components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
-import {ShiftSchedulingComponent} from '@components/shift-planner/shift-scheduling/shift-scheduling.component';
+
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        ShiftSchedulingComponent,
-        TestComponent,
-        UserAdministrationComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        DevModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
-        AngularFireAuthModule,
-        EmployeeAdministrationModule,
-        ShiftPlannerModule,
-        ShiftPlannerRoutingModule,
-    ],
-    providers: [
-        AuthenticationService,
-        fakeBackendProvider,
-        UserService,
-        ShiftSchedulingService,
-        EmployeeService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    TestComponent,
+    UserAdministrationComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    DevModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    EmployeeAdministrationModule,
+    ShiftPlannerModule,
+    AppRoutingModule,
+  ],
+  providers: [
+    AuthenticationService,
+    fakeBackendProvider,
+    UserService,
+    EmployeeService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

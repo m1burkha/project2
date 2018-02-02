@@ -1,19 +1,30 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ShiftSchedulingComponent} from './shift-scheduling/shift-scheduling.component';
-import {DxDataGridModule, DxTemplateHost, DxTemplateModule} from 'devextreme-angular';
-import {ShiftService} from '../../services/shifts/shift.service';
+import {
+  DxButtonModule, DxCalendarModule, DxDataGridModule, DxDateBoxModule, DxPopupModule, DxSelectBoxModule, DxTemplateHost,
+  DxTemplateModule
+} from 'devextreme-angular';
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
+import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
+import {ShiftPlannerRoutingModule} from '@components/shift-planner/shift-planner-routing.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     DxDataGridModule,
-    DxTemplateModule
+    DxTemplateModule,
+    DxSelectBoxModule,
+    DxCalendarModule,
+    DxDateBoxModule,
+    DxButtonModule,
+    DxPopupModule,
+    ShiftPlannerRoutingModule
   ],
   declarations: [
-    ShiftSchedulingComponent
+    ShiftScheduleComponent
   ],
-  providers: [ShiftService]
+  providers: [ShiftScheduleService]
 })
 export class ShiftPlannerModule {
 }

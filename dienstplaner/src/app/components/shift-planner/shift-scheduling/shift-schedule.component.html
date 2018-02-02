@@ -1,0 +1,63 @@
+<div class="dashboard">top dashboard</div>
+<div>
+  <dx-select-box id="select-prefix"
+                 [dataSource]="['January', 'February', 'March', 'April']"
+                 placeholder="Select Month"
+                 [value]="prefix"
+                 (onValueChanged)="filterSelected($event)">
+  </dx-select-box>
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="shiftList | async"
+    keyExpr="id"
+    [allowColumnReordering]="true"
+    [columnAutoWidth]="true"
+    (onRowInserting)="onAddSchedule($event)"
+    (onRowUpdating)="onUpdateSchedule($event)"
+    (onRowRemoving)="onDeleteSchedule($event)"
+    (onEditingStart)="onRowEdit($event)"
+
+
+    (onToolbarPreparing)="onToolbarPreparing($event)">
+
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+    <dxo-scrolling mode="infinite"></dxo-scrolling>
+    <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"></dxo-editing>
+
+    <dxo-paging [enabled]="false"></dxo-paging>
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+
+    <dxi-column dataField="id"></dxi-column>
+    <dxi-column dataField="date" dataType="date" caption="Datum"></dxi-column>
+    <dxi-column dataField="employee1" caption="Martin" cellTemplate="myContent"></dxi-column>
+    <dxi-column dataField="employee2" caption="Marc"></dxi-column>
+
+    <div *dxTemplate="let data of 'totalGroupCount'">
+      <div class="informer">
+        <h2 class="count">{{totalCount}}</h2>
+        <span class="name">Total Mitarbeiter</span>
+      </div>
+    </div>
+
+
+      <!--<div *dxTemplate="myContent">-->
+        <!--<dx-button title="shift item"></dx-button>-->
+      <!--</div>-->
+
+
+
+    </dx-data-grid>
+</div>
+
+<!--<dxi-column dataField="name" caption="{{'employee.caption' | translate }}"></dxi-column>-->
+
+<!--<dxo-selection mode="row" [selectAllMode]="allPages" [showCheckBoxesMode]="onClick"></dxo-selection>-->
+<!--<dxo-column-chooser [enabled]="true"></dxo-column-chooser>-->
+<!--<dx-date-box-->
+  <!--[min]="minDate"-->
+  <!--[max]="maxDate"-->
+  <!--[(value)]="currentDate">-->
+<!--</dx-date-box>-->
+
+
+

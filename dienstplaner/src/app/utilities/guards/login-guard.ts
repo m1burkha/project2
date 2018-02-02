@@ -1,6 +1,7 @@
 import {CanActivate, Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
+import {UserService} from '@services/user/user.service';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
@@ -10,7 +11,7 @@ export class LoginGuard implements CanActivate {
    * @param {AuthenticationService} authenticationService
    * @param {Router} router
    */
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   /**
@@ -18,12 +19,15 @@ export class LoginGuard implements CanActivate {
    * @returns {boolean}
    */
   canActivate() {
+    // TODO remove once user created.....
+    return true;
+    // .......
 
-    if (sessionStorage.getItem('auth_token') && this.authenticationService.isTokenValid()) {
-      return true;
-    }
-    this.router.navigate(['/login']);
-    return false;
+    // if (sessionStorage.getItem('auth_token') && this.userService.authState) {
+    //   return true;
+    // }
+    // this.router.navigate(['/login']);
+    // return false;
 
   }
 }

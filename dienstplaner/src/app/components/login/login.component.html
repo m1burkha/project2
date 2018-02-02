@@ -7,9 +7,9 @@
   <form novalidate #formRef="ngForm" [formGroup]="loginForm" (ngSubmit)="formRef.form.valid && onlogin()">
     <div class="login-controls">
       <img src="../../../assets/icons/username.png" height="30" width="30"/>
-      <input [ngClass]="{loginerror: isFieldValid('username')}" type="text" formControlName="username" placeholder="test">
+      <input [ngClass]="{loginerror: isFieldValid('email')}" type="text" formControlName="email" placeholder="test">
     </div>
-    <div><span *ngIf="isFieldValid('username')">Benützername ist erforderlich !</span></div>
+    <div><span *ngIf="isFieldValid('email')">Benützername ist erforderlich !</span></div>
     <div class="login-controls">
       <img src="../../../assets/icons/lock.png" height="30" width="30"/>
       <input [ngClass]="{loginerror: isFieldValid('password')}" type="password" formControlName="password" placeholder="test">
