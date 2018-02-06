@@ -21,7 +21,9 @@ export class TimeSpan implements ITimeSpan {
   /** end time  */
   endTime: Time;
   /** total hours  */
-  totalHours: number;
+  get totalHours(): number {
+    return (this.endTime.hours - this.startTime.hours) + (this.endTime.minutes - this.startTime.minutes) / 60;
+  }
   /** month hours  */
   month: string;
 

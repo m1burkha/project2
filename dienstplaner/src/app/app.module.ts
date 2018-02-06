@@ -21,6 +21,7 @@ import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module
 import {UserAdministrationComponent} from './components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
+import {ShiftPlannerRoutingModule} from "@components/shift-planner/shift-planner-routing.module";
 
 
 @NgModule({
@@ -40,12 +41,14 @@ import {EmployeeAdministrationModule} from '@components/employee-administration/
     AngularFireAuthModule,
     EmployeeAdministrationModule,
     ShiftPlannerModule,
+    ShiftPlannerRoutingModule,
     AppRoutingModule,
   ],
   providers: [
     AuthenticationService,
     fakeBackendProvider,
     UserService,
+    ShiftScheduleService,
     EmployeeService
   ],
   bootstrap: [AppComponent]

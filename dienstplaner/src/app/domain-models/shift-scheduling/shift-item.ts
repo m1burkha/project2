@@ -20,8 +20,14 @@ export class ShiftItem implements IShiftItem {
   id: string;
   /** shift timespans */
   timeSpans: TimeSpan[];
+
   /** totalhours */
-  totalHours: number;
+  get totalHours(): number {
+    return this.timeSpans.map(e => e.totalHours).reduce((a, b) => {
+      return a + b;
+    });
+  }
+
   /** Enum ShiftType */
   type: ShiftType;
 
