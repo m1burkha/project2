@@ -28,7 +28,6 @@ import {ShiftSchedulingComponent} from '@components/shift-planner/shift-scheduli
     declarations: [
         AppComponent,
         LoginComponent,
-        ShiftSchedulingComponent,
         TestComponent,
         UserAdministrationComponent
     ],
