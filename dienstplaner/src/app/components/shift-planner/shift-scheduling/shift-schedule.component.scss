@@ -21,6 +21,7 @@
   background-color: #5F9BE5;
   color: #fff;
 }
+
 .count {
   padding-top: 15px;
   line-height: 27px;
@@ -41,6 +42,18 @@
 /deep/ .selected-data .caption {
   font-weight: bold;
   font-size: 115%;
+}
+
+.popup-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .popup-content {
+    width: 45%;
+  }
 }
 
 
