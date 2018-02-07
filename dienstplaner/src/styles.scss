@@ -13,3 +13,7 @@ body {
 .mat-snack-bar-container__error, .mat-snack-bar-container__error .mat-snack-bar-container {
   background-color: #ac2925;
 }
+
+.mat-snack-bar-container__success, .mat-snack-bar-container__success .mat-snack-bar-container {
+  background-color: darkgreen;
+}

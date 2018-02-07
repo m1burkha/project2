@@ -22,11 +22,12 @@ import {UserAdministrationComponent} from './components/user-administration/user
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 import {
-  MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatSnackBarModule
 } from "@angular/material";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {LogoutComponent} from "@components/logout/logout.component";
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {LogoutComponent} from "@components/logout/logout.component";
     LogoutComponent,
     TestComponent,
     UserAdministrationComponent,
+    RegisterDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import {LogoutComponent} from "@components/logout/logout.component";
     EmployeeAdministrationModule,
     ShiftPlannerModule,
 
+    MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
@@ -63,6 +66,7 @@ import {LogoutComponent} from "@components/logout/logout.component";
     ShiftSchedulingService,
     EmployeeService
   ],
+  entryComponents: [RegisterDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

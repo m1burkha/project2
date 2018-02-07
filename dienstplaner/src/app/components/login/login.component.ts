@@ -2,14 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatSnackBar} from "@angular/material";
+import {MatDialog, MatSnackBar} from "@angular/material";
 import {UserService} from "@services/user/user.service";
 import * as firebase from "firebase/app";
+import {RegisterDialogComponent} from "@components/register-dialog/register-dialog.component";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit{
   username: FormControl = new FormControl('', [Validators.required]);
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit{
   /**
    * Login coconstructor injecting the FormBuilder for forms and AuthenticationService for login
    */
-  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog) {
     this.form = formBuilder.group({
       username: this.username,
       password: this.password
@@ -58,5 +59,12 @@ export class LoginComponent implements OnInit{
       }).catch(e => {
         this.snackBar.open(e.message, null, {duration: 3000, verticalPosition: 'top', panelClass: ['mat-snack-bar-container__error']});
       });
+  }
+
+  /**
+   * opens register dialog
+   */
+  register() {
+    let dialogRef = this.dialog.open(RegisterDialogComponent);
   }
 }

@@ -1,20 +1,24 @@
-  <mat-card class="example-container">
-    <form [formGroup]="form" (ngSubmit)="login()">
+<mat-card>
+  <h1 mat-card-title>Login</h1>
 
-    <h1>Login</h1>
+  <form [formGroup]="form" (ngSubmit)="login()">
+    <div mat-card-content class="example-container">
+      <mat-form-field>
+        <input matInput placeholder="Enter your username/email" [formControl]="username" required/>
+        <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Enter your username/email" [formControl]="username" required/>
-      <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Enter your password" [formControl]="password" [type]="hide ? 'password' : 'text'"
+               required/>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field>
-      <input matInput placeholder="Enter your password" [formControl]="password" [type]="hide ? 'password' : 'text'"
-             required/>
-      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-      <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
-    </mat-form-field>
-
-    <button mat-raised-button type="submit">login</button>
-    </form>
+    <div mat-card-actions class="button-container">
+      <button mat-raised-button type="button" (click)="register()">register</button>
+      <button mat-raised-button type="submit">login</button>
+    </div>
+  </form>
 </mat-card>
