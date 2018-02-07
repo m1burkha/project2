@@ -23,11 +23,12 @@ import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
-  MatSnackBarModule
+  MatSnackBarModule, MatTableModule, MatTabsModule
 } from "@angular/material";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {LogoutComponent} from "@components/logout/logout.component";
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import {ClickDummyModule} from "@components/dev/click-dummy/click-dummy.module";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,8 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+
+    ClickDummyModule,
     EmployeeAdministrationModule,
     ShiftPlannerModule,
 
@@ -56,6 +59,8 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatTabsModule,
+    MatTableModule,
     MatSnackBarModule,
     NoopAnimationsModule,
   ],
