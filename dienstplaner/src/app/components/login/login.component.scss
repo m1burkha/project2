@@ -1,58 +1,31 @@
-$controlbackground: #3B5F71;
-$containerbackground: #b7c8d3;
-
-//----------- setup for the flex box ------//
-@mixin flex-container($direction : row, $justifycont: space-between, $alignment : null, $align-items: null){
+.example-container {
   display: flex;
-  flex-direction: $direction;
-  justify-content: $justifycont;
-  align-content: $alignment;
-  align-items: $align-items;
-}
-//------- passing parameters to various controls ------//
-@mixin control-properties($width: 90%, $height: 50px, $fontsize: 18px, $backgroundcolor: null, $padding: null, $margin: null ){
-  width: $width;
-  height: $height;
-  font-size: $fontsize;
-  background-color: $backgroundcolor;
-  padding: $padding;
-  margin: $margin
-}
-//------ the complete login container -------//
-.container{
-  @include flex-container($direction: column, $justifycont: space-around, $alignment: center);
-  background-color: $containerbackground;
-  width: 500px;
-  height: 450px;
-  margin: 45px auto;
-}
-.login-header {
-  @include flex-container($alignment: center)
-}
-.login-header >   h2 {
-  text-align: center;
-  @include control-properties($height: null, $fontsize: null);
-}
-.login-header > img {
-  text-align: center;
-  @include control-properties($width: 282px, $height: 80px, $fontsize: null, $padding: 0 5px 5px 0, $backgroundcolor: $containerbackground);
+  flex-direction: column;
+  max-width: 400px;
+  margin: 5rem auto;
 
-}
-//------ the login controls being input, img, button --------//
-.login-controls {
-  @include flex-container($align-items: flex-start);
-  @include control-properties($width: null, $height: null, $fontsize: null, $backgroundcolor: $controlbackground, $padding: 5px);
-}
-.login-controls > button {
-  @include control-properties($width: 100%);
-}
-.login-controls > img {
-  align-self: center;
-}
-.login-controls > input {
-  @include control-properties($width: 87%);
-}
-.loginerror {
-  border: thin solid red;
+  .mat-form-field {
+    margin: 1rem 0;
+  }
+
+  .mat-icon {
+    cursor: pointer;
+  }
 }
 
+.example-container form > * {
+  width: 100%;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}

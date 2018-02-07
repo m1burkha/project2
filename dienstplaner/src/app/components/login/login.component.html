@@ -1,22 +1,20 @@
-<div class="container">
-  <div class="login-header">
-    <h2></h2>
-    <img src="../../../assets/icons/loginlogo.png"/>
-  </div>
-  <div><span *ngIf="!loginsuccess">{{errormessage}}</span></div>
-  <form novalidate #formRef="ngForm" [formGroup]="loginForm" (ngSubmit)="formRef.form.valid && onlogin()">
-    <div class="login-controls">
-      <img src="../../../assets/icons/username.png" height="30" width="30"/>
-      <input [ngClass]="{loginerror: isFieldValid('username')}" type="text" formControlName="username" placeholder="test">
-    </div>
-    <div><span *ngIf="isFieldValid('username')">Benützername ist erforderlich !</span></div>
-    <div class="login-controls">
-      <img src="../../../assets/icons/lock.png" height="30" width="30"/>
-      <input [ngClass]="{loginerror: isFieldValid('password')}" type="password" formControlName="password" placeholder="test">
-    </div>
-    <div><span *ngIf="isFieldValid('password')">Passwort ist erforderlich !</span></div>
-    <div class="login-controls">
-      <button type="submit" [disabled]="!formRef.form.valid">Login</button>
-    </div>
-  </form>
-</div>
+  <mat-card class="example-container">
+    <form [formGroup]="form" (ngSubmit)="login()">
+
+    <h1>Login</h1>
+
+    <mat-form-field>
+      <input matInput placeholder="Enter your username/email" [formControl]="username" required/>
+      <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Enter your password" [formControl]="password" [type]="hide ? 'password' : 'text'"
+             required/>
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button type="submit">login</button>
+    </form>
+</mat-card>

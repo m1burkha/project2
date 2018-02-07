@@ -1,72 +1,62 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material";
+import {UserService} from "@services/user/user.service";
+import * as firebase from "firebase/app";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  errormessage: string;
-  loginsuccess: boolean;
-  username: AbstractControl;
-  password: AbstractControl;
+export class LoginComponent implements OnInit{
+  username: FormControl = new FormControl('', [Validators.required]);
+  password: FormControl = new FormControl('', [Validators.required]);
+  form: FormGroup;
+  hide = true;
+
+  getUsernameErrorMessage() {
+    return this.username.hasError('required') ? 'You must enter a value' :
+      this.username.hasError('username') ? 'Not a valid username' :
+        '';
+  }
+
+  getPasswordErrorMessage() {
+    return this.password.hasError('required') ? 'You must enter a value' :
+      this.password.hasError('password') ? 'Not a valid password' :
+        '';
+  }
 
   /**
    * Login coconstructor injecting the FormBuilder for forms and AuthenticationService for login
-   * @param {FormBuilder} fb
-   * @param {AuthenticationService} authenticatioService
    */
-  constructor(private fb: FormBuilder, private authenticatioService: AuthenticationService, private router: Router) {
-  }
-
-  /** Initialise the form controls and clear any sessions */
-  ngOnInit() {
-    this.authenticatioService.logout();
-    this.initControls();
-  }
-
-  /** Init the form filed controls */
-  initControls() {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+    this.form = formBuilder.group({
+      username: this.username,
+      password: this.password
     });
+  }
 
-    this.username = this.loginForm.controls['username'];
-    this.password = this.loginForm.controls['password'];
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) this.router.navigate(['/shiftlist']);
+    });
   }
 
   /** User login authentication */
-  onlogin() {
-
-    const formValues = this.loginForm.value;
-    if (this.loginForm.valid) {
-      this.authenticatioService.login(formValues.username, formValues.password)
-        .subscribe(res => {
-            if (res === false) {
-              this.loginsuccess = false;
-              this.errormessage = 'Keine verbindug zu Server.........';
-            } else {
-              this.loginsuccess = true;
-              this.router.navigate(['/shiftlist']);
-            }
-          },
-          error => this.errormessage = error
-        );
-    }
+  login() {
+    if (this.username.valid && this.password.valid)
+      this.userService.login(this.username.value, this.password.value).then(e => {
+        //this.snackBar.open(e, null, { duration: 3000 });
+        console.log('custom then', e);
+        if (typeof Storage !== undefined) {
+          sessionStorage.setItem('auth_token', JSON.stringify(e));
+        }
+        this.router.navigate(['/shiftlist']);
+      }).catch(e => {
+        this.snackBar.open(e.message, null, {duration: 3000, verticalPosition: 'top', panelClass: ['mat-snack-bar-container__error']});
+      });
   }
-
-  /**
-   * method that can set the validity of the controls & fields in the form (disable / visible / hidden)
-   * @param {string} field
-   * @returns {boolean}
-   */
-  isFieldValid(field: string): boolean {
-    return !this.loginForm.controls[field].valid && this.loginForm.controls[field].touched;
-  }
-
 }
