@@ -17,6 +17,7 @@ export class FirestoreService<T> {
      * @param {AngularFirestore} db firestore db
      */
     constructor(private db: AngularFirestore) {
+      firebase.auth().useDeviceLanguage();
     }
 
     /**

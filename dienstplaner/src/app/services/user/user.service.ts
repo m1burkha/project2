@@ -14,7 +14,9 @@ export class UserService implements OnInit {
     /**
      * initializes user service
      */
-    constructor(private afAuth: AngularFireAuth) { }
+    constructor(private afAuth: AngularFireAuth) {
+      firebase.auth().useDeviceLanguage();
+    }
 
     /**
      * on init

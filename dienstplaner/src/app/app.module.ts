@@ -18,40 +18,56 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from './services/user/user.service';
 import {ShiftSchedulingService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
-import {ShiftPlannerRoutingModule} from '@components/shift-planner/shift-planner-routing.module';
-import { UserAdministrationComponent } from './components/user-administration/user-administration.component';
+import {UserAdministrationComponent} from './components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
-import {ShiftSchedulingComponent} from '@components/shift-planner/shift-scheduling/shift-scheduling.component';
+import {
+  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatSnackBarModule
+} from "@angular/material";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {LogoutComponent} from "@components/logout/logout.component";
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        TestComponent,
-        UserAdministrationComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        DevModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
-        AngularFireAuthModule,
-        EmployeeAdministrationModule,
-        ShiftPlannerModule,
-        ShiftPlannerRoutingModule,
-    ],
-    providers: [
-        AuthenticationService,
-        fakeBackendProvider,
-        UserService,
-        ShiftSchedulingService,
-        EmployeeService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    LogoutComponent,
+    TestComponent,
+    UserAdministrationComponent,
+    RegisterDialogComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    DevModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    EmployeeAdministrationModule,
+    ShiftPlannerModule,
+
+    MatDialogModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    NoopAnimationsModule,
+  ],
+  providers: [
+    AuthenticationService,
+    fakeBackendProvider,
+    UserService,
+    ShiftSchedulingService,
+    EmployeeService
+  ],
+  entryComponents: [RegisterDialogComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
