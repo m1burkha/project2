@@ -7,10 +7,10 @@ export interface ITimeSpan {
   startTime: Time;
   /** end time  */
   endTime: Time;
-  /** total hours  */
-  totalHours: number;
   /** month */
   month: string;
+  /** total hours  */
+  totalHours: number;
 }
 
 export class TimeSpan implements ITimeSpan {

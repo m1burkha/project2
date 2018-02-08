@@ -1,5 +1,6 @@
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
+import {Employee} from '@domain-models/employee/employee';
 
 /**
  * interface for the IShiftItems */
@@ -12,6 +13,8 @@ export interface IShiftItem {
   totalHours: number;
   /** Enum ShiftType */
   type: ShiftType;
+  /** employee */
+  employeeId: string;
 }
 
 /** class for the ShiftItem */
@@ -30,6 +33,9 @@ export class ShiftItem implements IShiftItem {
 
   /** Enum ShiftType */
   type: ShiftType;
+
+  /** employee id */
+  employeeId: string;
 
   /** create a new shift item (constructor)
    * @param values (id, timeSpans[], totalHours, type (enum shiftType))

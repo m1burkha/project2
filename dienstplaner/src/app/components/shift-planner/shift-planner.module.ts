@@ -6,8 +6,15 @@ import {
 } from 'devextreme-angular';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
-import {ShiftPlannerRoutingModule} from '@components/shift-planner/shift-planner-routing.module';
 import {DxoLabelModule} from 'devextreme-angular/ui/nested/label';
+import {RouterModule, ROUTES, Routes} from '@angular/router';
+import {LoginGuard} from '@utilities/guards/login-guard';
+import { ShiftItemComponent } from './shift-item/shift-item.component';
+
+
+const plannerRoutes: Routes = [
+  {path: 'shiftlist', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
+];
 
 
 @NgModule({
@@ -23,12 +30,13 @@ import {DxoLabelModule} from 'devextreme-angular/ui/nested/label';
     DxTextBoxModule,
     DxoLabelModule,
     DxLookupModule,
-    ShiftPlannerRoutingModule
+    [RouterModule.forChild(plannerRoutes)]
   ],
   declarations: [
-    ShiftScheduleComponent
+    ShiftScheduleComponent,
+    ShiftItemComponent
   ],
-  providers: [ShiftScheduleService]
+  providers: [ShiftScheduleService, LoginGuard]
 })
 export class ShiftPlannerModule {
 }

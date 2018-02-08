@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {FirestoreService} from '@services/firestore/firestore.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
+import moment = require('moment');
 
 /**
  * shift scheduling service
@@ -18,8 +19,17 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
     this.setCollection('ShiftScheduling');
   }
 
-  // getMonths() {
-  //     Calendar
-  // }
+  getMonths(): string[] {
+    return moment.months();
+  }
 
+  getDaysForMonth(month: string): number {
+    const index = this.getMonths().indexOf(month);
+    return moment({month: index}).daysInMonth();
+  }
+
+  getCurrentMonth() {
+    return this.getMonths()[moment().month()];
+  }
 }
+
