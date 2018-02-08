@@ -18,7 +18,8 @@ const plannerRoutes: Routes = [
     RouterModule.forChild(plannerRoutes)
   ],
   declarations: [
-    ShiftSchedulingComponent
+    ShiftScheduleComponent,
+    ShiftItemComponent
   ],
   providers: [ShiftService, LoginGuard]
 })

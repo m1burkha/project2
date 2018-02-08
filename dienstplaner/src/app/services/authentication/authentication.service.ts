@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/shareReplay';
-import {Token} from '../../domain-models/token/token';
+import {UserService} from '@services/user/user.service';
+import {User} from 'firebase/app';
+import {HttpClient} from '@angular/common/http';
+import {Token} from '@domain-models/token/token';
 
 @Injectable()
 export class AuthenticationService {
 
+
   /**
-   * AuthenticationService constructor injecting the httpclient
+   * AuthenticationService constructor injecting the AngularFireAuth
    * @param {HttpClient} httpClient
    */
   constructor(private httpClient: HttpClient) {
