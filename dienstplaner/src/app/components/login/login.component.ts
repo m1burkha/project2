@@ -1,83 +1,68 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
-import {UserService} from '@services/user/user.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatDialog, MatSnackBar} from "@angular/material";
+import {UserService} from "@services/user/user.service";
+import * as firebase from "firebase/app";
+import {RegisterDialogComponent} from "@components/register-dialog/register-dialog.component";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  errormessage: string;
-  loginsuccess: boolean;
-  email: AbstractControl;
-  password: AbstractControl;
+export class LoginComponent implements OnInit{
+  username: FormControl = new FormControl('', [Validators.required]);
+  password: FormControl = new FormControl('', [Validators.required]);
+  form: FormGroup;
+  hide = true;
 
-  /**
+  getUsernameErrorMessage() {
+    return this.username.hasError('required') ? 'You must enter a value' :
+      this.username.hasError('username') ? 'Not a valid username' :
+        '';
+  }
+
+  getPasswordErrorMessage() {
+    return this.password.hasError('required') ? 'You must enter a value' :
+      this.password.hasError('password') ? 'Not a valid password' :
+        '';
+  }
+ /**
    * Login coconstructor injecting the FormBuilder for forms and AuthenticationService for login
-   * @param {FormBuilder} fb
-   * @param {AuthenticationService} authenticatioService
    */
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
-  }
-
-  /** Initialise the form controls and clear any sessions */
-  ngOnInit() {
-    this.userService.logout();
-    this.initControls();
-  }
-
-  /** Init the form filed controls */
-  initControls() {
-    this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog) {
+    this.form = formBuilder.group({
+      username: this.username,
+      password: this.password
     });
+  }
 
-    this.email = this.loginForm.controls['email'];
-    this.password = this.loginForm.controls['password'];
+  ngOnInit() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) this.router.navigate(['/shiftlist']);
+    });
   }
 
   /** User login authentication */
-  onlogin() {
-
-    const formValues = this.loginForm.value;
-    if (this.loginForm.valid) {
-
-      // TODO remove once user created....
-      this.loginsuccess = true;
-      this.router.navigate(['/shiftlist']);
-      // const pp = this.userService.create('Martin', formValues.email, formValues.password);
-
-      // .........
-
-      // this.userService.login(formValues.email, formValues.password)
-      //   .then(user => {
-      //     console.log(user);
-      //     if (user) {
-      //        sessionStorage.setItem('auth_token', JSON.stringify({token: user.tokenid}));
-      //        sessionStorage.setItem('token_expires_at', JSON.stringify({expire_date: user.exp}));
-      //     this.loginsuccess = true;
-      //     this.router.navigate(['/shiftlist']);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     this.loginsuccess = false;
-      //     this.errormessage = error.message;
-      //   });
-    }
+  login() {
+    if (this.username.valid && this.password.valid)
+      this.userService.login(this.username.value, this.password.value).then(e => {
+        //this.snackBar.open(e, null, { duration: 3000 });
+        console.log('custom then', e);
+        if (typeof Storage !== undefined) {
+          sessionStorage.setItem('auth_token', JSON.stringify(e));
+        }
+        this.router.navigate(['/shiftlist']);
+      }).catch(e => {
+        this.snackBar.open(e.message, null, {duration: 3000, verticalPosition: 'top', panelClass: ['mat-snack-bar-container__error']});
+      });
   }
-
   /**
-   * method that can set the validity of the controls & fields in the form (disable / visible / hidden)
-   * @param {string} field
-   * @returns {boolean}
+   * opens register dialog
    */
-  isFieldValid(field: string): boolean {
-    return !this.loginForm.controls[field].valid && this.loginForm.controls[field].touched;
+  register() {
+    let dialogRef = this.dialog.open(RegisterDialogComponent);
   }
-
 }

@@ -1,33 +1,34 @@
-import {CanActivate, Router} from '@angular/router';
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
 import {Injectable} from '@angular/core';
-import {AuthenticationService} from '../../services/authentication/authentication.service';
-import {UserService} from '@services/user/user.service';
+import {CanActivate, Router} from '@angular/router';
+import * as firebase from "firebase/app";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class LoginGuard implements CanActivate {
 
   /**
    * constructor inject authenticationservice and router
-   * @param {AuthenticationService} authenticationService
-   * @param {Router} router
    */
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private router: Router) {
+    if (!firebase.apps.length) firebase.initializeApp(environment.firebase);
   }
 
   /**
    * loginguard if valid will allow router to navigate to the next page
-   * @returns {boolean}
    */
   canActivate() {
-    // TODO remove once user created.....
-    return true;
-    // .......
+    let resultObserver: Observer<boolean>;
+    let resultObs = new Observable<boolean>(observer => {
+      resultObserver = observer;
+    });
 
-    // if (sessionStorage.getItem('auth_token') && this.userService.authState) {
-    //   return true;
-    // }
-    // this.router.navigate(['/login']);
-    // return false;
-
+    firebase.auth().onAuthStateChanged(user => {
+      resultObserver.next(!!user);
+      if (!user) this.router.navigate(['/login']);
+      resultObserver.complete();
+    });
+    return resultObs;
   }
 }

@@ -21,34 +21,55 @@ import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module
 import {UserAdministrationComponent} from './components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
-
+import {
+  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatSnackBarModule, MatTableModule, MatTabsModule
+} from "@angular/material";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {LogoutComponent} from "@components/logout/logout.component";
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import {ClickDummyModule} from "@components/dev/click-dummy/click-dummy.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    LogoutComponent,
     TestComponent,
-    UserAdministrationComponent
+    UserAdministrationComponent,
+    RegisterDialogComponent,
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     DevModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ClickDummyModule,
     EmployeeAdministrationModule,
     ShiftPlannerModule,
-    AppRoutingModule,
+    MatDialogModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatTableModule,
+    MatSnackBarModule,
+    NoopAnimationsModule,
   ],
   providers: [
     AuthenticationService,
     fakeBackendProvider,
     UserService,
-    ShiftScheduleService,
+    ShiftSchedulingService,
     EmployeeService
   ],
+  entryComponents: [RegisterDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

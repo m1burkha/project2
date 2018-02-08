@@ -1,40 +1,30 @@
-.mat-card{
-  max-width: 400px;
-  margin: 3rem auto;
-}
-
-.example-container {
+.example-container{
   display: flex;
   flex-direction: column;
-  margin: auto;
+  width: 400px;
 
-  .mat-form-field {
+  .mat-form-field{
     margin: 1rem 0;
   }
 
-  .mat-icon {
+  .mat-icon{
     cursor: pointer;
   }
 }
-
-.example-container form > * {
+.example-container form > *{
   width: 100%;
 }
-
-.example-right-align {
+.example-right-align{
   text-align: right;
 }
-
 input.example-right-align::-webkit-outer-spin-button,
-input.example-right-align::-webkit-inner-spin-button {
+input.example-right-align::-webkit-inner-spin-button{
   display: none;
 }
-
-input.example-right-align {
+input.example-right-align{
   -moz-appearance: textfield;
 }
-
-.button-container {
+.button-container{
   display: flex;
   button{
     flex-grow: 1;
