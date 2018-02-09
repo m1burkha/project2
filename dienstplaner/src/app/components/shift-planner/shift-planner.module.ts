@@ -9,6 +9,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
 import {ShiftItemComponent} from '@components/shift-planner/shift-item/shift-item.component';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
+import { ShiftTemplateComponent } from './shift-template/shift-template.component';
+import { ShiftTimeSpanComponent } from './shift-time-span/shift-time-span.component';
 
 const plannerRoutes: Routes = [
   {path: '', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
@@ -28,7 +30,9 @@ const plannerRoutes: Routes = [
   ],
   declarations: [
     ShiftScheduleComponent,
-    ShiftItemComponent
+    ShiftItemComponent,
+    ShiftTemplateComponent,
+    ShiftTimeSpanComponent
   ],
   providers: [ShiftScheduleService, LoginGuard]
 })

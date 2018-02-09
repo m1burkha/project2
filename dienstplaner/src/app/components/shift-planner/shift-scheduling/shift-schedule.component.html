@@ -21,16 +21,19 @@
   <dxo-load-panel [enabled]="true"></dxo-load-panel>
   <dxi-column dataField="id" [allowEditing]="false"></dxi-column>
   <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="true"></dxi-column>
-  <div>
-    <dxi-column dataField="{{employee1}}" cellTemplate="cellTemplate"></dxi-column>
-    <div *dxTemplate="let d of 'cellTemplate'">
-      {{d.text}}
-      <dx-button text="shift item" (onclick)="showShiftItem()" style="float: right"></dx-button>
-    </div>
+  <!--<div>-->
+    <!--<dxi-column dataField="{{employee1}}" cellTemplate="cellTemplate"></dxi-column>-->
+    <!--<div *dxTemplate="let d of 'cellTemplate'">-->
+      <!--{{d.text}}-->
+      <!--<dx-button text="shift item" (onclick)="showShiftItem()" style="float: right"></dx-button>-->
+    <!--</div>-->
+  <!--</div>-->
 
-
+  <div *ngFor="let employee of employees | async">
+    <dxi-column dataField="{{employee.caption}}">
+      <dx-lookup  [items]="" displayExpr="caption" valueExpr="type"></dx-lookup>
+    </dxi-column>
   </div>
-  <dxi-column dataField="{{employee2}}"></dxi-column>
 
   <div *dxTemplate="let data of 'totalGroupCount'">
     <div class="informer">
@@ -38,10 +41,6 @@
       <span class="name">Total Mitarbeiter</span>
     </div>
   </div>
-  <!--<div *dxTemplate="let item of shiftItems">-->
-  <!--<dx-button title="shift item" onclick="showPopup(item)"></dx-button>-->
-  <!--</div>-->
-
 </dx-data-grid>
 
 

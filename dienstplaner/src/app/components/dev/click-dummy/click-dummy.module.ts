@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {RouterModule, Routes} from "@angular/router";
-import { ClickDummyComponent } from './click-dummy/click-dummy.component';
-import {LoginGuard} from "@utilities/guards/login-guard";
-import { TemplatesComponent } from './click-dummy/templates/templates.component';
-import { ShiftlistComponent } from './click-dummy/shiftlist/shiftlist.component';
-import {MatFormFieldModule, MatSelectModule, MatTableModule, MatTabsModule, MatTooltipModule} from "@angular/material";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
+import {ClickDummyComponent} from './click-dummy/click-dummy.component';
+import {LoginGuard} from '@utilities/guards/login-guard';
+import {TemplatesComponent} from './click-dummy/templates/templates.component';
+import {ShiftlistComponent} from './click-dummy/shiftlist/shiftlist.component';
+import {MatFormFieldModule, MatSelectModule, MatTableModule, MatTabsModule, MatTooltipModule} from '@angular/material';
 
 
 const routes: Routes = [
@@ -25,4 +25,5 @@ const routes: Routes = [
   declarations: [ClickDummyComponent, TemplatesComponent, ShiftlistComponent],
   providers: [LoginGuard]
 })
-export class ClickDummyModule { }
+export class ClickDummyModule {
+}

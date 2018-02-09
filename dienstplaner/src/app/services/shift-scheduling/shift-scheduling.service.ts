@@ -28,8 +28,16 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
     return moment({month: index}).daysInMonth();
   }
 
-  getCurrentMonth() {
+  getSelectedMonthIndex(month: string): number {
+    return this.getMonths().indexOf(month);
+  }
+
+  getCurrentMonthName(): string {
     return this.getMonths()[moment().month()];
+  }
+
+  getCurrentMonthIndex(): number {
+    return moment().month();
   }
 }
 

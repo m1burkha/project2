@@ -9,7 +9,6 @@ import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.
 })
 export class ShiftItemComponent implements OnInit {
 
-  buttonOptions: any;
   shiftTypes: string[] = [];
   selectedShiftType: ShiftType;
 
@@ -18,13 +17,6 @@ export class ShiftItemComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.buttonOptions = {
-      text: 'Ok',
-      disabled: false,
-      visible: true
-    };
-
     this.shiftTypes = Object.keys(ShiftType);
   }
 
