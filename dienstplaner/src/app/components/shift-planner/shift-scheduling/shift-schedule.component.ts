@@ -9,6 +9,8 @@ import moment = require('moment');
 import {MonthSelector} from '@domain-models/shift-scheduling/month-selector';
 import {Employee, IEmployee} from '@domain-models/employee/employee';
 import {EmployeeService} from '@services/employee/employee.service';
+import {Moment} from 'moment';
+
 
 
 @Component({
@@ -31,6 +33,8 @@ export class ShiftScheduleComponent implements OnInit {
   employees: Observable<IEmployee[]>;
 
 
+
+
   @Output() monthSelector = new EventEmitter<MonthSelector>();
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
 
@@ -39,17 +43,18 @@ export class ShiftScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employee1 = 'Martin';
-    this.employee2 = 'Marc';
     this.employees = this.employeeService.readAll();
     this.shiftList = this.scheduleService.readAll();
     this.months = this.scheduleService.getMonths();
-    this.month = this.scheduleService.getCurrentMonth();
+    this.month = this.scheduleService.getCurrentMonthName();
+    this.daysOfMonth = this.scheduleService.getDaysForMonth(this.month);
+    this.populateDateColumn();
   }
 
   filterSelected(event) {
     this.month = event.value;
     this.daysOfMonth = this.scheduleService.getDaysForMonth(event.value);
+    this.populateDateColumn();
   }
 
   onUpdateSchedule(event: any): void {
@@ -62,8 +67,12 @@ export class ShiftScheduleComponent implements OnInit {
     this.scheduleService.delete(event.key);
   }
 
-  showShiftItem() {
-    this.showShiftItemPopup = true;
+  populateDateColumn() {
+
+    const monthIndex = this.scheduleService.getSelectedMonthIndex(this.month);
+    for (let dayCount = 1; dayCount < this.daysOfMonth + 1; dayCount++) {
+      console.log('day', moment({month: monthIndex, day: dayCount} ).format('DD.MM.YYYY'));
+    }
   }
 
 
