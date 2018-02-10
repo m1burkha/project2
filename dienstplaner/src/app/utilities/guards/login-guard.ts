@@ -1,6 +1,5 @@
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
-
 import {Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
 import * as firebase from "firebase/app";
@@ -30,7 +29,6 @@ export class LoginGuard implements CanActivate {
       if (!user) this.router.navigate(['/login']);
       resultObserver.complete();
     });
-
     return resultObs;
   }
 }

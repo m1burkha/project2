@@ -1,0 +1,50 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef> date</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span *ngIf="!element.total">{{element.date}}</span>
+        <span *ngIf="element.total">{{element.total}}</span>
+        <span *ngIf="element.tooltip_date" matTooltip="{{element.tooltip_date}}"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="person1">
+      <mat-header-cell *matHeaderCellDef> person1</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span *ngIf="!element.total">
+        <mat-form-field>
+          <mat-select [(value)]="element.person1">
+            <mat-option *ngFor="let item of templates" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </span>
+        <span *ngIf="element.total">{{element.person1}} h</span>
+        <span *ngIf="element.tooltip_person1" matTooltip="{{element.tooltip_person1}}"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="person2">
+      <mat-header-cell *matHeaderCellDef> person2</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span *ngIf="!element.total">
+        <mat-form-field>
+          <mat-select [(value)]="element.person2">
+            <mat-option *ngFor="let item of templates" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </span>
+        <span *ngIf="element.total">{{element.person2}} h</span>
+        <span *ngIf="element.tooltip_person2" matTooltip="{{element.tooltip_person2}}"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

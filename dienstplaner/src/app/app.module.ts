@@ -16,18 +16,18 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {TestComponent} from './components/db/test/test.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from './services/user/user.service';
-import {ShiftSchedulingService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
 import {UserAdministrationComponent} from './components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
-  MatSnackBarModule
-} from "@angular/material";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {LogoutComponent} from "@components/logout/logout.component";
-import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule,
+  MatTableModule, MatTabsModule
+} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {LogoutComponent} from '@components/logout/logout.component';
+import {RegisterDialogComponent} from './components/register-dialog/register-dialog.component';
+import {ClickDummyModule} from '@components/dev/click-dummy/click-dummy.module';
 
 @NgModule({
   declarations: [
@@ -47,15 +47,17 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ClickDummyModule,
     EmployeeAdministrationModule,
     ShiftPlannerModule,
-
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatTabsModule,
+    MatTableModule,
     MatSnackBarModule,
     NoopAnimationsModule,
   ],
@@ -63,7 +65,6 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     AuthenticationService,
     fakeBackendProvider,
     UserService,
-    ShiftSchedulingService,
     EmployeeService
   ],
   entryComponents: [RegisterDialogComponent],

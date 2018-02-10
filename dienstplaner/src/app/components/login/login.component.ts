@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit{
       this.password.hasError('password') ? 'Not a valid password' :
         '';
   }
-
-  /**
+ /**
    * Login coconstructor injecting the FormBuilder for forms and AuthenticationService for login
    */
   constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog) {
@@ -60,7 +59,6 @@ export class LoginComponent implements OnInit{
         this.snackBar.open(e.message, null, {duration: 3000, verticalPosition: 'top', panelClass: ['mat-snack-bar-container__error']});
       });
   }
-
   /**
    * opens register dialog
    */

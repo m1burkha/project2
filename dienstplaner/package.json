@@ -29,6 +29,7 @@
     "devextreme": "^17.2.4",
     "devextreme-angular": "^17.2.4",
     "firebase": "^4.8.2",
+    "moment": "^2.20.1",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },
