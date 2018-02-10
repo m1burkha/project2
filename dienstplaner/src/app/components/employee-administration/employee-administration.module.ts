@@ -10,7 +10,7 @@ import {EmployeeAdministrationComponent} from '@components/employee-administrati
  */
 const routes: Routes = [
     {
-        path: '',
+        path: 'employees',
         component: EmployeeAdministrationComponent
     }
 ];
@@ -28,7 +28,7 @@ const routes: Routes = [
     declarations: [
         EmployeeAdministrationComponent
     ],
-    exports: [],
+    exports: [RouterModule],
     providers: []
 })
 export class EmployeeAdministrationModule {

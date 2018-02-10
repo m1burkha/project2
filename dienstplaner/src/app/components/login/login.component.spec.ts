@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoginComponent } from './login.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {By} from "@angular/platform-browser";
-import {DebugElement} from "@angular/core";
-import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {LoginComponent} from './login.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +14,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule, HttpClientModule],
-      declarations: [ LoginComponent ],
+      declarations: [LoginComponent],
       providers: [AuthenticationService, HttpClient]
     })
       .compileComponents();
@@ -31,29 +31,29 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('is login invalid when empty ',  () => {
-    expect(component.loginForm.valid).toBeFalsy();
+  it('is login invalid when empty ', () => {
+    expect(component.form.valid).toBeFalsy();
   });
 
   it('username field invalid when empty', () => {
-    let username = component.loginForm.controls['username'];
+    const username = component.form.controls['username'];
     expect(username.valid).toBeFalsy();
   });
 
   it('password field invalid when empty', () => {
-    let password = component.loginForm.controls['password'];
+    const password = component.form.controls['password'];
     expect(password.valid).toBeFalsy();
-    //expect()
+    // expect()
   });
 
   it('submit login button valid when fields valid,  disabled when fields invalid', () => {
-    let button = component.loginForm.controls['button'];
-    component.loginForm.controls['username'].setValue('test@test.com');
-    component.loginForm.controls['password'].setValue('123456');
+    const button = component.form.controls['button'];
+    component.form.controls['username'].setValue('test@test.com');
+    component.form.controls['password'].setValue('123456');
     fixture.detectChanges();
     expect(submitLogin.nativeElement.disabled).toBeFalsy();
-    component.loginForm.controls['username'].setValue('');
-    component.loginForm.controls['username'].setValue('');
+    component.form.controls['username'].setValue('');
+    component.form.controls['username'].setValue('');
     fixture.detectChanges();
     expect(submitLogin.nativeElement.disabled).toBeTruthy();
   });

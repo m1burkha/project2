@@ -1,15 +1,18 @@
-/** The user login credentials model used by user login */
+/**
+ * The login user interface
+ */
+export interface IUser  {
+  /** displayname  */
+  displayName: string | null;
+  /** email  */
+  email: string | null;
+  /** phonenumber  */
+  phoneNumber: string | null;
+  /** id  */
+  photoURL: string | null;
+  /** id  */
+  providerId: string;
+  /** id  */
+  uid: string;
 
-
-export class User {
-
-  constructor(firstname: string,
-              lastname: string,
-              id: string,
-              email: string,
-              username: string,
-              password: string,
-              securityrole: string  // administrator, user etc...
-  ) {
-  }
 }

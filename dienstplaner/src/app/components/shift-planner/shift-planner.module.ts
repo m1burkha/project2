@@ -1,19 +1,40 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ShiftSchedulingComponent} from './shift-scheduling/shift-scheduling.component';
-import {DxDataGridModule, DxTemplateHost, DxTemplateModule} from 'devextreme-angular';
-import {ShiftService} from '../../services/shifts/shift.service';
+import {
+  DxButtonModule, DxDataGridModule, DxLookupModule, DxPopupModule, DxSelectBoxModule, DxTemplateHost, DxTemplateModule,
+  DxTextBoxModule
+} from 'devextreme-angular';
+import {LoginGuard} from '@utilities/guards/login-guard';
+import {RouterModule, Routes} from '@angular/router';
+import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
+import {ShiftItemComponent} from '@components/shift-planner/shift-item/shift-item.component';
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
+import { ShiftTemplateComponent } from './shift-template/shift-template.component';
+import { ShiftTimeSpanComponent } from './shift-time-span/shift-time-span.component';
+
+const plannerRoutes: Routes = [
+  {path: '', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
+];
 
 @NgModule({
   imports: [
     CommonModule,
     DxDataGridModule,
-    DxTemplateModule
+    DxTemplateModule,
+    DxSelectBoxModule,
+    DxButtonModule,
+    DxPopupModule,
+    DxTextBoxModule,
+    DxLookupModule,
+    RouterModule.forChild(plannerRoutes)
   ],
   declarations: [
-    ShiftSchedulingComponent
+    ShiftScheduleComponent,
+    ShiftItemComponent,
+    ShiftTemplateComponent,
+    ShiftTimeSpanComponent
   ],
-  providers: [ShiftService]
+  providers: [ShiftScheduleService, LoginGuard]
 })
 export class ShiftPlannerModule {
 }

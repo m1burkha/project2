@@ -1,0 +1,60 @@
+
+.dashboard {
+  background-color: #b7c8d3;
+  height: 70px;
+}
+
+/deep/ .dx-datagrid-header-panel .dx-toolbar {
+  margin: 0;
+  padding-right: 20px;
+  background-color: #99BFEB;
+}
+
+/deep/ .dx-datagrid-header-panel .dx-toolbar-items-container {
+  height: 70px;
+}
+
+.informer {
+  height: 70px;
+  width: 130px;
+  text-align: center;
+  background-color: #5F9BE5;
+  color: #fff;
+}
+
+.count {
+  padding-top: 15px;
+  line-height: 27px;
+}
+
+/deep/ #select-prefix {
+  width: 150px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/deep/ .selected-data {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(191, 191, 191, 0.15);
+}
+
+/deep/ .selected-data .caption {
+  font-weight: bold;
+  font-size: 115%;
+}
+
+.popup-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .popup-content {
+    width: 45%;
+  }
+}
+
+
+

@@ -1,0 +1,35 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="caption">
+      <mat-header-cell *matHeaderCellDef> caption</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.caption}}
+        <span *ngIf="element.tooltip_caption" matTooltip="{{element.tooltip_caption}}"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef> type <span matTooltip="einer von unten erwähnten Typen -> enumeration"><i class="fa fa-info-circle"></i></span></mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.type}}
+        <span *ngIf="element.tooltip_type" matTooltip="{{element.tooltip_type}}"><i class="fa fa-info-circle"></i></span></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="timespans">
+      <mat-header-cell *matHeaderCellDef> timespans <span matTooltip="können beliebig viele sein"><i class="fa fa-info-circle"></i></span></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div *ngFor="let item of element.timespans">{{item.start}} - {{item.end}} ({{item.totalhours}} h)</div>
+        <span *ngIf="element.tooltip_timespans" matTooltip="{{element.tooltip_timespans}}"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalhours">
+      <mat-header-cell *matHeaderCellDef> totalhours </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.totalhours}} h
+        <span *ngIf="element.tooltip_totalhours" matTooltip="{{element.tooltip_totalhours}}"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
