@@ -5,11 +5,10 @@ import {IShiftSchedule, ShiftSchedule} from '@domain-models/shift-scheduling/shi
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
-import moment = require('moment');
 import {MonthSelector} from '@domain-models/shift-scheduling/month-selector';
 import {Employee, IEmployee} from '@domain-models/employee/employee';
 import {EmployeeService} from '@services/employee/employee.service';
-import {Moment} from 'moment';
+import * as moment from "moment";
 
 
 
