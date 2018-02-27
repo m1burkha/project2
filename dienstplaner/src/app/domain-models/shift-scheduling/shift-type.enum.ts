@@ -6,15 +6,17 @@ export enum ShiftType {
   /** type: working shift */
   workingShift = <any>'workingShift', // 0
   /** type: vacation day */
-  vacationDay = <any>'vactionDay', // 1
+  vacation = <any>'vacation', // 1
+  /** type: vacation day */
+  publicHoliday = <any>'publicHoliday', // 2
   /** type: sick leave */
-  sickLeave = <any>'sickLeave', // 2
+  sickLeave = <any>'sickLeave', // 3
   /** type: military */
-  military = <any>'military', // 3
+  military = <any>'military', // 4
   /** type: study leave */
-  studyLeave = <any>'studyleave', // 4
+  studyLeave = <any>'studyleave', // 5
   /** type: compensation */
-  compensation = <any>'compensation', // 5
+  compensation = <any>'compensation', // 6
   /** type: other */
-  other = <any>'other' // 6
+  other = <any>'other' // 7
 }
