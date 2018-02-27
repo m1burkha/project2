@@ -14,7 +14,7 @@ import {AddDialogComponent} from './add-dialog/add-dialog.component';
 })
 export class ShiftTemplateComponent implements OnInit {
   /** displayed columns */
-  displayedColumns: string[] = ['caption', 'type', 'timespans', 'totalhours'];
+  displayedColumns: string[] = ['caption', 'timespans', 'totalhours'];
   /** elements */
   dataSource: ShiftItem[];
 
