@@ -7,7 +7,7 @@ export interface IShiftSchedule {
   id: string;
   /** date */
   shiftDate: Date;
-  /** caption */
+  /** captionControl */
   caption: string;
   /** shift items */
   shiftItems: ShiftItem[];
@@ -18,14 +18,14 @@ export class ShiftSchedule implements IShiftSchedule {
   id: string;
   /** date */
   shiftDate: Date;
-  /** caption */
+  /** captionControl */
   caption: string;
   /** shift items */
   shiftItems: ShiftItem[];
 
   /**
    * creates a new shift scheduling item
-   * @param values arguments (id, shiftDate, caption, shiftItems[])
+   * @param values arguments (id, shiftDate, captionControl, shiftItems[])
    */
   constructor(values: any = null) {
     this.id = '';

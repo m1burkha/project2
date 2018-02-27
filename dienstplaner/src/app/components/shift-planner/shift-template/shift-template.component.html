@@ -1,1 +1,40 @@
-<dx-data-grid></dx-data-grid>
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="caption">
+      <mat-header-cell *matHeaderCellDef> caption</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.caption}}
+        <span *ngIf="element.tooltip_caption"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef> type </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.type}}
+        <span *ngIf="element.tooltip_type"><i class="fa fa-info-circle"></i></span></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="timespans">
+      <mat-header-cell *matHeaderCellDef> timespans </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div *ngFor="let item of element.timespans">{{item.start}} - {{item.end}} ({{item.totalhours}} h)</div>
+        <span *ngIf="element.tooltip_timespans"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalhours">
+      <mat-header-cell *matHeaderCellDef> totalhours </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.totalhours}}{{element.totalhours ? ' h' : ''}}
+        <span *ngIf="element.tooltip_totalhours"><i class="fa fa-info-circle"></i></span>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+  <div class="action">
+    <button mat-raised-button color="primary" (click)="addItem()">neues Element hinzufügen</button>
+  </div>
+</div>

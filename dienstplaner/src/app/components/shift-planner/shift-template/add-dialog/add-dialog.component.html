@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Element hinzufügen</h1>
+
+<form [formGroup]="form" (ngSubmit)="add()">
+  <div mat-dialog-content class="example-container">
+    <mat-form-field>
+      <input matInput placeholder="Bezeichnung" [formControl]="captionControl" required/>
+      <mat-error *ngIf="captionControl.invalid">{{getCaptionErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-content class="example-container">
+    <mat-form-field>
+      <mat-select placeholder="Art" [formControl]="typeControl" required>
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{ type.viewValue }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="typeControl.invalid">{{getTypeErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions class="button-container">
+    <button mat-raised-button type="button" (click)="onClick()">abbrechen</button>
+    <button mat-raised-button type="submit">hinzufügen</button>
+  </div>
+</form>

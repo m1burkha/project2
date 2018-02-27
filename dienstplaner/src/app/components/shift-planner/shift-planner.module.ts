@@ -9,11 +9,22 @@ import {RouterModule, Routes} from '@angular/router';
 import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
 import {ShiftItemComponent} from '@components/shift-planner/shift-item/shift-item.component';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
-import { ShiftTemplateComponent } from './shift-template/shift-template.component';
-import { ShiftTimeSpanComponent } from './shift-time-span/shift-time-span.component';
+import {ShiftTemplateComponent} from './shift-template/shift-template.component';
+import {ShiftTimeSpanComponent} from './shift-time-span/shift-time-span.component';
+import {
+  MatButton, MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule,
+  MatTooltipModule
+} from '@angular/material';
+import {ShiftItemsService} from '@services/shift-items/shift-items.service';
+import {AddDialogComponent} from './shift-template/add-dialog/add-dialog.component';
+import {RegisterDialogComponent} from "@components/register-dialog/register-dialog.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const plannerRoutes: Routes = [
   {path: '', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
+  {path: 'templates', component: ShiftTemplateComponent, canActivate: [LoginGuard]},
 ];
 
 @NgModule({
@@ -26,15 +37,28 @@ const plannerRoutes: Routes = [
     DxPopupModule,
     DxTextBoxModule,
     DxLookupModule,
+    MatTabsModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
     RouterModule.forChild(plannerRoutes)
   ],
   declarations: [
     ShiftScheduleComponent,
     ShiftItemComponent,
     ShiftTemplateComponent,
-    ShiftTimeSpanComponent
+    ShiftTimeSpanComponent,
+    AddDialogComponent
   ],
-  providers: [ShiftScheduleService, LoginGuard]
+  entryComponents: [AddDialogComponent],
+  providers: [ShiftScheduleService, ShiftItemsService, LoginGuard]
 })
 export class ShiftPlannerModule {
 }

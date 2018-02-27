@@ -4,7 +4,7 @@
 export interface IEmployee {
     /** id */
     id: string;
-    /** caption */
+    /** captionControl */
     caption: string;
     /** department */
     department: string;
@@ -22,7 +22,7 @@ export interface IEmployee {
 export class Employee implements IEmployee {
     /** id */
     id: string;
-    /** caption */
+    /** captionControl */
     caption: string;
     /** department */
     department: string;
@@ -35,7 +35,7 @@ export class Employee implements IEmployee {
 
     /**
      * creates a new employee
-     * @param values values (id, caption, department, weekHours, workLoad, vacationDays)
+     * @param values values (id, captionControl, department, weekHours, workLoad, vacationDays)
      */
     constructor(values: any = null) {
         this.id = '';
