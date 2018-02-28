@@ -1,4 +1,5 @@
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {Employee, IEmployee} from '@domain-models/employee/employee';
 
 /**
  * interface for the shift schedule */
@@ -7,10 +8,12 @@ export interface IShiftSchedule {
   id: string;
   /** date */
   shiftDate: Date;
-  /** caption */
-  caption: string;
-  /** shift items */
-  shiftItems: ShiftItem[];
+  /** shiftItem */
+  shiftItem: ShiftItem;
+  /** employee Id */
+  employeeId: string;
+  /** selectedShiftColumnOfEmployees */
+  selectedShiftColumnOfEmployees: string[];
 }
 
 export class ShiftSchedule implements IShiftSchedule {
@@ -18,10 +21,12 @@ export class ShiftSchedule implements IShiftSchedule {
   id: string;
   /** date */
   shiftDate: Date;
-  /** caption */
-  caption: string;
-  /** shift items */
-  shiftItems: ShiftItem[];
+  /** shiftItem */
+  shiftItem: ShiftItem;
+  /** employee Id */
+  employeeId: string;
+  /** selectedShiftColumnOfEmployees */
+  selectedShiftColumnOfEmployees: string[];
 
   /**
    * creates a new shift scheduling item

@@ -4,11 +4,11 @@ export interface ITimeSpan {
   /** id  */
   id: string;
   /** start time  */
-  startTime: Time;
+  startTime: string;
   /** end time  */
-  endTime: Time;
+  endTime: string;
   /** month */
-  month: string;
+  month: number;
   /** total hours  */
   totalHours: number;
 }
@@ -17,15 +17,16 @@ export class TimeSpan implements ITimeSpan {
   /** id  */
   id: string;
   /** start time  */
-  startTime: Time;
+  startTime: string;
   /** end time  */
-  endTime: Time;
+  endTime: string;
   /** total hours  */
   get totalHours(): number {
-    return (this.endTime.hours - this.startTime.hours) + (this.endTime.minutes - this.startTime.minutes) / 60;
+    // return (this.endTime.hours - this.startTime.hours) + (this.endTime.minutes - this.startTime.minutes) / 60;
+    return 0;
   }
-  /** month hours  */
-  month: string;
+  /** month */
+  month: number;
 
   /** create a new Timespan (constructor)
    * @param values (id, startTime, endTime, totalHours)

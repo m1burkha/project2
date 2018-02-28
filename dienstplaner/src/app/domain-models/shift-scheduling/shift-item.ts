@@ -13,8 +13,8 @@ export interface IShiftItem {
   totalHours: number;
   /** Enum ShiftType */
   type: ShiftType;
-  /** employee */
-  employeeId: string;
+  /** caption */
+  caption: string;
 }
 
 /** class for the ShiftItem */
@@ -23,6 +23,8 @@ export class ShiftItem implements IShiftItem {
   id: string;
   /** shift timespans */
   timeSpans: TimeSpan[];
+  /** caption */
+  caption: string;
 
   /** totalhours */
   get totalHours(): number {
@@ -33,9 +35,6 @@ export class ShiftItem implements IShiftItem {
 
   /** Enum ShiftType */
   type: ShiftType;
-
-  /** employee id */
-  employeeId: string;
 
   /** create a new shift item (constructor)
    * @param values (id, timeSpans[], totalHours, type (enum shiftType))
