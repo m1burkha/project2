@@ -30,7 +30,7 @@ export class ShiftSchedule implements IShiftSchedule {
 
   /**
    * creates a new shift scheduling item
-   * @param values arguments (id, shiftDate, caption, shiftItems[])
+   * @param values arguments (id, shiftDate, captionControl, shiftItems[])
    */
   constructor(values: any = null) {
     this.id = '';
