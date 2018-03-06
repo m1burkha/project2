@@ -1,7 +1,6 @@
 <dx-data-grid
         id="gridContainer"
         [dataSource]="employees | async"
-        <!--keyExpr="id"-->
         [allowColumnReordering]="true"
         (onRowInserting)="insert($event)"
         (onRowUpdating)="update($event)"
