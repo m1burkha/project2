@@ -68,7 +68,7 @@ const plannerRoutes: Routes = [
     AddDialogComponent
   ],
   entryComponents: [AddDialogComponent],
-  providers: [ShiftScheduleService, ShiftItemsService, LoginGuard]
+  providers: [ShiftScheduleService, ShiftItemsService, LoginGuard],
   exports: [RouterModule],
 })
 export class ShiftPlannerModule {
