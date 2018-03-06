@@ -1,7 +1,7 @@
 <dx-data-grid
         id="gridContainer"
         [dataSource]="employees | async"
-        keyExpr="id"
+        <!--keyExpr="id"-->
         [allowColumnReordering]="true"
         (onRowInserting)="insert($event)"
         (onRowUpdating)="update($event)"
@@ -22,3 +22,4 @@
   <dxi-column dataField="workLoad" caption="Pensum"></dxi-column>
   <dxi-column dataField="vacationDays" caption="Urlaubstage"></dxi-column>
 </dx-data-grid>
+

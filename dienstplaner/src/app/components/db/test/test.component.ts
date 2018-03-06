@@ -6,6 +6,7 @@ import {UserService} from '@services/user/user.service';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {IShiftItem, ShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 
 
 class TestItem {
@@ -91,11 +92,13 @@ export class TestComponent implements OnInit {
   }
 
   createShiftScheduling() {
-    const ss: IShiftSchedule = {id: '', shiftDate: new Date('12.12.2018'), caption: 'Frühschicht', shiftItems: []};
-    this.shiftSchedulingService.create(ss).then(e => {
-      console.log('document reference', e);
-      console.log('id', e.id);
-      ss.caption = e.id;
-    });
-  }
+        const shiftItem = Object.assign(ShiftItem.prototype);
+        // shiftItem.type = ShiftType.workingShift;
+        // const ss: IShiftSchedule = {id: '', shiftDate: new Date('12.12.2018'), shiftItem};
+        // this.shiftSchedulingService.create(ss).then(e => {
+        //     console.log('document reference', e);
+        //     console.log('id', e.id);
+        //     ss.shiftItem.id = e.id;
+        // });
+    }
 }
