@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ShiftType} from "@domain-models/shift-scheduling/shift-type.enum";
-import {ShiftItem} from "@domain-models/shift-scheduling/shift-item";
+import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
+import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 
 /**
  * add dialog
@@ -25,7 +25,7 @@ export class AddDialogComponent {
     {value: ShiftType.military, viewValue: 'Militär'},
     {value: ShiftType.sickLeave, viewValue: 'Krankheit'},
     {value: ShiftType.studyLeave, viewValue: 'Aus- & Weiterbildung'},
-    {value: ShiftType.vacationDay, viewValue: 'Urlaub'},
+    {value: ShiftType.vacation, viewValue: 'Urlaub'},
     {value: ShiftType.other, viewValue: 'Andere'},
     {value: ShiftType.workingShift, viewValue: 'Arbeitszeit'},
   ];
@@ -69,7 +69,7 @@ export class AddDialogComponent {
    * adds item
    */
   add(): void {
-    this.dialogRef.close(new ShiftItem({ type: this.typeControl.value, caption: this.captionControl.value}));
+    this.dialogRef.close(new ShiftItem({type: this.typeControl.value, caption: this.captionControl.value}));
   }
 
   /**
