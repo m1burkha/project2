@@ -9,11 +9,11 @@ export interface IShiftSchedule {
   /** date */
   shiftDate: Date;
   /** shiftItem */
-  shiftItem: ShiftItem;
+//  shiftItem: ShiftItem;
   /** employee Id */
-  employeeId: string;
+//   employeeId: string;
   /** selectedShiftColumnOfEmployees */
-  selectedShiftColumnOfEmployees: string[];
+  selectedShiftColumnOfEmployees: any[];
 }
 
 export class ShiftSchedule implements IShiftSchedule {
@@ -22,11 +22,11 @@ export class ShiftSchedule implements IShiftSchedule {
   /** date */
   shiftDate: Date;
   /** shiftItem */
-  shiftItem: ShiftItem;
+  // shiftItem: ShiftItem;
   /** employee Id */
-  employeeId: string;
+//   employeeId: string;
   /** selectedShiftColumnOfEmployees */
-  selectedShiftColumnOfEmployees: string[];
+  selectedShiftColumnOfEmployees: any[];
 
   /**
    * creates a new shift scheduling item

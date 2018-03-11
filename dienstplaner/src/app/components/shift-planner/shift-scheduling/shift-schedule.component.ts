@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {DxDataGridComponent} from 'devextreme-angular';
 import {IShiftSchedule, ShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
@@ -14,9 +14,11 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/reduce';
 import {Router} from '@angular/router';
-import DevExpress from 'devextreme/bundles/dx.all';
+import {ShiftItemsService} from '@services/shift-items/shift-items.service';
+import {zip} from 'rxjs/observable/zip';
 
-const mySource: ShiftItem[] = [
+
+const myTemplates: ShiftItem[] = [
   {
     'id': '10', 'caption': 'WorkingShift', 'type': ShiftType.workingShift, 'timeSpans': [
       {'id': '1', 'startTime': '07:00', 'endTime': '11:30', 'totalHours': 4.5, 'month': 2},
@@ -26,16 +28,15 @@ const mySource: ShiftItem[] = [
   {
     'id': '20', 'caption': 'Other', 'type': ShiftType.other, 'timeSpans': [
       {'id': '3', 'startTime': '09:00', 'endTime': '12:30', 'totalHours': 3.5, 'month': 2},
-      {'id': '4', 'startTime': '13:30', 'endTime': '18:30', 'totalHours': 5, 'month': 2},
-    ], 'totalHours': 8.5
+      {'id': '4', 'startTime': '13:30', 'endTime': '18:30', 'totalHours': 2, 'month': 2},
+    ], 'totalHours': 5.5
   },
   {
     'id': '50',
-    'caption': 'Compensation',
+    'caption': 'compensation',
     'type': ShiftType.compensation,
     'timeSpans': [],
-    'totalHours': 8.5,
-    // tooltip_totalHours: 'benötigt Stunden, da diese als Soll-Stunden hinzugefügt werden'
+    'totalHours': 3,
   },
   {
     'id': '60',
@@ -43,112 +44,67 @@ const mySource: ShiftItem[] = [
     'type': ShiftType.sickLeave,
     'timeSpans': [],
     'totalHours': 8.5,
-    // tooltip_totalHours: 'benötigt Stunden, da diese als Ist-Stunden abgezogen werden'
   }
 ];
-
-// const schedules = Observable.from([
-//   {
-//     id: 'a',
-//     shiftDate: moment({month: 1, day: 12, year: 2018}).toDate(),
-//     employees: [
-//       {id: '1FU8y4kVr6AQ8yP6vRX4', caption: 'Larry 1', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       //   {id: '5MY69SV5cFEorxeGqtEa', caption: 'Dirty Harry', department: 'Finance', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       //   {id: '9kTDXHvzJoPHnBT6H0R7', caption: 'Silver White', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14}
-//     ],
-//     shiftItem: {
-//       id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-//         {id: '1', startTime: '07:00', endTime: '11:30', totalHours: 4.5, month: 2},
-//         {id: '2', startTime: '12:30', endTime: '16:30', totalHours: 4, month: 2},
-//       ], totalHours: 8.5
-//     }
-//   },
-//   {
-//     id: 'b', shiftDate: moment(moment(), 'L').day(10).toDate(),
-//     employees: [{id: '1FU8y4kVr6AQ8yP6vRX4', caption: 'Larry 1', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       {id: '5MY69SV5cFEorxeGqtEa', caption: 'Dirty Harry', department: 'Finance', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       {id: '9kTDXHvzJoPHnBT6H0R7', caption: 'Silver White', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14}],
-//     shiftItem: {
-//       id: '20', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-//         {id: '3', startTime: '09:00', endTime: '12:30', totalHours: 3.5, month: 2},
-//         {id: '4', startTime: '13:30', endTime: '18:30', totalHours: 5, month: 2},
-//       ], totalHours: 8.5
-//     }
-//   },
-//   {
-//     id: 'c', shiftDate: moment({month: 5, day: 12, year: 2018}).toDate(),
-//     employees: [{id: '1FU8y4kVr6AQ8yP6vRX4', caption: 'Larry 1', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       {id: '5MY69SV5cFEorxeGqtEa', caption: 'Dirty Harry', department: 'Finance', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       {id: '9kTDXHvzJoPHnBT6H0R7', caption: 'Silver White', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14}],
-//     shiftItem: {
-//       id: '30', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-//         {id: '5', startTime: '08:00', endTime: '12:00', totalHours: 4, month: 2},
-//         {id: '6', startTime: '13:00', endTime: '17:00', totalHours: 4.5, month: 2},
-//       ], totalHours: 8.5
-//     }
-//   },
-//   {
-//     id: 'd', shiftDate: moment({month: 6, day: 19, year: 2018}).toDate(),
-//     employees: [{id: '1FU8y4kVr6AQ8yP6vRX4', caption: 'Larry 1', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       {id: '5MY69SV5cFEorxeGqtEa', caption: 'Dirty Harry', department: 'Finance', weekHours: 12, workLoad: 100, vacationDays: 14},
-//       {id: '9kTDXHvzJoPHnBT6H0R7', caption: 'Silver White', department: 'IT', weekHours: 12, workLoad: 100, vacationDays: 14}],
-//     shiftItem: {
-//       id: '40', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-//         {id: '7', startTime: '07:00', endTime: '11:00', totalHours: 4, month: 2},
-//         {id: '8', startTime: '12:00', endTime: '15:00', totalHours: 3, month: 2},
-//       ], totalHours: 7
-//     }
-//   },
-// ]);
-
-
-const schedules = Observable.from([
+const shedules: ShiftSchedule[] = [
   {
     id: 'a',
-    shiftDate: moment({month: 1, day: 12, year: 2018}).toDate(),
-    employeeId: '1FU8y4kVr6AQ8yP6vRX4',
-    selectedShiftColumnOfEmployees: [],
-    shiftItem: {
-      id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-        {id: '1', startTime: '07:00', endTime: '11:30', totalHours: 4.5, month: 2},
-        {id: '2', startTime: '12:30', endTime: '16:30', totalHours: 4, month: 2},
-      ], totalHours: 8.5
-    }
+    shiftDate: moment({month: 2, day: 12, year: 2018}).toDate(),
+    // employeeId: '1FU8y4kVr6AQ8yP6vRX4',
+    selectedShiftColumnOfEmployees: [{
+      columnId: '1FU8y4kVr6AQ8yP6vRX4',
+      columnCaption: 'Harry Hasler',
+      shiftItem: {
+        id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
+          {id: '1', startTime: '07:00', endTime: '11:30', totalHours: 4.5, month: 2},
+          {id: '2', startTime: '12:30', endTime: '16:30', totalHours: 4, month: 2},
+        ], totalHours: 8.5
+      }
+    }],
   },
   {
-    id: 'b', shiftDate: moment(moment(), 'L').day(10).toDate(),
-    employeeId: '5MY69SV5cFEorxeGqtEa',
-    selectedShiftColumnOfEmployees: [],
-    shiftItem: {
-      id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-        {id: '3', startTime: '09:00', endTime: '12:30', totalHours: 3, month: 2},
-        {id: '4', startTime: '13:30', endTime: '18:30', totalHours: 2.5, month: 2},
-      ], totalHours: 5.5
-    }
+    id: 'b',
+    shiftDate: moment(moment(), 'L').day(10).toDate(),
+    // employeeId: '5MY69SV5cFEorxeGqtEa',
+    selectedShiftColumnOfEmployees: [{
+      columnId: '5MY69SV5cFEorxeGqtEa',
+      columnCaption: 'Marco Polo',
+      shiftItem: {
+        id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
+          {id: '3', startTime: '09:00', endTime: '12:30', totalHours: 3, month: 2},
+          {id: '4', startTime: '13:30', endTime: '18:30', totalHours: 2.5, month: 2},
+        ], totalHours: 5.5
+      }
+    }],
   },
   {
-    id: 'c', shiftDate: moment({month: 1, day: 14, year: 2018}).toDate(),
-    employeeId: '9kTDXHvzJoPHnBT6H0R7',
-    selectedShiftColumnOfEmployees: [],
-    shiftItem: {
-      id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-        {id: '5', startTime: '08:00', endTime: '12:00', totalHours: 2, month: 2},
-        {id: '6', startTime: '13:00', endTime: '17:00', totalHours: 2.5, month: 2},
-      ], totalHours: 4.5
-    }
+    id: 'c', shiftDate: moment({month: 2, day: 14, year: 2018}).toDate(),
+    // employeeId: '9kTDXHvzJoPHnBT6H0R7',
+    selectedShiftColumnOfEmployees: [{
+      columnId: '9kTDXHvzJoPHnBT6H0R7',
+      columnCaption: 'Kollege Essig',
+      shiftItem: {
+        id: '10', caption: 'vacation', type: ShiftType.vacation, timeSpans: [
+          {id: '5', startTime: '08:00', endTime: '12:00', totalHours: 2, month: 2},
+          {id: '6', startTime: '13:00', endTime: '17:00', totalHours: 2.5, month: 2},
+        ], totalHours: 4.5
+      }
+    }]
   },
   {
     id: 'd', shiftDate: moment({month: 6, day: 19, year: 2018}).toDate(),
-    employeeId: '5MY69SV5cFEorxeGqtEa',
-    selectedShiftColumnOfEmployees: [],
-    shiftItem: {
-      id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
-        {id: '7', startTime: '07:00', endTime: '11:00', totalHours: 4, month: 2},
-        {id: '8', startTime: '12:00', endTime: '15:00', totalHours: 3, month: 2},
-      ], totalHours: 7
-    }
-  },
-]);
+    // employeeId: '5MY69SV5cFEorxeGqtEa',
+    selectedShiftColumnOfEmployees: [{
+      columnId: '5MY69SV5cFEorxeGqtEa',
+      columnCaption: 'Markus Peterer',
+      shiftItem: {
+        id: '10', caption: 'WorkingShift', type: ShiftType.workingShift, timeSpans: [
+          {id: '7', startTime: '07:00', endTime: '11:00', totalHours: 4, month: 2},
+          {id: '8', startTime: '12:00', endTime: '15:00', totalHours: 3, month: 2},
+        ], totalHours: 7
+      }
+    }]
+  }];
 
 
 @Component({
@@ -158,16 +114,13 @@ const schedules = Observable.from([
 })
 export class ShiftScheduleComponent implements OnInit {
 
-  sheduleList: Observable<IShiftSchedule[]>;
+  sheduleDataSource: ShiftSchedule[] = [];
   totalCount: number;
-  shiftItems: ShiftItem[] = [];
+  shiftItems: ShiftItem[];
   months: string[];
-  month: number;
   monthName: string;
-  year: number;
-  daysOfMonth: number;
   employees: Employee[] = [];
-  templates: ShiftItem[];
+  shiftTemplates: ShiftItem[];
   totalEmployees: number;
 
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
@@ -180,19 +133,25 @@ export class ShiftScheduleComponent implements OnInit {
    */
   constructor(private scheduleService: ShiftScheduleService,
               private employeeService: EmployeeService,
+              private shiftTemplateService: ShiftItemsService,
               private router: Router) {
-    // this.setShiftValue = this.setShiftValue.bind(this);
   }
 
   /** Initialise the shift schedule component variables / instances */
   ngOnInit() {
     this.months = moment.months();
-    this.month = moment().month(); // current month
-    this.monthName = this.months[this.month]; // current month by name
-    this.daysOfMonth = this.getDaysForMonth(this.monthName);
-    this.year = moment().year(); // current year
-    this.templates = mySource;
-    this.sheduleList = this.createMonthlyShifts(this.month);
+    const complete = zip(
+      this.shiftTemplateService.readAll(),
+      this.employeeService.readAll())
+      .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
+        this.shiftTemplates = myTemplates;
+        this.employees = employees;
+        this.totalEmployees = this.employees.length;
+      })
+      .subscribe(x => {
+        this.createDefaultShifts(moment().month());
+        this.populateDatagridWithData(moment().month());
+      });
   }
 
   /**
@@ -200,9 +159,9 @@ export class ShiftScheduleComponent implements OnInit {
    * @param event , the selected month
    */
   filterMonthSelection(event): void {
-    this.daysOfMonth = this.getDaysForMonth(event.value);
-    this.month = this.getMonthIndex(event.value);
-    this.sheduleList = this.createMonthlyShifts(this.month);
+    // this.daysOfMonth = this.getDaysForMonth(event.value);
+    const selectedMonth = this.months.findIndex(month => month === event.value);
+    this.createDefaultShifts(selectedMonth);
   }
 
   /**
@@ -211,39 +170,55 @@ export class ShiftScheduleComponent implements OnInit {
    * @param month
    * @returns {Observable<IShiftSchedule[]>}
    */
-  createMonthlyShifts(month: any): Observable<IShiftSchedule[]> {
-
-    const shifts: any[] = [];
-    this.employeeService.readAll().forEach(emp => {
-      this.employees = emp;
-      this.totalEmployees = emp.length;
-    });
-
-    if (month) {
-      const monthIndex = (typeof month === 'number') ? month : this.months.indexOf(month);
-      //  return this.scheduleService.readAll().reduce((acc, item) => {
-      return schedules.reduce((acc, item) => {
-        if (item.shiftDate.getMonth() === month) {
-          acc.push(item);
-        }
-        return acc;
-      }, [])
-        .switchMap(monthlyShift => {
-          if (monthlyShift.length >= 28 && monthlyShift.length <= 31) {
-            return Observable.of(monthlyShift);
-          }
-          for (let i = 1; i < this.daysOfMonth + 1; i++) {
-            const schedule = new ShiftSchedule();
-            schedule.id = `${month}.${this.year}`;
-            schedule.shiftDate = moment({day: i, month: month, year: this.year}).toDate();
-            schedule.shiftItem = new ShiftItem();
-            schedule.selectedShiftColumnOfEmployees = [];
-            shifts.push(schedule);
-          }
-          return Observable.of(shifts);
-        });
+  createDefaultShifts(monthIndex: number): void {
+    const shifts: ShiftSchedule[] = [];
+    // populate the datagrid with default values
+    for (let i = 1; i < moment().month(monthIndex).daysInMonth() + 1; i++) {
+      const scheduleRow = new ShiftSchedule();
+      scheduleRow.id = `${monthIndex}.${moment().year()}`;
+      scheduleRow.shiftDate = moment({day: i, month: monthIndex, year: moment().year()}).toDate();
+      scheduleRow.selectedShiftColumnOfEmployees = [];
+      this.employees.map(employee => {
+        const row = {
+          columnCaption: employee.caption,
+          columnId: employee.id,
+          shiftItem: new ShiftItem({id: 0, caption: 'Select Shifts', type: ShiftType.workingShift}) // default shiftItem value
+        };
+        scheduleRow.selectedShiftColumnOfEmployees.push(row);
+      });
+      shifts.push(scheduleRow);
     }
+    this.sheduleDataSource = shifts;
   }
+
+  populateDatagridWithData(monthIndex): void {
+
+    shedules.map(shedule => {
+      const currentRow = this.sheduleDataSource.find(row => {
+        return row.shiftDate.getDay() === shedule.shiftDate.getDay();
+      });
+      const index = currentRow && currentRow.selectedShiftColumnOfEmployees.findIndex(
+        columnIndex => columnIndex.columnId === shedule.selectedShiftColumnOfEmployees[0].columnId);
+      if (index !== -1) {
+        currentRow.selectedShiftColumnOfEmployees[index].shiftItem = shedule.selectedShiftColumnOfEmployees[0].shiftItem;
+      }
+    });
+    // uncomment to use
+    // this.scheduleService.readAll().subscribe((monthlylist: ShiftSchedule[]) => {
+    //   monthlylist.filter(shedule => shedule.shiftDate.getMonth() === monthIndex)
+    //     .map(monthShedule => {
+    //       const currentRow = this.sheduleDataSource.find(row => {
+    //         return row.shiftDate.getDay() === monthShedule.shiftDate.getDay();
+    //       });
+    //       const index = currentRow && currentRow.selectedShiftColumnOfEmployees.findIndex(
+    //         columnIndex => columnIndex.columnId === monthShedule.selectedShiftColumnOfEmployees[0].columnId);
+    //       if (index !== -1) {
+    //         currentRow.selectedShiftColumnOfEmployees[index].shiftItem = monthShedule.selectedShiftColumnOfEmployees[0].shiftItem;
+    //       }
+    //     });
+    // });
+  }
+
 
   onPrepareShiftsForSave(event) {
     console.log('save row event', event);
@@ -257,7 +232,7 @@ export class ShiftScheduleComponent implements OnInit {
    */
   onSetCellValue(rowData: any, value: any): void {
     (<any>this).defaultSetCellValue(rowData, value);
-    // this.defaultSetCellValue(rowData, value);
+// this.defaultSetCellValue(rowData, value);
   }
 
   /**
@@ -266,29 +241,34 @@ export class ShiftScheduleComponent implements OnInit {
    */
   onShiftChangeEvent(evt: any): void {
     evt.editorOptions.onValueChanged = (e: any) => {
-      console.log('valueChanged', e);
-      const selectedEmp = evt.row.data.selectedShiftColumnOfEmployees.find(emp => emp === evt.dataField);
-      if (!selectedEmp) {
-        evt.row.data.selectedShiftColumnOfEmployees.push(evt.dataField);
+      const shiftValue = evt.row.data.selectedShiftColumnOfEmployees.find(shift => shift.columnId === evt.dataField);
+      const shiftTemplate = this.shiftTemplates.find(template => template.id === e.value);
+      if (shiftValue) {
+        shiftValue.shiftItem = shiftTemplate;
       }
-      evt.row.data.employeeId = evt.dataField;
-      const shift = this.templates.find(template => {
-        return template.id === e.value;
-      });
-      evt.row.data.shiftItem = shift;
-      evt.row.cells[evt.index].value = e.value;
-      evt.row.cells[evt.index].text = shift.caption;
-      evt.setValue(e.value, shift.caption);
+      evt.setValue(e.value);
+      this.dataGrid.instance.refresh();
     };
   }
 
   setCellFromDatasource(rowData) {
     const column = this as any;
+
     if (column.dataField === rowData.employeeId) {
       if (rowData.selectedShiftColumnOfEmployees.indexOf(column.dataField) === -1) {
-        rowData.selectedShiftColumnOfEmployees.push(column.dataField);
+        rowData.selectedShiftColumnOfEmployees.push({empId: column.dataField, shift: rowData.shiftItem});
       }
+      // column.setCellValue(rowData, rowData.shiftItem.caption);
+      column.setCellValue(rowData);
       return rowData.shiftItem.caption;
+    } else {
+      // return null;
+      // const cell1 = column.lookup.dataSource.find(cell => cell.caption === rowData.shiftItem.caption).caption;
+
+      // return cell;
+      // return rowData.shiftItem.caption;
+      // const cell = rowData.selectedShiftColumnOfEmployees.find(col => col === column.dataField);
+      // return cell !== undefined ? rowData.shiftItem.caption : '';
     }
   }
 
@@ -299,104 +279,69 @@ export class ShiftScheduleComponent implements OnInit {
    * @param options
    */
   calculateAllTotals(options) {
-    let sum = 0;
-    // console.log(options);
-    // if (options.component._options.summary.totalItems.findIndex(obj => obj.column === options.name) > 0) {
     const totalItemName = options.name.split(':');
     const summaryItems = options.component._options.summary.totalItems;
     const column = summaryItems.find(item => item.name === options.name).column;
-
     switch (totalItemName[0]) {
 
       case 'totalhours':
-        if (options.summaryProcess === 'start') {
+
+        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
           options.totalValue = 0;
         }
 
-        if (options.summaryProcess === 'calculate') { // currently not working
-          console.log('calculate');
-          sum = options.component._options.dataSource.reduce((acc, value) => {
-            if (value.selectedShiftColumnOfEmployees &&
-              value.selectedShiftColumnOfEmployees.findIndex(calcColumn => calcColumn === column) !== -1) {
-              acc = acc + value.shiftItem.totalHours;
-            }
-            return acc;
-          }, 0);
-        }
+        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
 
-        if (options.summaryProcess === 'finalize') {
-          sum = options.component._options.dataSource.reduce((acc, value) => {
-            if (value.selectedShiftColumnOfEmployees &&
-              value.selectedShiftColumnOfEmployees.findIndex(calcColumn => calcColumn === column) !== -1) {
-              acc = acc + value.shiftItem.totalHours;
+          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
+            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.columnId === column);
+            if (columnValue) {
+              acc = acc + columnValue.shiftItem.totalHours;
             }
             return acc;
           }, 0);
-          options.totalValue = sum;
         }
         break;
 
       case 'total-public-holidays':
 
-        if (options.summaryProcess === 'start') {
+        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
           options.totalValue = 0;
         }
 
-        if (options.summaryProcess === 'finalize') {
-          sum = options.component._options.dataSource.reduce((acc, value) => {
-            if (value.selectedShiftColumnOfEmployees &&
-              value.selectedShiftColumnOfEmployees.findIndex(calcColumn => calcColumn === column) !== -1 &&
-              value.shiftItem.type === ShiftType.publicHoliday) {
-              acc = acc + value.shiftItem.totalHours;
+        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
+
+          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
+            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.columnId === column);
+            if (columnValue && columnValue.shiftItem.type === ShiftType.publicHoliday) {
+              acc = acc + columnValue.shiftItem.totalHours;
             }
             return acc;
           }, 0);
-          options.totalValue = sum;
+
         }
         break;
 
       case 'totalholidays':
 
-        if (options.summaryProcess === 'start') {
+        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
           options.totalValue = 0;
         }
 
-        if (options.summaryProcess === 'finalize') {
-          sum = options.component._options.dataSource.reduce((acc, value) => {
-            if (value.selectedShiftColumnOfEmployees &&
-              value.selectedShiftColumnOfEmployees.findIndex(calcColumn => calcColumn === column) !== -1 &&
-              value.shiftItem.type === ShiftType.vacation) {
-              acc = acc + value.shiftItem.totalHours;
+        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
+
+          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
+            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.columnId === column);
+            if (columnValue && columnValue.shiftItem.type === ShiftType.vacation) {
+              acc = acc + columnValue.shiftItem.totalHours;
             }
             return acc;
           }, 0);
-          options.totalValue = sum;
         }
         break;
 
       default:
         options.totalValue = 0;
     }
-  }
-
-
-  /**
-   * Get the number of days for the month
-   * @param {string} month
-   * @returns {number}
-   */
-  getDaysForMonth(month: string): number {
-    const index = this.months.indexOf(month);
-    return moment({month: index}).daysInMonth();
-  }
-
-  /**
-   * Get the month index, 0,1,2,3,4... for the month
-   * @param {string} month
-   * @returns {number}
-   */
-  getMonthIndex(month: string): number {
-    return this.months.indexOf(month);
   }
 
   /** refresh the current schedule datagrid */
@@ -455,3 +400,37 @@ export class ShiftScheduleComponent implements OnInit {
     });
   }
 }
+
+// if (options.summaryProcess === 'calculate' && column === totalItemName[1]) {
+//   console.log('calculate');
+// }
+
+
+//  return this.scheduleService.readAll().reduce((acc, item) => {
+// const tmp = schedules.reduce((row, shiftItem) => {
+//   if (shiftItem.shiftDate.getMonth() === month) {
+//     row.push(shiftItem);
+//   }
+//   return row;
+// }, [])
+//   .switchMap(monthlyShiftList => {
+// if (monthlyShift.length >= 0 && monthlyShift.length <= 31) {
+//   return Observable.of(monthlyShift);
+// }
+
+// evt.row.cells[evt.index].value = e.value;
+// evt.row.cells[evt.index].displayValue = shift.caption;
+// evt.row.cells[evt.index].text = shift.caption;
+// evt.row.cells[evt.index].values[evt.index] = shift.caption;
+// evt.editorOptions.value = shift.caption;
+
+// const shift = this.shiftTemplates.find(template => {
+//   return template.id === e.value;
+// });
+// const selectedEmp = evt.row.data.selectedShiftColumnOfEmployees.find(emp => emp === evt.dataField);
+// if (!selectedEmp) {
+//   evt.row.data.selectedShiftColumnOfEmployees.push({empId: evt.dataField, shift: shift});
+// }
+// evt.row.data.employeeId = evt.dataField;
+// evt.row.data.shiftItem = shift;
+

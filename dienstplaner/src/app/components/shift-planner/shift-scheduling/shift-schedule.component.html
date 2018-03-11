@@ -3,15 +3,16 @@
 <dx-select-box id="select-month"
                [dataSource]="months"
                placeholder="Select Month"
-               [value]="monthName"
+               [value]="2"
                (onValueChanged)="filterMonthSelection($event)">
 </dx-select-box>
 <dx-data-grid
   id="gridContainer"
-  [dataSource]="sheduleList | async"
+  [dataSource]="sheduleDataSource"
   [allowColumnReordering]="true"
   [allowColumnResizing]="true"
   [columnAutoWidth]="true"
+  (onRowUpdating)="onPrepareShiftsForSave($event)"
   (onEditorPreparing)="onShiftChangeEvent($event)"
   (onToolbarPreparing)="onToolbarPreparing($event)">
   <!--<dxo-selection-->
@@ -26,12 +27,10 @@
   <dxo-paging [enabled]="false"></dxo-paging>
   <dxi-column dataField="id"></dxi-column>
   <dxi-column dataField="shiftDate" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
-  <div *ngFor="let employee of employees">
-    <dxi-column dataField="{{employee.id}}" caption="{{employee.caption}}" [calculateDisplayValue]="setCellFromDatasource" [setCellValue]="onSetCellValue">
-      <!--<dxi-column dataField="a" datatype="shiftitem" caption="Shifts">-->
-      <dxo-lookup [dataSource]="templates" displayExpr="caption" valueExpr="id"></dxo-lookup>
-    </dxi-column>
-    <!--</dxi-column>-->
+  <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
+     <dxi-column dataField="{{column.columnId}}" caption="{{column.columnCaption}}"  datatype="ShiftItem">
+        <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
+     </dxi-column>
   </div>
   <dxo-summary [calculateCustomSummary]="calculateAllTotals">
     <dxi-total-item
@@ -91,5 +90,8 @@
       <option value=""></option>
     </select>
   </div>
-
 </dx-data-grid>
+
+<!--[calculateDisplayValue]="setCellFromDatasource" -->
+<!--sheduleDataSource[i].selectedShiftColumnOfEmployees; index as i-->
+<!--[setCellValue]="onSetCellValue"-->
