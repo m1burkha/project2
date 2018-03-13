@@ -1,9 +1,9 @@
 <div class="dashboard">top dashboard</div>
 
-<dx-select-box id="select-month"
+<dx-select-box #selectMonthRef
+               id="select-month"
                [dataSource]="months"
                placeholder="Select Month"
-               [value]="2"
                (onValueChanged)="filterMonthSelection($event)">
 </dx-select-box>
 <dx-data-grid
@@ -26,9 +26,9 @@
   <dxo-editing mode="batch" [allowUpdating]="true"></dxo-editing>
   <dxo-paging [enabled]="false"></dxo-paging>
   <dxi-column dataField="id"></dxi-column>
-  <dxi-column dataField="shiftDate" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
+  <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
   <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
-     <dxi-column dataField="{{column.columnId}}" caption="{{column.columnCaption}}"  datatype="ShiftItem">
+     <dxi-column dataField="{{column.columnEmployeeId}}" caption="{{column.columnEmployeeCaption}}"  datatype="ShiftItem">
         <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
      </dxi-column>
   </div>
@@ -77,18 +77,11 @@
     </div>
   </dxo-summary>
 
-
   <div *dxTemplate="let data of 'totalGroupCount'">
     <div class="informer">
       <h2 class="count">{{totalEmployees}}</h2>
       <span class="name">Mitarbeiter</span>
     </div>
-  </div>
-
-  <div *dxTemplate="let shiftItem of 'selectedShiftItem'">
-    <select data-options="templates" name="templates">
-      <option value=""></option>
-    </select>
   </div>
 </dx-data-grid>
 
