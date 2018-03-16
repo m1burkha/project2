@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {DxDataGridComponent, DxSelectBoxComponent} from 'devextreme-angular';
-import {IShiftSchedule, ShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
+import {ShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
@@ -147,20 +146,19 @@ export class ShiftScheduleComponent implements OnInit {
   /** Initialise the shift schedule component variables / instances */
   ngOnInit() {
     this.months = moment.months();
-    this.selectedMonth = moment().month(); // current for the month selection by startup
+    this.selectedMonth = moment().month(); // current month for selection by startup
     this.selectMonthRef.value = this.months[this.selectedMonth];
     const complete = zip(
       this.shiftTemplateService.readAll(),
       this.employeeService.readAll())
       .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
-        this.shiftTemplates = myTemplates;
+        this.shiftTemplates = myTemplates; // templates
         this.employees = employees;
         this.totalEmployees = this.employees.length;
       })
       .subscribe(x => {
         this.createDefaultShifts(moment().month());
-        this.populateDatagridWithData(moment().month());
-        // this.dataGrid.instance.repaintRows([0,1]);
+        this.refreshDataGrid();
       });
   }
 
@@ -169,11 +167,9 @@ export class ShiftScheduleComponent implements OnInit {
    * @param event , the selected month
    */
   filterMonthSelection(event): void {
-    // this.daysOfMonth = this.getDaysForMonth(event.value);
     this.selectedMonth = this.months.findIndex(month => month === event.value);
     event.value = this.months[this.selectedMonth];
     this.createDefaultShifts(this.selectedMonth);
-    this.populateDatagridWithData(this.selectedMonth);
   }
 
   /**
@@ -200,52 +196,46 @@ export class ShiftScheduleComponent implements OnInit {
       });
       shifts.push(scheduleRow);
     }
-    this.sheduleDataSource = shifts;
+    this.populateDatagridWithData(monthIndex, shifts);
   }
 
   /**
    * Retrieve data from the DB, filter to the chosen month and populate the datagrid
    * @param monthIndex
    */
-  populateDatagridWithData(monthIndex): void {
+  populateDatagridWithData(monthIndex: number, shifts: ShiftSchedule[]): void {
     // test data
-    shedules.map(shedule => {
-      const currentRow = this.sheduleDataSource.find(row => {
-        return row.date.getDay() === shedule.date.getDay();
-      });
-      const index = currentRow && currentRow.selectedShiftColumnOfEmployees.findIndex(
-        columnIndex => columnIndex.columnEmployeeId === shedule.selectedShiftColumnOfEmployees[0].columnEmployeeId);
-      if (index !== -1) {
-        currentRow.selectedShiftColumnOfEmployees[index].shiftItem = shedule.selectedShiftColumnOfEmployees[0].shiftItem;
-      }
-    });
-
-    this.scheduleService.readAll().subscribe((monthlylist: ShiftSchedule[]) => {
-      console.log('monthlylist', monthlylist);
-      const list = monthlylist.filter(shedule => new Date(shedule.date).getMonth() === monthIndex)
-          .map(monthShedule => {
-            return this.sheduleDataSource.find(row => {
-              return row.date.getDay() === new Date(monthShedule.date).getDay();
-            });
-          });
-      console.log('list', list);
-    });
-
-    // uncomment to use backend service
-    // this.scheduleService.readAll().subscribe((monthlylist: ShiftSchedule[]) => {
-    //   monthlylist.filter(shedule => new Date(shedule.date).getMonth() === monthIndex)
-    //     .map(monthShedule => {
-    //       const currentRow = this.sheduleDataSource.find(row => {
-    //         return row.date.getDay() === monthShedule.date.getDay();
-    //       });
-    //       const index = currentRow && currentRow.selectedShiftColumnOfEmployees.findIndex(
-    //         columnIndex => columnIndex.columnEmployeeId === monthShedule.selectedShiftColumnOfEmployees[0].columnEmployeeId);
-    //       if (index !== -1) {
-    //         currentRow.selectedShiftColumnOfEmployees[index].shiftItem = monthShedule.selectedShiftColumnOfEmployees[0].shiftItem;
-    //       }
-    //     });
+    // shedules.map(shedule => {
+    //   const currentRow = this.sheduleDataSource.find(row => {
+    //     return row.date.getDate() === shedule.date.getDate();
+    //   });
+    //   const index = currentRow && currentRow.selectedShiftColumnOfEmployees.findIndex(
+    //     columnIndex => columnIndex.columnEmployeeId === shedule.selectedShiftColumnOfEmployees[0].columnEmployeeId);
+    //   if (index !== -1) {
+    //     currentRow.selectedShiftColumnOfEmployees[index].shiftItem = shedule.selectedShiftColumnOfEmployees[0].shiftItem;
+    //   }
     // });
 
+    // uncomment to use backend service
+    this.scheduleService.readAll().subscribe((monthlylist: ShiftSchedule[]) => {
+      monthlylist.filter(shedule => {
+        return shedule.hasOwnProperty(`${monthIndex}.${moment().year()}`);
+      })
+        .map(monthShedule => {
+          monthShedule[`${monthIndex}.${moment().year()}`].shiftSchedules.map(shift => {
+
+            const currentRow = shifts.find(row => {
+              return row.date.getDate() === new Date(shift.date).getDate();
+            });
+            const shiftIndex = currentRow && currentRow.selectedShiftColumnOfEmployees.findIndex(
+              columnIndex => columnIndex.columnEmployeeId === shift.selectedShiftColumnOfEmployees[0].columnEmployeeId);
+            if (shiftIndex !== -1) {
+              currentRow.selectedShiftColumnOfEmployees[shiftIndex].shiftItem = shift.selectedShiftColumnOfEmployees[0].shiftItem;
+            }
+          });
+        });
+    });
+    this.sheduleDataSource = shifts;
   }
 
   /**
@@ -254,14 +244,13 @@ export class ShiftScheduleComponent implements OnInit {
    * @param event
    */
   onPrepareShiftsForSave(event) {
-    console.log(Object.entries(event));
     const shiftSchedules: ShiftSchedule[] = [];
     const monthYear = `${this.selectedMonth}.${moment().year()}`;
     for (const [key, value] of Object.entries(event.newData)) {
 
       const selectedShiftItem = event.key.selectedShiftColumnOfEmployees.find(template => template.columnEmployeeId === key);
       const shiftSchedule = new ShiftSchedule();
-      shiftSchedule.id = '';
+      shiftSchedule.id = monthYear;
       shiftSchedule.date = event.key.date;
       shiftSchedule.selectedShiftColumnOfEmployees = [{
         columnEmployeeId: selectedShiftItem.columnEmployeeId,
@@ -270,10 +259,9 @@ export class ShiftScheduleComponent implements OnInit {
       }];
       shiftSchedules.push(shiftSchedule);
     }
-    const employeeShift = {[monthYear]: shiftSchedules};
-    // console.log('saved shifts', (JSON.stringify(employeeShift)));
-    console.log('shedule array', shiftSchedules);
-    this.storeSchedules(shiftSchedules);
+    const employeeShift = {[monthYear]: {shiftSchedules}};
+    console.log('saved shifts', (JSON.stringify(employeeShift)));
+    this.storeSchedules(employeeShift);
   }
 
   /**
@@ -300,11 +288,6 @@ export class ShiftScheduleComponent implements OnInit {
       evt.setValue(e.value);
       this.dataGrid.instance.refresh();
     };
-  }
-
-  setCellFromDatasource(rowData) {
-    const column = this as any;
-
   }
 
   /**
@@ -393,15 +376,27 @@ export class ShiftScheduleComponent implements OnInit {
   }
 
   storeSchedules(data: any) {
-    data.map(schedule => {
-      this.scheduleService.create(schedule);
-    });
+    if (data) {
+      this.scheduleService.create(data);
+    }
   }
+
   /**
    * The toolbar and components in the toolbar above the datagrid
    * @param e
    */
   onToolbarPreparing(e) {
+
+    e.toolbarOptions.items.forEach((item, index) => {
+      if (item.name === 'revertButton') {
+        item.options.onClick = (x) => {
+          this.dataGrid.instance.cancelEditData();
+          this.createDefaultShifts(this.selectedMonth); // reload after reverting
+        };
+      }
+    });
+
+    // controls on the toolbar
     e.toolbarOptions.items.unshift({
       location: 'before',
       template: 'totalGroupCount'
@@ -427,7 +422,6 @@ export class ShiftScheduleComponent implements OnInit {
       options: {
         icon: 'refresh',
         onClick: this.refreshDataGrid.bind(this),
-        // [routerLink]: '[/employees]'
       },
     });
   }

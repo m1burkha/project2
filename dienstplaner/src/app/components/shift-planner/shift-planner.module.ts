@@ -34,6 +34,8 @@ import {
 import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {AddDialogComponent} from './shift-template/add-dialog/add-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {EmployeeAdministrationComponent} from '@components/employee-administration/employee-administration.component';
+import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 
 const plannerRoutes: Routes = [
   {path: '', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
