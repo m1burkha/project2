@@ -158,7 +158,6 @@ export class ShiftScheduleComponent implements OnInit {
       })
       .subscribe(x => {
         this.createDefaultShifts(moment().month());
-        this.refreshDataGrid();
       });
   }
 
@@ -170,6 +169,12 @@ export class ShiftScheduleComponent implements OnInit {
     this.selectedMonth = this.months.findIndex(month => month === event.value);
     event.value = this.months[this.selectedMonth];
     this.createDefaultShifts(this.selectedMonth);
+  }
+
+  setCellFromDatasource(rowData) {
+    const column = this as any;
+    const col = rowData.selectedShiftColumnOfEmployees.find(currentColumn => currentColumn.columnEmployeeId === column.dataField);
+    return col.shiftItem.caption;
   }
 
   /**
@@ -190,7 +195,7 @@ export class ShiftScheduleComponent implements OnInit {
         const row = {
           columnEmployeeCaption: employee.caption,
           columnEmployeeId: employee.id,
-          shiftItem: new ShiftItem({id: 0, caption: 'Select Shifts'}) // default shiftItem value
+          shiftItem: new ShiftItem({id: 0, caption: ''}) // default shiftItem value
         };
         scheduleRow.selectedShiftColumnOfEmployees.push(row);
       });
@@ -231,11 +236,11 @@ export class ShiftScheduleComponent implements OnInit {
               columnIndex => columnIndex.columnEmployeeId === shift.selectedShiftColumnOfEmployees[0].columnEmployeeId);
             if (shiftIndex !== -1) {
               currentRow.selectedShiftColumnOfEmployees[shiftIndex].shiftItem = shift.selectedShiftColumnOfEmployees[0].shiftItem;
-            }
+             }
           });
         });
+      this.sheduleDataSource = shifts;
     });
-    this.sheduleDataSource = shifts;
   }
 
   /**
@@ -404,7 +409,6 @@ export class ShiftScheduleComponent implements OnInit {
       location: 'before',
       widget: 'dxButton',
       options: {
-        // icon: 'Employees',
         text: 'Mitarbeiter Profile',
         onClick: this.showEmployees.bind(this)
       },
@@ -412,7 +416,6 @@ export class ShiftScheduleComponent implements OnInit {
       location: 'before',
       widget: 'dxButton',
       options: {
-        // icon: 'Employees',
         text: 'SchichtTemplates',
         onClick: this.showShiftTemplates.bind(this)
       },

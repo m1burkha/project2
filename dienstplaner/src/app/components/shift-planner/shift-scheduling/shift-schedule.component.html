@@ -15,11 +15,6 @@
   (onRowUpdating)="onPrepareShiftsForSave($event)"
   (onEditorPreparing)="onShiftChangeEvent($event)"
   (onToolbarPreparing)="onToolbarPreparing($event)">
-  <!--<dxo-selection-->
-    <!--[selectAllMode]="allMode"-->
-    <!--[showCheckBoxesMode]="checkBoxesMode"-->
-    <!--mode="multiple">-->
-  <!--</dxo-selection>-->
   <dxo-export [enabled]="true" fileName="ShiftSchedules"></dxo-export>
   <dxo-search-panel [visible]="true"></dxo-search-panel>
   <dxo-scrolling mode="infinite"></dxo-scrolling>
@@ -28,7 +23,7 @@
   <dxi-column dataField="id"></dxi-column>
   <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
   <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
-     <dxi-column dataField="{{column.columnEmployeeId}}" caption="{{column.columnEmployeeCaption}}"  datatype="ShiftItem">
+     <dxi-column dataField="{{column.columnEmployeeId}}" caption="{{column.columnEmployeeCaption}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
         <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
      </dxi-column>
   </div>
