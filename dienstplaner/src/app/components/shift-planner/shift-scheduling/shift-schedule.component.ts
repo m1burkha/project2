@@ -222,7 +222,7 @@ export class ShiftScheduleComponent implements OnInit {
     // });
 
     // uncomment to use backend service
-    this.scheduleService.readAll().subscribe((monthlylist: ShiftSchedule[]) => {
+    this.scheduleService.readAllShifts(moment().year().toString(), monthIndex.toString()).subscribe((monthlylist: ShiftSchedule[]) => {
       monthlylist.filter(shedule => {
         return shedule.hasOwnProperty(`${monthIndex}.${moment().year()}`);
       })
@@ -382,7 +382,7 @@ export class ShiftScheduleComponent implements OnInit {
 
   storeSchedules(data: any) {
     if (data) {
-      this.scheduleService.create(data);
+      this.scheduleService.createShift(data);
     }
   }
 
