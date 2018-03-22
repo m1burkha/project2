@@ -15,8 +15,6 @@ export interface IShiftItem {
   totalHours: number;
   /** Enum ShiftType */
   type: ShiftType;
-  /** caption */
-  caption: string;
 }
 
 /** class for the ShiftItem */
@@ -27,8 +25,6 @@ export class ShiftItem implements IShiftItem {
   caption: string;
   /** shift timespans */
   timeSpans: TimeSpan[];
-  /** caption */
-  caption: string;
 
   /** totalhours */
   get totalHours(): number {

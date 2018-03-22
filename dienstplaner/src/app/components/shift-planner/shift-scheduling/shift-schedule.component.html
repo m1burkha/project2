@@ -1,37 +1,31 @@
 <div class="dashboard">top dashboard</div>
 
-<dx-select-box id="select-month"
+<dx-select-box #selectMonthRef
+               id="select-month"
                [dataSource]="months"
                placeholder="Select Month"
-               [value]="monthName"
                (onValueChanged)="filterMonthSelection($event)">
 </dx-select-box>
 <dx-data-grid
   id="gridContainer"
-  [dataSource]="sheduleList | async"
+  [dataSource]="sheduleDataSource"
   [allowColumnReordering]="true"
   [allowColumnResizing]="true"
   [columnAutoWidth]="true"
+  (onRowUpdating)="onPrepareShiftsForSave($event)"
   (onEditorPreparing)="onShiftChangeEvent($event)"
   (onToolbarPreparing)="onToolbarPreparing($event)">
-  <!--<dxo-selection-->
-    <!--[selectAllMode]="allMode"-->
-    <!--[showCheckBoxesMode]="checkBoxesMode"-->
-    <!--mode="multiple">-->
-  <!--</dxo-selection>-->
   <dxo-export [enabled]="true" fileName="ShiftSchedules"></dxo-export>
   <dxo-search-panel [visible]="true"></dxo-search-panel>
   <dxo-scrolling mode="infinite"></dxo-scrolling>
   <dxo-editing mode="batch" [allowUpdating]="true"></dxo-editing>
   <dxo-paging [enabled]="false"></dxo-paging>
   <dxi-column dataField="id"></dxi-column>
-  <dxi-column dataField="shiftDate" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
-  <div *ngFor="let employee of employees">
-    <dxi-column dataField="{{employee.id}}" caption="{{employee.caption}}" [calculateDisplayValue]="setCellFromDatasource" [setCellValue]="onSetCellValue">
-      <!--<dxi-column dataField="a" datatype="shiftitem" caption="Shifts">-->
-      <dxo-lookup [dataSource]="templates" displayExpr="caption" valueExpr="id"></dxo-lookup>
-    </dxi-column>
-    <!--</dxi-column>-->
+  <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
+  <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
+     <dxi-column dataField="{{column.columnEmployeeId}}" caption="{{column.columnEmployeeCaption}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
+        <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
+     </dxi-column>
   </div>
   <dxo-summary [calculateCustomSummary]="calculateAllTotals">
     <dxi-total-item
@@ -78,18 +72,10 @@
     </div>
   </dxo-summary>
 
-
   <div *dxTemplate="let data of 'totalGroupCount'">
     <div class="informer">
       <h2 class="count">{{totalEmployees}}</h2>
       <span class="name">Mitarbeiter</span>
     </div>
   </div>
-
-  <div *dxTemplate="let shiftItem of 'selectedShiftItem'">
-    <select data-options="templates" name="templates">
-      <option value=""></option>
-    </select>
-  </div>
-
 </dx-data-grid>

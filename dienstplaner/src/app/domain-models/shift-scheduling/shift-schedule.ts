@@ -7,26 +7,26 @@ export interface IShiftSchedule {
   /** id */
   id: string;
   /** date */
-  shiftDate: Date;
+  date: Date;
   /** shiftItem */
-  shiftItem: ShiftItem;
+//  shiftItem: ShiftItem;
   /** employee Id */
-  employeeId: string;
+//  employeeId: string;
   /** selectedShiftColumnOfEmployees */
-  selectedShiftColumnOfEmployees: string[];
+  selectedShiftColumnOfEmployees: any[];
 }
 
 export class ShiftSchedule implements IShiftSchedule {
   /** id */
   id: string;
   /** date */
-  shiftDate: Date;
+  date: Date;
   /** shiftItem */
-  shiftItem: ShiftItem;
+  // shiftItem: ShiftItem;
   /** employee Id */
-  employeeId: string;
+//  employeeId: string;
   /** selectedShiftColumnOfEmployees */
-  selectedShiftColumnOfEmployees: string[];
+  selectedShiftColumnOfEmployees: any[];
 
   /**
    * creates a new shift scheduling item

@@ -10,7 +10,7 @@ import {EmployeeAdministrationComponent} from '@components/employee-administrati
  */
 const routes: Routes = [
     {
-        path: 'employees',
+        path: '',
         component: EmployeeAdministrationComponent
     }
 ];
