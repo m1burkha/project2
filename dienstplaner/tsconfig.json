@@ -16,7 +16,8 @@
       "@components/*": ["app/components/*"],
       "@domain-models/*": ["app/domain-models/*"],
       "@services/*": ["app/services/*"],
-      "@utilities/*": ["app/utilities/*"]
+      "@utilities/*": ["app/utilities/*"],
+      "@assets/*": ["app/assets/*"]
     },
     "lib": [
       "es2017",

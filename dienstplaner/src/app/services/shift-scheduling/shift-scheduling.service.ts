@@ -21,27 +21,27 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
     this.setCollection('ShiftScheduling');
   }
 
-  setAlternativeCollection(year: string, month: string) {
-    this.db.collection('ShiftScheduling').doc(year).collection(month);
+  setAlternativeCollection(id: string, collection: string) {
+    this.db.collection('ShiftScheduling').doc(id).collection(collection);
   }
 
-  readShifts(year: string, month: string, id: string): AngularFirestoreDocument<IShiftSchedule> {
-    this.setAlternativeCollection(year, month);
-    return this.read(id);
+  readShifts(id: string): Observable<IShiftSchedule> {
+    this.setAlternativeCollection(id, 'shiftSchedules');
+    return this.read(id).valueChanges();
   }
 
   public readAllShifts(year: string, month: string): Observable<IShiftSchedule[]> {
-    this.setAlternativeCollection(year, month);
-    return    this.readAll();
+    // this.setAlternativeCollection(year, month);
+    return this.readAll();
   }
 
   public createShift(object: IShiftSchedule): Promise<DocumentReference> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
+    // this.setAlternativeCollection(object.id, 'shiftSchedules');
     return this.create(object);
   }
 
   public updateShift(id: string, object: IShiftSchedule): Promise<void> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
+    // this.setAlternativeCollection(id, 'shiftSchedules');
     return this.update(id, object);
   }
 
@@ -50,9 +50,13 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
     return this.updatePartial(id, object);
   }
 
-  public deleteShift(id: string, object: IShiftSchedule): Promise<void> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
+  public deleteShift(id: string): Promise<void> {
+    // this.db.collection('ShiftScheduling').doc(id).collection(`shiftSchedules/${shiftScheduleIndex}`);
     return this.delete(id);
+  }
+
+  public createId(): string {
+    return this.db.createId();
   }
 }
 
