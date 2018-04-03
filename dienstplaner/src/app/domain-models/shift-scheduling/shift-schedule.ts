@@ -35,6 +35,9 @@ export class ShiftSchedule implements IShiftSchedule {
    */
   constructor(values: any = null) {
     this.id = '';
+    if (!this.selectedShiftColumnOfEmployees) {
+      this.selectedShiftColumnOfEmployees = [];
+    }
     Object.assign(this, values);
   }
 

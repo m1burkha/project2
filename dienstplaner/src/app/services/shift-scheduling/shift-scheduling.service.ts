@@ -67,5 +67,9 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
     this.setAltCollection(object.date);
     return this.delete(object.id);
   }
+
+  public createId(): string {
+    return this.db.createId();
+  }
 }
 

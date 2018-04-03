@@ -15,46 +15,7 @@ import 'rxjs/add/operator/reduce';
 import {Router} from '@angular/router';
 import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {zip} from 'rxjs/observable/zip';
-import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
-
-
-const myTemplates: ShiftItem[] = [
-  {
-    'id': '10', 'caption': 'WorkingShift', 'type': ShiftType.workingShift, 'timeSpans': [
-      {'id': '1', 'startTime': '07:00', 'endTime': '11:30', 'totalHours': 4.5, 'month': 2},
-      {'id': '2', 'startTime': '12:30', 'endTime': '16:30', 'totalHours': 4, 'month': 2},
-    ], 'totalHours': 8.5
-  },
-  {
-    'id': '20', 'caption': 'Other', 'type': ShiftType.other, 'timeSpans': [
-      {'id': '3', 'startTime': '09:00', 'endTime': '12:30', 'totalHours': 3.5, 'month': 2},
-      {'id': '4', 'startTime': '13:30', 'endTime': '18:30', 'totalHours': 2, 'month': 2},
-    ], 'totalHours': 5.5
-  },
-  {
-    'id': '50',
-    'caption': 'compensation',
-    'type': ShiftType.compensation,
-    'timeSpans': [],
-    'totalHours': 3,
-  },
-  {
-    'id': '60',
-    'caption': 'Sick leave',
-    'type': ShiftType.sickLeave,
-    'timeSpans': [],
-    'totalHours': 8.5,
-  },
-  {
-    'id': '80',
-    'caption': 'Vacation',
-    'type': ShiftType.vacation,
-    'timeSpans': [],
-    'totalHours': 6.5,
-  }
-];
-
 
 @Component({
   selector: 'app-shift-scheduling',
@@ -91,15 +52,17 @@ export class ShiftScheduleComponent implements OnInit {
     this.months = moment.months();
     this.selectedMonth = moment().month(); // current month for selection by startup
     this.selectMonthRef.value = this.months[this.selectedMonth];
-    const complete = zip(
+    zip(
       this.shiftTemplateService.readAll(),
       this.employeeService.readAll())
       .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
-        this.shiftTemplates = templates;
+        this.shiftTemplates = templates.sort((a, b) => {
+          return a.caption > b.caption ? 1 : -1;
+        });
         this.employees = employees;
         this.totalEmployees = this.employees.length;
       })
-      .subscribe(x => {
+      .subscribe(() => {
         this.createDefaultShifts(moment().month());
       });
   }
@@ -155,11 +118,10 @@ export class ShiftScheduleComponent implements OnInit {
 
   /**
    * Retrieve data from the DB, filter to the chosen month and populate the datagrid
-   * @param monthIndex
+   * @param {number} monthIndex
+   * @param {ShiftSchedule[]} shifts
    */
   populateDatagridWithData(monthIndex: number, shifts: ShiftSchedule[]): void {
-
-    // uncomment to use backend service
     this.scheduleService.readAllShifts(new Date((new Date).getFullYear(), monthIndex))
       .subscribe((monthlylist: ShiftSchedule[]) => {
         monthlylist
@@ -191,7 +153,6 @@ export class ShiftScheduleComponent implements OnInit {
    */
   onSetCellValue(rowData: any, value: any): void {
     (<any>this).defaultSetCellValue(rowData, value);
-// this.defaultSetCellValue(rowData, value);
   }
 
   /**
@@ -212,7 +173,7 @@ export class ShiftScheduleComponent implements OnInit {
 
   /**
    * Calculates all the summary totals for Total hours, total public holidays, total holidays
-   * Each row and colummn that is selected, the employee id is added to the selectedShiftColumnOfEmployees array,
+   * Each row and colummn that is selected, the employee rowId is added to the selectedShiftColumnOfEmployees array,
    * the summaries are then calculated for each column selected or changed
    * @param options
    */
@@ -293,12 +254,6 @@ export class ShiftScheduleComponent implements OnInit {
 
   showShiftTemplates() {
     this.router.navigateByUrl('/shifttemplate');
-  }
-
-  storeSchedules(data: any) {
-    if (data) {
-      this.scheduleService.createShift(data);
-    }
   }
 
   /**

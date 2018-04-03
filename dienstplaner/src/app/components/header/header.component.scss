@@ -1,0 +1,75 @@
+$headerbackground: #fed70d;
+
+
+//----------- setup for the flex box container------//
+@mixin flex-container($direction : row, $justifycontent: space-between, $alignment : null, $align-items: null, $flex-wrap: null){
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justifycontent;
+  align-content: $alignment;
+  align-items: $align-items;
+  flex-wrap: $flex-wrap;
+}
+//------- passing parameters to various controls, images etc...------//
+@mixin control-properties($width: null, $height: null, $fontsize: null, $backgroundcolor: null, $padding: null, $margin: null ){
+  width: $width;
+  height: $height;
+  font-size: $fontsize;
+  background-color: $backgroundcolor;
+  padding: $padding;
+  margin: $margin
+}
+//------- 3D text converter ------//
+@mixin threedeetext($color) {
+  color: $color;
+  text-shadow:
+    0 2px 0 darken($color, 14%),
+    0 4px 0 darken($color, 16%),
+    0 6px 0 darken($color, 18%),
+    0 8px 0 darken($color, 20%),
+    3px 8px 15px rgba(0,0,0,0.1),
+    3px 8px 5px rgba(0,0,0,0.3);
+}
+
+.header-icon {
+  @include control-properties($width: 90px, $height: 89px, $padding: 0 0 3px 7px);
+}
+
+.header-container {
+  @include flex-container($align-items: center, $flex-wrap: wrap, $justifycontent: flex-left);
+  background-color: rgba(186, 211, 209, 0.99);
+  width: 100%;
+}
+.header-text {
+  flex: 1 auto;
+  @include flex-container($align-items: center, $justifycontent: center);
+}
+.header-text span {
+  font: bold 66px/1.5 Helvetica, sans-serif;
+  text-transform: uppercase;
+  @include threedeetext(#da915a);
+}
+
+@media screen and (max-width: 625px)  {
+  .header-text span {
+    font: bold 50px/1.5 Helvetica, sans-serif;
+    text-transform: uppercase;
+    @include threedeetext(#da915a);
+  }
+  .header-icon {
+    @include control-properties($width: 80px, $height: 79px, $padding: 0 0 3px 7px);
+  }
+}
+
+@media screen and (max-width: 502px)  {
+  .header-text span {
+    font: bold 35px/1.5 Helvetica, sans-serif;
+    text-transform: uppercase;
+    @include threedeetext(#da915a);
+  }
+
+  .header-icon {
+    @include control-properties($width: 70px, $height: 69px, $padding: 0 0 3px 7px);
+  }
+}
+
