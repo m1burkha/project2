@@ -34,6 +34,10 @@ export class ShiftTemplateComponent implements OnInit {
     });
   }
 
+  reduceHours(timeSpans): number {
+    return timeSpans.reduce((a, b) => a + b.totalHours, 0);
+  }
+
   /**
    * opens dialog
    */

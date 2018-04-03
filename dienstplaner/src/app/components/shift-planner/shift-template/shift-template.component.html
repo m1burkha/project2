@@ -4,30 +4,24 @@
 
     <ng-container matColumnDef="caption">
       <mat-header-cell *matHeaderCellDef> caption</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.caption}}
-        <span *ngIf="element.tooltip_caption"><i class="fa fa-info-circle"></i></span>
-      </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.caption}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="type">
       <mat-header-cell *matHeaderCellDef> type </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.type}}
-        <span *ngIf="element.tooltip_type"><i class="fa fa-info-circle"></i></span></mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.type}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="timespans">
       <mat-header-cell *matHeaderCellDef> timespans </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <div *ngFor="let item of element.timespans">{{item.start}} - {{item.end}} ({{item.totalhours}} h)</div>
-        <span *ngIf="element.tooltip_timespans"><i class="fa fa-info-circle"></i></span>
+        <div *ngFor="let item of element.timeSpans">{{item.startTime}} - {{item.endTime}} ({{item.totalHours}} h)</div>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="totalhours">
       <mat-header-cell *matHeaderCellDef> totalhours </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.totalhours}}{{element.totalhours ? ' h' : ''}}
-        <span *ngIf="element.tooltip_totalhours"><i class="fa fa-info-circle"></i></span>
-      </mat-cell>
+      <mat-cell *matCellDef="let element"> {{reduceHours(element.timeSpans)}} h</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
