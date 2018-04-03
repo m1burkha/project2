@@ -60,9 +60,7 @@ export class ShiftScheduleComponent implements OnInit {
       this.employeeService.readAll())
       .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
         templates.push(new ShiftItem({caption: ''}));
-        this.shiftTemplates = templates.sort((a, b) => {
-          return a.caption > b.caption ? 1 : -1;
-        }).map(e => new ShiftItem(e));
+        this.shiftTemplates = templates.sort((a, b) => (a.caption > b.caption ? 1 : -1)).sort((a, b) => (a.type < b.type ? 1 : -1)).map(e => new ShiftItem(e));
         this.employees = employees;
         this.totalEmployees = this.employees.length;
       })

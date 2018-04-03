@@ -3,25 +3,33 @@
   <mat-table #table [dataSource]="dataSource">
 
     <ng-container matColumnDef="caption">
-      <mat-header-cell *matHeaderCellDef> caption</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Bezeichnung</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.caption}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef> type </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Art </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.type}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="timespans">
-      <mat-header-cell *matHeaderCellDef> timespans </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Zeiten </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <div *ngFor="let item of element.timeSpans">{{item.startTime}} - {{item.endTime}} ({{item.totalHours.toFixed(2)}} h)</div>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="totalhours">
-      <mat-header-cell *matHeaderCellDef> totalhours </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Stunden </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{reduceHours(element.timeSpans)}} h</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef class="actions"> </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="actions">
+        <mat-icon title="bearbeiten" (click)="editItem(element)">edit</mat-icon>
+        <mat-icon title="löschen" (click)="deleteItem(element)">delete</mat-icon>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -43,9 +43,12 @@ export class AddDialogComponent {
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private snackBar: MatSnackBar) {
-
-    this.shiftItem = new ShiftItem({caption: '', type: ShiftType.workingShift, timeSpans: []});
-    this.addTimeSpan();
+    if (data && data instanceof ShiftItem) {
+      this.shiftItem = new ShiftItem(data);
+    } else {
+      this.shiftItem = new ShiftItem({caption: '', type: ShiftType.workingShift, timeSpans: []});
+      this.addTimeSpan();
+    }
   }
 
   captionChanged(event) {
