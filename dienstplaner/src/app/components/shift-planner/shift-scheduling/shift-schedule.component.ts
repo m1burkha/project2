@@ -184,7 +184,6 @@ export class ShiftScheduleComponent implements OnInit {
     switch (totalItemName[0]) {
 
       case 'totalhours':
-
         if (options.summaryProcess === 'start' && column === totalItemName[1]) {
           options.totalValue = 0;
         }
@@ -193,9 +192,12 @@ export class ShiftScheduleComponent implements OnInit {
 
           options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
             const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue && columnValue.type !== ShiftType.vacation &&
-              columnValue.type !== ShiftType.publicHoliday) {
-              acc = acc + columnValue.totalHours;
+            if (columnValue
+              && columnValue.shiftItem.type !== ShiftType.vacation
+              && columnValue.shiftItem.type !== ShiftType.publicHoliday
+              && columnValue.shiftItem.timeSpans
+              && columnValue.shiftItem.timeSpans.length) {
+              acc = acc + columnValue.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
           }, 0);
@@ -212,8 +214,11 @@ export class ShiftScheduleComponent implements OnInit {
 
           options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
             const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue && columnValue.type === ShiftType.publicHoliday) {
-              acc = acc + columnValue.totalHours;
+            if (columnValue
+              && columnValue.shiftItem.type === ShiftType.publicHoliday
+              && columnValue.shiftItem.timeSpans
+              && columnValue.shiftItem.timeSpans.length) {
+              acc = acc + columnValue.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
           }, 0);
@@ -230,8 +235,11 @@ export class ShiftScheduleComponent implements OnInit {
 
           options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
             const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue && columnValue.type === ShiftType.vacation) {
-              acc = acc + columnValue.totalHours;
+            if (columnValue
+              && columnValue.shiftItem.type === ShiftType.vacation
+              && columnValue.shiftItem.timeSpans
+              && columnValue.shiftItem.timeSpans.length) {
+              acc = acc + columnValue.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
           }, 0);
