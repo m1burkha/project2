@@ -30,12 +30,12 @@ export class ShiftTemplateComponent implements OnInit {
    */
   ngOnInit() {
     this.shiftItemsService.readAll().subscribe((items: ShiftItem[]) => {
-      this.dataSource = items;
+      this.dataSource = items.map(e => new ShiftItem(e));
     });
   }
 
   reduceHours(timeSpans): number {
-    return timeSpans.reduce((a, b) => a + b.totalHours, 0);
+    return timeSpans.reduce((a, b) => a + b.totalHours, 0).toFixed(2);
   }
 
   /**

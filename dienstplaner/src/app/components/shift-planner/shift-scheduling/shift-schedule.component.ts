@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {zip} from 'rxjs/observable/zip';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
+import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 
 @Component({
   selector: 'app-shift-scheduling',
@@ -61,7 +62,7 @@ export class ShiftScheduleComponent implements OnInit {
         templates.push(new ShiftItem({caption: ''}));
         this.shiftTemplates = templates.sort((a, b) => {
           return a.caption > b.caption ? 1 : -1;
-        });
+        }).map(e => new ShiftItem(e));
         this.employees = employees;
         this.totalEmployees = this.employees.length;
       })
@@ -204,7 +205,7 @@ export class ShiftScheduleComponent implements OnInit {
               && columnValue.shiftItem.type !== ShiftType.publicHoliday
               && columnValue.shiftItem.timeSpans
               && columnValue.shiftItem.timeSpans.length) {
-              acc = acc + columnValue.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0);
+              acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
           }, 0);
@@ -225,7 +226,7 @@ export class ShiftScheduleComponent implements OnInit {
               && columnValue.shiftItem.type === ShiftType.publicHoliday
               && columnValue.shiftItem.timeSpans
               && columnValue.shiftItem.timeSpans.length) {
-              acc = acc + columnValue.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0);
+              acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
           }, 0);
@@ -246,7 +247,7 @@ export class ShiftScheduleComponent implements OnInit {
               && columnValue.shiftItem.type === ShiftType.vacation
               && columnValue.shiftItem.timeSpans
               && columnValue.shiftItem.timeSpans.length) {
-              acc = acc + columnValue.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0);
+              acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
           }, 0);

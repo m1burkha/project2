@@ -24,7 +24,7 @@ import {DevModule} from '@components/dev/dev.module';
 import {
   MatButtonModule,
   MatDialogModule,
-  MatFormFieldModule,
+  MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatSelectModule,
   MatSnackBarModule,
@@ -67,6 +67,7 @@ const plannerRoutes: Routes = [
     MatDialogModule,
     MatSnackBarModule,
     MatInputModule,
+    MatIconModule,
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forChild(plannerRoutes)

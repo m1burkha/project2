@@ -1,8 +1,9 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 
 /**
  * add dialog
@@ -13,12 +14,12 @@ import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
   styleUrls: ['./add-dialog.component.scss']
 })
 export class AddDialogComponent {
-  /** captionControl form control */
-  captionControl: FormControl = new FormControl('', [Validators.required]);
-  /** type selection form control */
-  typeControl = new FormControl('', [Validators.required]);
-  /** form group */
-  form: FormGroup;
+  /** shift item */
+  shiftItem: ShiftItem;
+  /** availables times */
+  hours: string[] = ['05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+  /** availables times */
+  minutes: string[] = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
   /** shift types */
   types = [
     {value: ShiftType.compensation, viewValue: 'Kompensation'},
@@ -30,24 +31,8 @@ export class AddDialogComponent {
     {value: ShiftType.workingShift, viewValue: 'Arbeitszeit'},
   ];
 
-  /**
-   * error message for wrong captionControl
-   * @returns {string | string | string}
-   */
-  getCaptionErrorMessage() {
-    return this.captionControl.hasError('required') ? 'You must enter a value' :
-      this.captionControl.hasError('captionControl') ? 'Not a valid captionControl' :
-        '';
-  }
-
-  /**
-   * error message for wrong type
-   * @returns {string | string | string}
-   */
-  getTypeErrorMessage() {
-    return this.typeControl.hasError('required') ? 'You must enter a value' :
-      this.typeControl.hasError('type') ? 'Not a valid type' :
-        '';
+  get totalHours(): number {
+    return this.shiftItem ? this.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0) : 0;
   }
 
   /**
@@ -57,19 +42,45 @@ export class AddDialogComponent {
    */
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private formBuilder: FormBuilder,
               private snackBar: MatSnackBar) {
-    this.form = formBuilder.group({
-      captionControl: this.captionControl,
-      typeControl: this.typeControl
-    });
+
+    this.shiftItem = new ShiftItem({caption: '', type: ShiftType.workingShift, timeSpans: []});
+    this.addTimeSpan();
+  }
+
+  captionChanged(event) {
+    this.shiftItem.caption = event.target.value;
+  }
+
+  getHour(time: string): string {
+    return time ? time.substring(0, 2) : '05';
+  }
+
+  setHour(time: string, event: MatSelectChange): string {
+    return event.value + (time ? time.substring(2) : ':00');
+  }
+
+  getMinute(time: string): string {
+    return time ? time.substring(3) : '00';
+  }
+
+  setMinute(time: string, event: MatSelectChange): string {
+    return (time ? time.substring(0, 3) : '05:') + event.value;
+  }
+
+  addTimeSpan() {
+    this.shiftItem.timeSpans.push(new TimeSpan({startTime: '07:00', endTime: '12:00'}));
+  }
+
+  removeTimeSpan(ts) {
+    this.shiftItem.timeSpans.splice(this.shiftItem.timeSpans.indexOf(ts), 1);
   }
 
   /**
    * adds item
    */
   add(): void {
-    this.dialogRef.close(new ShiftItem({type: this.typeControl.value, caption: this.captionControl.value}));
+    this.dialogRef.close(this.shiftItem);
   }
 
   /**

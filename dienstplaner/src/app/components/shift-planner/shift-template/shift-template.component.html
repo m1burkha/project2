@@ -15,7 +15,7 @@
     <ng-container matColumnDef="timespans">
       <mat-header-cell *matHeaderCellDef> timespans </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <div *ngFor="let item of element.timeSpans">{{item.startTime}} - {{item.endTime}} ({{item.totalHours}} h)</div>
+        <div *ngFor="let item of element.timeSpans">{{item.startTime}} - {{item.endTime}} ({{item.totalHours.toFixed(2)}} h)</div>
       </mat-cell>
     </ng-container>
 
