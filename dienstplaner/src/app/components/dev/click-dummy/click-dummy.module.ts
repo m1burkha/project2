@@ -6,6 +6,7 @@ import {LoginGuard} from '@utilities/guards/login-guard';
 import {TemplatesComponent} from './click-dummy/templates/templates.component';
 import {ShiftlistComponent} from './click-dummy/shiftlist/shiftlist.component';
 import {MatFormFieldModule, MatSelectModule, MatTableModule, MatTabsModule, MatTooltipModule} from '@angular/material';
+import { ServerCommComponent } from './click-dummy/server-comm/server-comm.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatSelectModule,
   ],
-  declarations: [ClickDummyComponent, TemplatesComponent, ShiftlistComponent],
+  declarations: [ClickDummyComponent, TemplatesComponent, ShiftlistComponent, ServerCommComponent],
   providers: [LoginGuard]
 })
 export class ClickDummyModule {

@@ -23,7 +23,7 @@
   <dxi-column dataField="id"></dxi-column>
   <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
   <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
-     <dxi-column dataField="{{column.columnEmployeeId}}" caption="{{column.columnEmployeeCaption}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
+     <dxi-column dataField="{{column.employeeId}}" caption="{{getEmployeeCaption(column.employeeId)}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
         <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
      </dxi-column>
   </div>
