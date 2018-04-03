@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DxDataGridComponent, DxSelectBoxComponent} from 'devextreme-angular';
 import {ShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
@@ -20,7 +20,8 @@ import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-
 @Component({
   selector: 'app-shift-scheduling',
   templateUrl: './shift-schedule.component.html',
-  styleUrls: ['./shift-schedule.component.scss']
+  styleUrls: ['./shift-schedule.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ShiftScheduleComponent implements OnInit {
 
@@ -49,6 +50,7 @@ export class ShiftScheduleComponent implements OnInit {
 
   /** Initialise the shift schedule component variables / instances */
   ngOnInit() {
+    moment.locale('de');
     this.months = moment.months();
     this.selectedMonth = moment().month(); // current month for selection by startup
     this.selectMonthRef.value = this.months[this.selectedMonth];
@@ -56,6 +58,7 @@ export class ShiftScheduleComponent implements OnInit {
       this.shiftTemplateService.readAll(),
       this.employeeService.readAll())
       .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
+        templates.push(new ShiftItem({caption: ''}));
         this.shiftTemplates = templates.sort((a, b) => {
           return a.caption > b.caption ? 1 : -1;
         });
@@ -81,6 +84,10 @@ export class ShiftScheduleComponent implements OnInit {
     const column = this as any;
     const col = rowData.selectedShiftColumnOfEmployees.find(currentColumn => currentColumn.employeeId === column.dataField);
     return col.shiftItem.caption;
+  }
+
+  getFormattedDate(rowData) {
+    return moment(rowData.date).format('dd, DD.MM.YYYY');
   }
 
   getEmployeeCaption(employeeId): string {
