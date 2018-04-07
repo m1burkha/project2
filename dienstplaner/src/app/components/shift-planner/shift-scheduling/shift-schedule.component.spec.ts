@@ -5,18 +5,18 @@ import {ShiftScheduleService} from '@services/shift-scheduling/shift-schedule.se
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Employee} from '@domain-models/employee/employee';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {HeaderComponent} from '@components/header/header.component';
 
 
 describe('ShiftScheduleComponent', () => {
   let component: ShiftScheduleComponent;
   let fixture: ComponentFixture<ShiftScheduleComponent>;
-  // let employeeService: EmployeeService, shiftScheduleService: ShiftScheduleService;
   const employees: Employee[] = [], shiftTemplates: ShiftItem[] = [];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [ShiftScheduleComponent],
+      declarations: [ShiftScheduleComponent, HeaderComponent],
       providers: [EmployeeService, ShiftScheduleService, HttpClient]
     })
       .compileComponents();

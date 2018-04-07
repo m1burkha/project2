@@ -1,8 +1,5 @@
 import {Injectable} from '@angular/core';
-import {
-  HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
-  HttpResponse
-} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
@@ -10,6 +7,9 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class FakeBackendService implements HttpInterceptor {
+
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * Intercept all http requests when no backend available
@@ -38,6 +38,13 @@ export class FakeBackendService implements HttpInterceptor {
       }
     }
     return next.handle(req);
+  }
+
+  readAllShifts(year: string, month: string): Observable<any> {
+    console.log('in read all');
+    let pp = this.http.get('../../assets/mockdata/shiftSchedules.json');
+    pp.subscribe(x => console.log(x));
+    return this.http.get('../../assets/mockdata/shiftSchedules.json');
   }
 }
 

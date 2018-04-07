@@ -49,15 +49,16 @@ import {HeaderModule} from '@components/header/header.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
     ReactiveFormsModule,
     HttpClientModule,
     DevModule,
+    HeaderModule,
     ClickDummyModule,
     EmployeeAdministrationModule,
     ShiftPlannerModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
@@ -67,8 +68,7 @@ import {HeaderModule} from '@components/header/header.module';
     MatTabsModule,
     MatTableModule,
     MatSnackBarModule,
-    NoopAnimationsModule,
-    HeaderModule
+    NoopAnimationsModule
   ],
   providers: [
     AuthenticationService,

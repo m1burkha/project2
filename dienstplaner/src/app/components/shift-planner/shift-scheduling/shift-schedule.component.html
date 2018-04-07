@@ -1,4 +1,4 @@
-<app-header  [iconName]="'shift_clock3.png'" [headerText]="'Shift Planner'"></app-header>
+<app-header  [iconName]="'shift_clock3.png'" [headerText]="'Schicht Planner'"></app-header>
 
 <dx-select-box #selectMonthRef
                id="select-month"
@@ -30,7 +30,7 @@
   <dxo-summary [calculateCustomSummary]="calculateAllTotals">
     <dxi-total-item
       displayFormat="SollStunden"
-      column="id">
+      column="date">
     </dxi-total-item>
     <div *ngFor="let employee of employees">
       <dxi-total-item
@@ -44,7 +44,7 @@
     </div>
     <dxi-total-item
       displayFormat="FeiertagSaldo"
-      column="id">
+      column="date">
     </dxi-total-item>
     <div *ngFor="let employee of employees">
       <dxi-total-item
@@ -58,7 +58,7 @@
     </div>
     <dxi-total-item
       displayFormat="UrlaubSaldo"
-      column="id">
+      column="date">
     </dxi-total-item>
     <div *ngFor="let employee of employees">
       <dxi-total-item

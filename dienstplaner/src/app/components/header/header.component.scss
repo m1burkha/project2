@@ -50,7 +50,7 @@ $headerbackground: #fed70d;
   @include threedeetext(#da915a);
 }
 
-@media screen and (max-width: 625px)  {
+@media screen and (max-width: 805px)  {
   .header-text span {
     font: bold 50px/1.5 Helvetica, sans-serif;
     text-transform: uppercase;
@@ -61,7 +61,7 @@ $headerbackground: #fed70d;
   }
 }
 
-@media screen and (max-width: 502px)  {
+@media screen and (max-width: 630px)  {
   .header-text span {
     font: bold 35px/1.5 Helvetica, sans-serif;
     text-transform: uppercase;

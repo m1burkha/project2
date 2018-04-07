@@ -1,237 +1,84 @@
 [
   {
-    "2.2018": {
-      "shiftSchedules": [
-        {
-          "date": "2018-03-09T23:00:00.000Z",
-          "id": "2.2018",
-          "selectedShiftColumnOfEmployees": [
-            {
-              "columnEmployeeCaption": "Harry Hasler",
-              "columnEmployeeId": "1FU8y4kVr6AQ8yP6vRX4",
-              "shiftItem": {
-                "caption": "WorkingShift",
-                "id": "10",
-                "timeSpans": [
-                  {
-                    "endTime": "11:30",
-                    "id": "1",
-                    "month": 2,
-                    "startTime": "07:00",
-                    "totalHours": 4.5
-                  },
-                  {
-                    "endTime": "16:30",
-                    "id": "2",
-                    "month": 2,
-                    "startTime": "12:30",
-                    "totalHours": 4
-                  }
-                ],
-                "totalHours": 8.5,
-                "type": "workingShift"
-              }
-            }
-          ]
-        },
-        {
-          "date": "2018-03-09T23:00:00.000Z",
-          "id": "2.2018",
-          "selectedShiftColumnOfEmployees": [
-            {
-              "columnEmployeeCaption": "Marco Polo",
-              "columnEmployeeId": "5MY69SV5cFEorxeGqtEa",
-              "shiftItem": {
-                "caption": "WorkingShift",
-                "id": "10",
-                "timeSpans": [
-                  {
-                    "endTime": "11:30",
-                    "id": "1",
-                    "month": 2,
-                    "startTime": "07:00",
-                    "totalHours": 4.5
-                  },
-                  {
-                    "endTime": "16:30",
-                    "id": "2",
-                    "month": 2,
-                    "startTime": "12:30",
-                    "totalHours": 4
-                  }
-                ],
-                "totalHours": 8.5,
-                "type": "workingShift"
-              }
-            }
-          ]
-        },
-        {
-          "date": "2018-03-09T23:00:00.000Z",
-          "id": "2.2018",
-          "selectedShiftColumnOfEmployees": [
-            {
-              "columnEmployeeCaption": "Kollege Essig",
-              "columnEmployeeId": "9kTDXHvzJoPHnBT6H0R7",
-              "shiftItem": {
-                "caption": "WorkingShift",
-                "id": "10",
-                "timeSpans": [
-                  {
-                    "endTime": "11:30",
-                    "id": "1",
-                    "month": 2,
-                    "startTime": "07:00",
-                    "totalHours": 4.5
-                  },
-                  {
-                    "endTime": "16:30",
-                    "id": "2",
-                    "month": 2,
-                    "startTime": "12:30",
-                    "totalHours": 4
-                  }
-                ],
-                "totalHours": 8.5,
-                "type": "workingShift"
-              }
-            }
-          ]
-        },
-        {
-          "date": "2018-03-09T23:00:00.000Z",
-          "id": "2.2018",
-          "selectedShiftColumnOfEmployees": [
-            {
-              "columnEmployeeCaption": "Markus Peterer",
-              "columnEmployeeId": "TAYJ0PXdlegdOBa3Tlcv",
-              "shiftItem": {
-                "caption": "WorkingShift",
-                "id": "10",
-                "timeSpans": [
-                  {
-                    "endTime": "11:30",
-                    "id": "1",
-                    "month": 2,
-                    "startTime": "07:00",
-                    "totalHours": 4.5
-                  },
-                  {
-                    "endTime": "16:30",
-                    "id": "2",
-                    "month": 2,
-                    "startTime": "12:30",
-                    "totalHours": 4
-                  }
-                ],
-                "totalHours": 8.5,
-                "type": "workingShift"
-              }
-            }
-          ]
+    "date": "2018-03-31T23:00:00.000Z",
+    "id": "2018-04-01",
+    "selectedShiftColumnOfEmployees": [
+      {
+        "employeeId": "1FU8y4kVr6AQ8yP6vRX4",
+        "shiftItem": {
+          "caption": "",
+          "id": "",
+          "timeSpans": [          ]
         }
-      ]
-    }
+      },
+      {
+        "employeeId": "5MY69SV5cFEorxeGqtEa",
+        "shiftItem": {
+          "caption": "",
+          "id": "",
+          "timeSpans": [          ]
+        }
+      },
+      {
+        "employeeId": "9kTDXHvzJoPHnBT6H0R7",
+        "shiftItem": {
+          "caption": ""
+        }
+      },
+      {
+        "employeeId": "TAYJ0PXdlegdOBa3Tlcv",
+        "shiftItem": {
+          "caption": ""
+        }
+      }
+    ]
   },
   {
-    "3.2018": {
-      "shiftSchedules": [
-        {
-          "date": "2018-04-07T22:00:00.000Z",
-          "id": "3.2018",
-          "selectedShiftColumnOfEmployees": [
-            {
-              "columnEmployeeCaption": "Markus Peterer",
-              "columnEmployeeId": "TAYJ0PXdlegdOBa3Tlcv",
-              "shiftItem": {
-                "caption": "compensation",
-                "id": "50",
-                "timeSpans": [],
-                "totalHours": 3,
-                "type": "compensation"
-              }
-            }
-          ]
+    "date": "2018-04-02T23:00:00.000Z",
+    "id": "2018-04-03",
+    "selectedShiftColumnOfEmployees": [
+      {
+        "employeeId": "1FU8y4kVr6AQ8yP6vRX4",
+        "shiftItem": {
+          "caption": "Kompensation",
+          "id": "J9fqy7YE90I0FxvHbjYr",
+          "timeSpans": [          ],
+          "type": "compensation"
         }
-      ]
-    }
-  },
-  {
-    "3.2018": {
-      "shiftSchedules": [
-        {
-          "date": "2018-04-04T22:00:00.000Z",
-          "id": "3.2018",
-          "selectedShiftColumnOfEmployees": [
-            {
-              "columnEmployeeCaption": "Marco Polo",
-              "columnEmployeeId": "5MY69SV5cFEorxeGqtEa",
-              "shiftItem": {
-                "caption": "WorkingShift",
-                "id": "10",
-                "timeSpans": [
-                  {
-                    "endTime": "11:30",
-                    "id": "1",
-                    "month": 2,
-                    "startTime": "07:00",
-                    "totalHours": 4.5
-                  },
-                  {
-                    "endTime": "16:30",
-                    "id": "2",
-                    "month": 2,
-                    "startTime": "12:30",
-                    "totalHours": 4
-                  }
-                ],
-                "totalHours": 8.5,
-                "type": "workingShift"
-              }
-            }
-          ]
+      },
+      {
+        "employeeId": "5MY69SV5cFEorxeGqtEa",
+        "shiftItem": {
+          "caption": "Kompensation",
+          "id": "J9fqy7YE90I0FxvHbjYr",
+          "timeSpans": [          ],
+          "type": "compensation"
         }
-      ]
-    }
-  },
-  {
-    "4.2018": {
-      "shiftSchedules": [
-        {
-          "date": "2018-05-03T22:00:00.000Z",
-          "id": "4.2018",
-          "selectedShiftColumnOfEmployees": [
+      },
+      {
+        "employeeId": "9kTDXHvzJoPHnBT6H0R7",
+        "shiftItem": {
+          "caption": "07:00 - 16:30",
+          "id": "h3EGkzLYppZQUMaboQJ0",
+          "timeSpans": [
             {
-              "columnEmployeeCaption": "Harry Hasler",
-              "columnEmployeeId": "1FU8y4kVr6AQ8yP6vRX4",
-              "shiftItem": {
-                "caption": "compensation",
-                "id": "50",
-                "timeSpans": [],
-                "totalHours": 3,
-                "type": "compensation"
-              }
-            }
-          ]
-        },
-        {
-          "date": "2018-05-03T22:00:00.000Z",
-          "id": "4.2018",
-          "selectedShiftColumnOfEmployees": [
+              "endTime": "12:00",
+              "startTime": "07:00"
+            },
             {
-              "columnEmployeeCaption": "Marco Polo",
-              "columnEmployeeId": "5MY69SV5cFEorxeGqtEa",
-              "shiftItem": {
-                "caption": "Sick leave",
-                "id": "60",
-                "timeSpans": [],
-                "totalHours": 8.5,
-                "type": "sickLeave"
-              }
+              "endTime": "16:30",
+              "startTime": "13:00"
             }
-          ]
+          ],
+          "type": "workingShift"
         }
-      ]
-    }
+      },
+      {
+        "employeeId": "TAYJ0PXdlegdOBa3Tlcv",
+        "shiftItem": {
+          "caption": ""
+        }
+      }
+    ]
   }
-]
+  ]
