@@ -46,6 +46,8 @@ export class ShiftItem implements IShiftItem {
     Object.assign(this, values);
     if (!this.timeSpans) {
       this.timeSpans = [];
+    } else {
+      this.timeSpans = this.timeSpans.map(e => new TimeSpan(e));
     }
   }
 }

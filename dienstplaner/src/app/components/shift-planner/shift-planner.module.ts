@@ -17,13 +17,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
 import {ShiftItemComponent} from '@components/shift-planner/shift-item/shift-item.component';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
-import {ShiftTemplateComponent} from './shift-template/shift-template.component';
-import {ShiftTimeSpanComponent} from './shift-time-span/shift-time-span.component';
+import {ShiftTemplateComponent} from '@components/shift-planner/shift-template/shift-template.component';
+import {ShiftTimeSpanComponent} from '@components/shift-planner/shift-time-span/shift-time-span.component';
+
 import {DevModule} from '@components/dev/dev.module';
 import {
   MatButtonModule,
   MatDialogModule,
-  MatFormFieldModule,
+  MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatSelectModule,
   MatSnackBarModule,
@@ -34,8 +35,7 @@ import {
 import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {AddDialogComponent} from './shift-template/add-dialog/add-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {EmployeeAdministrationComponent} from '@components/employee-administration/employee-administration.component';
-import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
+import {HeaderModule} from '@components/header/header.module';
 
 const plannerRoutes: Routes = [
   {path: '', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
@@ -46,6 +46,7 @@ const plannerRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    HeaderModule,
     DxDataGridModule,
     DxPivotGridModule,
     DxTemplateModule,
@@ -66,6 +67,7 @@ const plannerRoutes: Routes = [
     MatDialogModule,
     MatSnackBarModule,
     MatInputModule,
+    MatIconModule,
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forChild(plannerRoutes)

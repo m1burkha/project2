@@ -29,6 +29,16 @@ export class FirestoreService<T> {
   }
 
   /**
+   * initializes subcollection
+   * @param {string} collection collection name
+   * @param {string} document document name
+   * @param {string} subcollection subcollection name
+   */
+  protected setSubCollection(collection: string, document: string, subcollection: string): void {
+    this.collection = this.db.collection(collection).doc(document).collection(subcollection);
+  }
+
+  /**
    * creates a document from object
    * @param {T} object object to store
    * @returns {Promise<DocumentReference>} id
@@ -73,6 +83,7 @@ export class FirestoreService<T> {
     if (!this.collection) {
       throw Error('collection not set');
     }
+    console.log(this.collection.valueChanges());
     return this.collection.valueChanges();
   }
 

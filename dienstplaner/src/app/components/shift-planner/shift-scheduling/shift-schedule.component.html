@@ -1,4 +1,4 @@
-<div class="dashboard">top dashboard</div>
+<app-header  [iconName]="'shift_clock3.png'" [headerText]="'Schicht Planner'"></app-header>
 
 <dx-select-box #selectMonthRef
                id="select-month"
@@ -20,17 +20,17 @@
   <dxo-scrolling mode="infinite"></dxo-scrolling>
   <dxo-editing mode="batch" [allowUpdating]="true"></dxo-editing>
   <dxo-paging [enabled]="false"></dxo-paging>
-  <dxi-column dataField="id"></dxi-column>
-  <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="false"></dxi-column>
+  <dxi-column dataField="date" [calculateDisplayValue]="getFormattedDate" caption="Datum" [allowEditing]="false"></dxi-column>
   <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
-     <dxi-column dataField="{{column.columnEmployeeId}}" caption="{{column.columnEmployeeCaption}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
+     <dxi-column dataField="{{column.employeeId}}" caption="{{getEmployeeCaption(column.employeeId)}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
         <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
      </dxi-column>
   </div>
+
   <dxo-summary [calculateCustomSummary]="calculateAllTotals">
     <dxi-total-item
       displayFormat="SollStunden"
-      column="id">
+      column="date">
     </dxi-total-item>
     <div *ngFor="let employee of employees">
       <dxi-total-item
@@ -44,7 +44,7 @@
     </div>
     <dxi-total-item
       displayFormat="FeiertagSaldo"
-      column="id">
+      column="date">
     </dxi-total-item>
     <div *ngFor="let employee of employees">
       <dxi-total-item
@@ -58,7 +58,7 @@
     </div>
     <dxi-total-item
       displayFormat="UrlaubSaldo"
-      column="id">
+      column="date">
     </dxi-total-item>
     <div *ngFor="let employee of employees">
       <dxi-total-item

@@ -1,0 +1,34 @@
+[
+  {
+    "caption": "Harry Hasler",
+    "department": "Geschäftsleitung",
+    "id": "1FU8y4kVr6AQ8yP6vRX4",
+    "vacationDays": "20",
+    "weekHours": "42.5",
+    "workLoad": "70"
+  },
+  {
+    "caption": "Marco Polo",
+    "department": "GL",
+    "id": "5MY69SV5cFEorxeGqtEa",
+    "vacationDays": "20",
+    "weekHours": "42",
+    "workLoad": "100"
+  },
+  {
+    "caption": "Kollege Essig",
+    "department": "Küche",
+    "id": "9kTDXHvzJoPHnBT6H0R7",
+    "vacationDays": "12",
+    "weekHours": "30",
+    "workLoad": "65"
+  },
+  {
+    "caption": "Markus Peterer",
+    "department": "Service",
+    "id": "TAYJ0PXdlegdOBa3Tlcv",
+    "vacationDays": "20",
+    "weekHours": "42.5",
+    "workLoad": "100"
+  }
+]

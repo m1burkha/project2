@@ -1,26 +1,65 @@
 <h1 mat-dialog-title>Element hinzufügen</h1>
 
-<form [formGroup]="form" (ngSubmit)="add()">
   <div mat-dialog-content class="example-container">
     <mat-form-field>
-      <input matInput placeholder="Bezeichnung" [formControl]="captionControl" required/>
-      <mat-error *ngIf="captionControl.invalid">{{getCaptionErrorMessage()}}</mat-error>
+      <input matInput placeholder="Bezeichnung" [value]="shiftItem.caption" (change)="captionChanged($event)" required/>
     </mat-form-field>
   </div>
 
   <div mat-dialog-content class="example-container">
     <mat-form-field>
-      <mat-select placeholder="Art" [formControl]="typeControl" required>
+      <mat-select placeholder="Art" [(value)]="shiftItem.type" required>
         <mat-option *ngFor="let type of types" [value]="type.value">
           {{ type.viewValue }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="typeControl.invalid">{{getTypeErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>
 
+<div mat-dialog-content class="time-container" *ngFor="let ts of shiftItem.timeSpans">
+  <mat-form-field>
+    <mat-select placeholder="Von" [value]="getHour(ts.startTime)" (change)="ts.startTime = setHour(ts.startTime, $event)" required>
+      <mat-option *ngFor="let time of hours" [value]="time">
+        {{ time }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  :
+  <mat-form-field>
+    <mat-select [value]="getMinute(ts.startTime)" (change)="ts.startTime = setMinute(ts.startTime, $event)" required>
+      <mat-option *ngFor="let time of minutes" [value]="time">
+        {{ time }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+-
+  <mat-form-field>
+    <mat-select placeholder="Bis" [value]="getHour(ts.endTime)" (change)="ts.endTime = setHour(ts.endTime, $event)" required>
+      <mat-option *ngFor="let time of hours" [value]="time">
+        {{ time }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  :
+  <mat-form-field>
+    <mat-select [value]="getMinute(ts.endTime)" (change)="ts.endTime = setMinute(ts.endTime, $event)" required>
+      <mat-option *ngFor="let time of minutes" [value]="time">
+        {{ time }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <span>({{ts.totalHours.toFixed(2)}} h)</span>
+
+  <mat-icon (click)="removeTimeSpan(ts)">remove_circle</mat-icon>
+</div>
+
+
+<span>({{totalHours.toFixed(2)}} h)</span>
+
+<mat-icon (click)="addTimeSpan()">add_circle</mat-icon>
+
   <div mat-dialog-actions class="button-container">
     <button mat-raised-button type="button" (click)="onClick()">abbrechen</button>
-    <button mat-raised-button type="submit">hinzufügen</button>
+    <button mat-raised-button type="button" (click)="add()">speichern</button>
   </div>
-</form>

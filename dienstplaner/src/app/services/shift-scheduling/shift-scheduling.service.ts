@@ -5,6 +5,7 @@ import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {Observable} from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
+import * as moment from 'moment';
 
 /**
  * shift scheduling service
@@ -21,38 +22,54 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
     this.setCollection('ShiftScheduling');
   }
 
-  setAlternativeCollection(year: string, month: string) {
-    this.db.collection('ShiftScheduling').doc(year).collection(month);
+  setAltCollection(date: Date) {
+    this.setSubCollection('ShiftScheduling', moment(date).format('YYYY'), moment(date).format('MM'));
   }
 
-  readShifts(year: string, month: string, id: string): AngularFirestoreDocument<IShiftSchedule> {
-    this.setAlternativeCollection(year, month);
+  /**
+   * gets all shifts of a day
+   * @param {string} id date 'YYYY-MM-DD'
+   * @returns {AngularFirestoreDocument<IShiftSchedule>}
+   */
+  public readShifts(id: string): AngularFirestoreDocument<IShiftSchedule> {
+    this.setAltCollection(moment(id).toDate());
     return this.read(id);
   }
 
-  public readAllShifts(year: string, month: string): Observable<IShiftSchedule[]> {
-    this.setAlternativeCollection(year, month);
-    return    this.readAll();
+  /**
+   * gets all shifts of a month
+   * @param {string} year year, 4 digits
+   * @param {string} month human readable month index (jan = 1, dec = 12)
+   * @returns {Observable<IShiftSchedule[]>}
+   */
+  public readAllShifts(date: Date): Observable<IShiftSchedule[]> {
+    this.setAltCollection(date);
+    return this.readAll();
   }
 
   public createShift(object: IShiftSchedule): Promise<DocumentReference> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
+    this.setAltCollection(object.date);
+    object.id = moment(object.date).format('YYYY-MM-DD');
     return this.create(object);
   }
 
-  public updateShift(id: string, object: IShiftSchedule): Promise<void> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
-    return this.update(id, object);
+  public updateShift(object: IShiftSchedule): Promise<void> {
+    this.setAltCollection(object.date);
+    return this.update(object.id, object);
   }
 
   public updatePartialShift(id: string, object: Partial<IShiftSchedule>): Promise<void> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
+    this.setAltCollection(object.date);
     return this.updatePartial(id, object);
   }
 
-  public deleteShift(id: string, object: IShiftSchedule): Promise<void> {
-    this.setAlternativeCollection(object.date.getFullYear().toString(), object.date.getMonth().toString());
-    return this.delete(id);
+  public deleteShift(object: IShiftSchedule): Promise<void> {
+    this.setAltCollection(object.date);
+    return this.delete(object.id);
+  }
+
+  public createId(): string {
+    return this.db.createId();
   }
 }
 

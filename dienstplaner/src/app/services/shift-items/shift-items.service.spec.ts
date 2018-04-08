@@ -1,11 +1,19 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { ShiftItemsService } from './shift-items.service';
+import {ShiftItemsService} from './shift-items.service';
+import {environment} from '../../../environments/environment';
+import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
 
 describe('ShiftItemsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ShiftItemsService]
+      imports: [
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule
+      ],
+      providers: [ShiftItemsService, AngularFirestore]
     });
   });
 

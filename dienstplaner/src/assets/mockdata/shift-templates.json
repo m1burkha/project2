@@ -1,0 +1,69 @@
+{
+  "templates": [
+    {
+      "id": "10",
+      "caption": "WorkingShift",
+      "type": "workingShift",
+      "timeSpans": [
+        {
+          "id": "1",
+          "startTime": "07:00",
+          "endTime": "11:30",
+          "totalHours": 4.5,
+          "month": 2
+        },
+        {
+          "id": "2",
+          "startTime": "12:30",
+          "endTime": "16:30",
+          "totalHours": 4,
+          "month": 2
+        }
+      ],
+      "totalHours": 8.5
+    },
+    {
+      "id": "20",
+      "caption": "Other",
+      "type": "other",
+      "timeSpans": [
+        {
+          "id": "3",
+          "startTime": "09:00",
+          "endTime": "12:30",
+          "totalHours": 3.5,
+          "month": 2
+        },
+        {
+          "id": "4",
+          "startTime": "13:30",
+          "endTime": "18:30",
+          "totalHours": 2,
+          "month": 2
+        }
+      ],
+      "totalHours": 5.5
+    },
+    {
+      "id": "50",
+      "caption": "compensation",
+      "type": "compensation",
+      "timeSpans": [],
+      "totalHours": 3
+    },
+    {
+      "id": "60",
+      "caption": "Sick leave",
+      "type": "sickLeave",
+      "timeSpans": [],
+      "totalHours": 8.5
+    },
+    {
+      "id": "80",
+      "caption": "Vacation",
+      "type": "vacation",
+      "timeSpans": [],
+      "totalHours": 6.5
+    }
+  ]
+}

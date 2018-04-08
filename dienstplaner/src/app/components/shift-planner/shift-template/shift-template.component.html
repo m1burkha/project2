@@ -1,32 +1,34 @@
-
+<app-header  [iconName]="'template_blue.png'" [headerText]="'Schicht Templates'"></app-header>
 <div class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource">
 
     <ng-container matColumnDef="caption">
-      <mat-header-cell *matHeaderCellDef> caption</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.caption}}
-        <span *ngIf="element.tooltip_caption"><i class="fa fa-info-circle"></i></span>
-      </mat-cell>
+      <mat-header-cell *matHeaderCellDef> Bezeichnung</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.caption}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef> type </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.type}}
-        <span *ngIf="element.tooltip_type"><i class="fa fa-info-circle"></i></span></mat-cell>
+      <mat-header-cell *matHeaderCellDef> Art </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.type}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="timespans">
-      <mat-header-cell *matHeaderCellDef> timespans </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Zeiten </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <div *ngFor="let item of element.timespans">{{item.start}} - {{item.end}} ({{item.totalhours}} h)</div>
-        <span *ngIf="element.tooltip_timespans"><i class="fa fa-info-circle"></i></span>
+        <div *ngFor="let item of element.timeSpans">{{item.startTime}} - {{item.endTime}} ({{item.totalHours.toFixed(2)}} h)</div>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="totalhours">
-      <mat-header-cell *matHeaderCellDef> totalhours </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.totalhours}}{{element.totalhours ? ' h' : ''}}
-        <span *ngIf="element.tooltip_totalhours"><i class="fa fa-info-circle"></i></span>
+      <mat-header-cell *matHeaderCellDef> Stunden </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{reduceHours(element.timeSpans)}} h</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef class="actions"> </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="actions">
+        <mat-icon title="bearbeiten" (click)="editItem(element)">edit</mat-icon>
+        <mat-icon title="löschen" (click)="deleteItem(element)">delete</mat-icon>
       </mat-cell>
     </ng-container>
 
