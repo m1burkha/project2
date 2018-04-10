@@ -5,17 +5,17 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Employee} from '@domain-models/employee/employee';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {HeaderComponent} from '@components/header/header.component';
-import {ShiftScheduleService} from "@services/shift-scheduling/shift-scheduling.service";
-import {ShiftItemsService} from "@services/shift-items/shift-items.service";
-import {by, element} from "protractor";
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
+import {ShiftItemsService} from '@services/shift-items/shift-items.service';
+import {By} from '@angular/platform-browser';
 
 
 describe('ShiftScheduleComponent', () => {
   let component: ShiftScheduleComponent;
   let fixture: ComponentFixture<ShiftScheduleComponent>;
   let employees: Employee[] = [], shiftTemplates: ShiftItem[] = [];
-  employees = require(('../../../../assets/mockdata/employees.json'));
-  shiftTemplates = require(('../../../../assets/mockdata/shift-templates.json'));
+  employees = require(('../../../../assets/data/mockdata/employees.json'));
+  shiftTemplates = require(('../../../../assets/data/mockdata/shift-templates.json'));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,17 +41,17 @@ describe('ShiftScheduleComponent', () => {
 
       service.readAllShifts(new Date()).subscribe(shift => {
         expect(shift.length).toBe(2);
-      })
+      });
     });
   });
 
   it('employee list should not be empty and must contain employee id of 1FU8y4kVr6AQ8yP6vRX4', () => {
-    inject([EmployeeService],(service: EmployeeService) => {
+    inject([EmployeeService], (service: EmployeeService) => {
       service.readAll().subscribe(emplist => {
         expect(emplist.length > 0).toBeGreaterThan(0);
         expect(emplist[0].id === '1FU8y4kVr6AQ8yP6vRX4').toBe(true);
       });
-    })
+    });
   });
 
   it('shift template list should not be empty and must contain shift caption workingshift', () => {
@@ -63,11 +63,11 @@ describe('ShiftScheduleComponent', () => {
     });
   });
 
-  it('select shift from drop down ',  () => {
-    element(by.css('dx-texteditor-container > dx-item: nth-child(1)')).click().then(() => {
-      console.log(element(by.css('dx-list-item-content')).getText());
+  it('select shift from drop down ', () => {
+    fixture.debugElement.query(By.css('dx-texteditor-container > dx-item: nth-child(1)')).nativeElement.click().then(() => {
+      // console.log(element(By.css('dx-list-item-content')).getText());
       // expect(element(by.css('dx-list-item-content')).getText()).toBe(`07:00 - 16:30`);
-    })
+    });
 
   });
 });
