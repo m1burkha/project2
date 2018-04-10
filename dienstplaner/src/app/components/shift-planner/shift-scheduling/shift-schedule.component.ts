@@ -17,6 +17,9 @@ import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {zip} from 'rxjs/observable/zip';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
+import {IPublicHolidayShift, PublicHolidayShift} from '@domain-models/shift-scheduling/public-holiday-shift';
+import {filter} from 'rxjs/operator/filter';
+
 
 @Component({
   selector: 'app-shift-scheduling',
@@ -30,6 +33,7 @@ export class ShiftScheduleComponent implements OnInit {
   months: string[];
   employees: Employee[] = [];
   shiftTemplates: ShiftItem[];
+  publicHolidays: IPublicHolidayShift[];
   totalEmployees: number;
   selectedMonth: number;
 
@@ -59,7 +63,7 @@ export class ShiftScheduleComponent implements OnInit {
       this.shiftTemplateService.readAll(),
       this.employeeService.readAll())
       .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
-        templates.push(new ShiftItem({caption: ''}));
+        templates.push(new ShiftItem({caption: '', timeSpans: []}));
         this.shiftTemplates = templates.sort((a, b) => (a.caption > b.caption ? 1 : -1)).sort((a, b) => (a.type < b.type ? 1 : -1)).map(e => new ShiftItem(e));
         this.employees = employees;
         this.totalEmployees = this.employees.length;
@@ -112,7 +116,8 @@ export class ShiftScheduleComponent implements OnInit {
         const row = new EmployeeShiftItem({
           employeeId: employee.id,
           shiftItem: {
-            caption: '' // default shiftItem value
+            caption: '', // default shiftItem value
+            timeSpans: []
           }
         });
         scheduleRow.selectedShiftColumnOfEmployees.push(row);
@@ -139,7 +144,34 @@ export class ShiftScheduleComponent implements OnInit {
               });
             }
           });
+        this.setPublicHolidays(monthIndex);
+        this.calculateLeaveTaken();
         this.sheduleDataSource = shifts;
+      });
+  }
+
+  setPublicHolidays(monthIndex: number) {
+    this.scheduleService.fetchPublicHolidays()
+      .subscribe((publicHolidays: PublicHolidayShift[]) => {
+        publicHolidays.filter(days => new Date(days.date).getMonth() === monthIndex)
+          .forEach(publicDay => {
+            const currentRow = this.sheduleDataSource.find(row => row.date.getDate() === new Date(publicDay.date).getDate());
+            if (currentRow) {
+              currentRow.selectedShiftColumnOfEmployees.forEach(emp => {
+                emp.shiftItem.caption = publicDay.name;
+                emp.shiftItem.type = ShiftType.publicHoliday;
+                emp.shiftItem.timeSpans.push(new TimeSpan({startTime: '08:00', endTime: '12:00'}));
+                emp.shiftItem.timeSpans.push(new TimeSpan({startTime: '13:00', endTime: '17:00'}));
+              });
+            }
+          });
+      });
+  }
+
+  calculateLeaveTaken() {
+    this.scheduleService.readAllShifts(new Date())
+      .subscribe(x => {
+        console.log(x);
       });
   }
 

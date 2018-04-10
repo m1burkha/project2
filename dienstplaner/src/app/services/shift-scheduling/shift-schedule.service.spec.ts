@@ -10,7 +10,7 @@ import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 
 describe('ShiftScheduleService', () => {
 
-  const mockSchedules = new Observable<IShiftSchedule[]>(sub => sub.next(require('../../../assets/mockdata/shiftSchedules.json')));
+  const mockSchedules = new Observable<IShiftSchedule[]>(sub => sub.next(require('../../../assets/data/mockdata/shiftSchedules.json')));
   const serviceMock: any = {
     readAllShifts: jasmine.createSpy('readAllShifts')
       .and.returnValue(mockSchedules),
