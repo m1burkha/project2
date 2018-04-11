@@ -325,13 +325,6 @@ export class ShiftScheduleComponent implements OnInit {
         text: 'SchichtTemplates',
         onClick: this.showShiftTemplates.bind(this)
       },
-    }, {
-      location: 'after',
-      widget: 'dxButton',
-      options: {
-        icon: 'refresh',
-        onClick: this.refreshDataGrid.bind(this),
-      },
     });
   }
 }

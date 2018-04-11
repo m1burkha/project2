@@ -7,16 +7,15 @@ import {Observable} from 'rxjs/Observable';
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as moment from 'moment';
 
-
 /**
- * shift scheduling service
+ * service for shiftSchedue
  */
 @Injectable()
 export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
 
   /**
    * initializes shift scheduling service
-   * @param {AngularFirestore} db angular firestore
+   * @param {AngularFirestore} db, angular firestore
    */
   constructor(protected db: AngularFirestore) {
     super(db);

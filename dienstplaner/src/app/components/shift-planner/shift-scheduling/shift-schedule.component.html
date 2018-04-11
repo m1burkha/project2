@@ -16,13 +16,12 @@
   (onEditorPreparing)="onShiftChangeEvent($event)"
   (onToolbarPreparing)="onToolbarPreparing($event)">
   <dxo-export [enabled]="true" fileName="ShiftSchedules"></dxo-export>
-  <dxo-search-panel [visible]="true"></dxo-search-panel>
   <dxo-scrolling mode="infinite"></dxo-scrolling>
   <dxo-editing mode="batch" [allowUpdating]="true"></dxo-editing>
   <dxo-paging [enabled]="false"></dxo-paging>
-  <dxi-column dataField="date" [calculateDisplayValue]="getFormattedDate" caption="Datum" [allowEditing]="false"></dxi-column>
+  <dxi-column dataField="date" [calculateDisplayValue]="getFormattedDate" caption="Datum" [allowEditing]="false" [allowSorting]="false"></dxi-column>
   <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
-     <dxi-column dataField="{{column.employeeId}}" caption="{{getEmployeeCaption(column.employeeId)}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem">
+     <dxi-column dataField="{{column.employeeId}}" caption="{{getEmployeeCaption(column.employeeId)}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem" [allowSorting]="false">
         <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id" ></dxo-lookup>
      </dxi-column>
   </div>
