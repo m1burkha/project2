@@ -18,22 +18,32 @@ import {zip} from 'rxjs/observable/zip';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 
+/** The ShiftSchedule component */
 @Component({
   selector: 'app-shift-scheduling',
   templateUrl: './shift-schedule.component.html',
   styleUrls: ['./shift-schedule.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
+/** The ShiftSchedule class */
 export class ShiftScheduleComponent implements OnInit {
 
+  /** the schedule datasource for the grid */
   sheduleDataSource: ShiftSchedule[] = [];
+  /** months holder for the month drop down */
   months: string[];
+  /** the list of employees, displays all the columns in the datagrid */
   employees: Employee[] = [];
+  /** template holder for all the templates created */
   shiftTemplates: ShiftItem[];
+  /** total amount of employees, displayed tin the toolbar */
   totalEmployees: number;
+  /** the month selected from the dropdown */
   selectedMonth: number;
 
+  /** reference to the datagrid component */
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
+  /** reference to the month select component */
   @ViewChild('selectMonthRef') selectMonthRef: DxSelectBoxComponent;
 
   /**
@@ -59,7 +69,7 @@ export class ShiftScheduleComponent implements OnInit {
       this.shiftTemplateService.readAll(),
       this.employeeService.readAll())
       .map(([templates, employees]: [ShiftItem[], Employee[]]) => {
-        templates.push(new ShiftItem({caption: ''}));
+        templates.push(new ShiftItem({caption: '', timeSpans: []}));
         this.shiftTemplates = templates.sort((a, b) => (a.caption > b.caption ? 1 : -1)).sort((a, b) => (a.type < b.type ? 1 : -1)).map(e => new ShiftItem(e));
         this.employees = employees;
         this.totalEmployees = this.employees.length;
@@ -79,16 +89,31 @@ export class ShiftScheduleComponent implements OnInit {
     this.createDefaultShifts(this.selectedMonth);
   }
 
+  /**
+   * sets the text/caption in the datagrid cell from the datasource
+   * @param rowData
+   * @returns {any}
+   */
   setCellFromDatasource(rowData) {
     const column = this as any;
     const col = rowData.selectedShiftColumnOfEmployees.find(currentColumn => currentColumn.employeeId === column.dataField);
     return col.shiftItem.caption;
   }
 
+  /**
+   * date format for the date column in the datagrid, eg: column Datumn Mo, 02.04.2018
+   * @param rowData
+   * @returns {string}
+   */
   getFormattedDate(rowData) {
     return moment(rowData.date).format('dd, DD.MM.YYYY');
   }
 
+  /**
+   * sets the caption (employee name) for each employee column
+   * @param employeeId
+   * @returns {string}
+   */
   getEmployeeCaption(employeeId): string {
     return this.employees.find(x => x.id === employeeId).caption;
   }
@@ -112,7 +137,8 @@ export class ShiftScheduleComponent implements OnInit {
         const row = new EmployeeShiftItem({
           employeeId: employee.id,
           shiftItem: {
-            caption: '' // default shiftItem value
+            caption: '', // default shiftItem value
+            timeSpans: []
           }
         });
         scheduleRow.selectedShiftColumnOfEmployees.push(row);
@@ -154,8 +180,8 @@ export class ShiftScheduleComponent implements OnInit {
 
   /**
    * Sets the shift in the selected cell for that column
-   * @param rowData, the row and cell new selected value to be set
-   * @param value
+   * @param rowData, the row and cell of the new selection
+   * @param value, the value to set
    */
   onSetCellValue(rowData: any, value: any): void {
     (<any>this).defaultSetCellValue(rowData, value);
@@ -262,21 +288,27 @@ export class ShiftScheduleComponent implements OnInit {
     this.dataGrid.instance.refresh();
   }
 
+  /**
+   * navigation button (Mitarbeiter profile), navigates to the employees grid
+   */
   showEmployees() {
     this.router.navigateByUrl('/employees');
   }
 
+  /**
+   * navigation button (Schicht Templates), navigates to the shift template grid
+   */
   showShiftTemplates() {
     this.router.navigateByUrl('/shifttemplate');
   }
 
   /**
    * The toolbar and components in the toolbar above the datagrid
-   * @param e
+   * @param e, which component event has been clicked
    */
   onToolbarPreparing(e) {
 
-    e.toolbarOptions.items.forEach((item, index) => {
+    e.toolbarOptions.items.forEach((item) => {
       if (item.name === 'revertButton') {
         item.options.onClick = (x) => {
           this.dataGrid.instance.cancelEditData();
@@ -302,13 +334,6 @@ export class ShiftScheduleComponent implements OnInit {
       options: {
         text: 'SchichtTemplates',
         onClick: this.showShiftTemplates.bind(this)
-      },
-    }, {
-      location: 'after',
-      widget: 'dxButton',
-      options: {
-        icon: 'refresh',
-        onClick: this.refreshDataGrid.bind(this),
       },
     });
   }

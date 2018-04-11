@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialogRef, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '@services/user/user.service';
@@ -60,7 +60,8 @@ export class RegisterDialogComponent {
    * @param {FormBuilder} formBuilder form builder
    * @param {MatSnackBar} snackBar snack bar
    */
-  constructor(public dialogRef: MatDialogRef<RegisterDialogComponent>, private userService: UserService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(public dialogRef: MatDialogRef<RegisterDialogComponent>, private userService: UserService,
+              private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
     this.form = formBuilder.group({
       username: this.username,
       email: this.email,
@@ -72,7 +73,7 @@ export class RegisterDialogComponent {
    * register user
    */
   register() {
-    if (this.username.valid && this.email.valid && this.password.valid)
+    if (this.username.valid && this.email.valid && this.password.valid) {
       this.userService.create(this.username.value, this.email.value, this.password.value).then(e => {
         this.snackBar.open('user created', null, {
           duration: 3000,
@@ -80,7 +81,7 @@ export class RegisterDialogComponent {
           panelClass: ['mat-snack-bar-container__success']
         });
         console.log('custom then', e);
-        if (typeof Storage !== undefined) {
+        if (typeof Storage !== 'undefined') {
           sessionStorage.setItem('auth_token', JSON.stringify(e));
         }
         this.dialogRef.close();
@@ -91,6 +92,7 @@ export class RegisterDialogComponent {
           panelClass: ['mat-snack-bar-container__error']
         });
       });
+    }
   }
 
   /**
