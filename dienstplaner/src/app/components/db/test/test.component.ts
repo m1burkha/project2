@@ -3,8 +3,8 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import {UserService} from '@services/user/user.service';
-import {ShiftScheduleService} from '@services/shift-scheduling/shift-schedule.service';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 
 
 class TestItem {
