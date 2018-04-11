@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from '@components/login/login.component';
 import {TestComponent} from '@components/db/test/test.component';
-import {LogoutComponent} from "@components/logout/logout.component";
+import {LogoutComponent} from '@components/logout/logout.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
