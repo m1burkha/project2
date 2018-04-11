@@ -6,9 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as moment from 'moment';
-import {HttpClient} from '@angular/common/http';
-import {IShiftItem, ShiftItem} from '@domain-models/shift-scheduling/shift-item';
-import {IPublicHolidayShift} from '@domain-models/shift-scheduling/public-holiday-shift';
+
 
 /**
  * shift scheduling service
@@ -20,11 +18,15 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
    * initializes shift scheduling service
    * @param {AngularFirestore} db angular firestore
    */
-  constructor(protected db: AngularFirestore, private httpClient: HttpClient) {
+  constructor(protected db: AngularFirestore) {
     super(db);
     this.setCollection('ShiftScheduling');
   }
 
+  /**
+   * the collection and document path for firebase, ShiftScheduling/year/month (ShiftScheduling/2018/04)
+   * @param {Date} date
+   */
   setAltCollection(date: Date) {
     this.setSubCollection('ShiftScheduling', moment(date).format('YYYY'), moment(date).format('MM'));
   }
@@ -90,13 +92,6 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
   public deleteShift(object: IShiftSchedule): Promise<void> {
     this.setAltCollection(object.date);
     return this.delete(object.id);
-  }
-
-  fetchPublicHolidays(): Observable<IPublicHolidayShift[]> {
-    return this.httpClient.get('../../assets/data/Feiertage_2018.json')
-      .map(response => {
-        return <IPublicHolidayShift[]>response;
-      });
   }
 }
 
