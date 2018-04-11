@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {UserService} from "@services/user/user.service";
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit{
         '';
   }
  /**
-   * Login coconstructor injecting the FormBuilder for forms and AuthenticationService for login
+   * Login coconstructor injecting the FormBuilder for forms and UserService for login
    */
   constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog) {
     this.form = formBuilder.group({
@@ -49,7 +48,7 @@ export class LoginComponent implements OnInit{
   login() {
     if (this.username.valid && this.password.valid)
       this.userService.login(this.username.value, this.password.value).then(e => {
-        //this.snackBar.open(e, null, { duration: 3000 });
+        // this.snackBar.open(e, null, { duration: 3000 });
         console.log('custom then', e);
         if (typeof Storage !== undefined) {
           sessionStorage.setItem('auth_token', JSON.stringify(e));
