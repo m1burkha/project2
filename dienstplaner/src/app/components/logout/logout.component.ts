@@ -5,7 +5,7 @@ import {UserService} from '@services/user/user.service';
 @Component({
   template: ''
 })
-export class LogoutComponent implements OnInit{
+export class LogoutComponent implements OnInit {
   /**
    * logout constructor
    */
@@ -14,8 +14,8 @@ export class LogoutComponent implements OnInit{
 
   /** on init */
   ngOnInit() {
-      this.userService.logout().then(() => {
-        this.router.navigate(['/']);
-      });
+    this.userService.logout().then(() => {
+      this.router.navigate(['/']);
+    });
   }
 }

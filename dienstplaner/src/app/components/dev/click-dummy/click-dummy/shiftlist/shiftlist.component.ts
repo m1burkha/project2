@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-shiftlist',
@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class ShiftlistComponent {
   displayedColumns = ['date', 'person1', 'person2'];
-  dataSource  = [
-    {date: 'Do, 01.02.2018', person1: '', person2: '', tooltip_person1: 'hier kann ein oder mehrere Templates (shift-item) ausgewählt werden'},
+  dataSource = [
+    {
+      date: 'Do, 01.02.2018',
+      person1: '',
+      person2: '',
+      tooltip_person1: 'hier kann ein oder mehrere Templates (shift-item) ausgewählt werden'
+    },
     {date: 'Fr, 02.02.2018', person1: '', person2: ''},
     {date: 'Sa, 03.02.2018', person1: 'Samstag-Frühschicht', person2: ''},
     {date: 'So, 04.02.2018', person1: '', person2: ''},
@@ -36,9 +41,18 @@ export class ShiftlistComponent {
     {date: 'Mo, 26.02.2018', person1: '', person2: 'Feiertag'},
     {date: 'Di, 27.02.2018', person1: '', person2: ''},
     {date: 'Mi, 28.02.2018', person1: '', person2: ''},
-    {total: 'Soll-Stunden', person1: '132.2', person2: '187.9', tooltip_person1: 'wird aus den Werten in der Liste berechnet', tooltip_person2: 'wird aus den Werten in der Liste berechnet'},
-    {total: 'Urlaubssaldo', person1: '8.7', person2: '17.2', tooltip_person1: 'wird aus den Werten in der Liste berechnet', tooltip_person2: 'wird aus den Werten in der Liste berechnet'},
-    {total: 'Feiertagsaldo', person1: '1.7', person2: '2.4', tooltip_person1: 'wird aus den Werten in der Liste berechnet', tooltip_person2: 'wird aus den Werten in der Liste berechnet'},
+    {
+      total: 'Soll-Stunden', person1: '132.2', person2: '187.9', tooltip_person1: 'wird aus den Werten in der Liste berechnet',
+      tooltip_person2: 'wird aus den Werten in der Liste berechnet'
+    },
+    {
+      total: 'Urlaubssaldo', person1: '8.7', person2: '17.2', tooltip_person1: 'wird aus den Werten in der Liste berechnet',
+      tooltip_person2: 'wird aus den Werten in der Liste berechnet'
+    },
+    {
+      total: 'Feiertagsaldo', person1: '1.7', person2: '2.4', tooltip_person1: 'wird aus den Werten in der Liste berechnet',
+      tooltip_person2: 'wird aus den Werten in der Liste berechnet'
+    },
   ];
   templates = [
     'Frühschicht',
