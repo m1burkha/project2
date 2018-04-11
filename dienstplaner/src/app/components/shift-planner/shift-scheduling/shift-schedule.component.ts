@@ -18,22 +18,32 @@ import {zip} from 'rxjs/observable/zip';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 
+/** The ShiftSchedule component */
 @Component({
   selector: 'app-shift-scheduling',
   templateUrl: './shift-schedule.component.html',
   styleUrls: ['./shift-schedule.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
+/** The ShiftSchedule class */
 export class ShiftScheduleComponent implements OnInit {
 
+  /** the schedule datasource for the grid */
   sheduleDataSource: ShiftSchedule[] = [];
+  /** months holder for the month drop down */
   months: string[];
+  /** the list of employees, displays all the columns in the datagrid */
   employees: Employee[] = [];
+  /** template holder for all the templates created */
   shiftTemplates: ShiftItem[];
+  /** total amount of employees, displayed tin the toolbar */
   totalEmployees: number;
+  /** the month selected from the dropdown */
   selectedMonth: number;
 
+  /** reference to the datagrid component */
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
+  /** reference to the month select component */
   @ViewChild('selectMonthRef') selectMonthRef: DxSelectBoxComponent;
 
   /**

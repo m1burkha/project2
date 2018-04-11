@@ -7,9 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as moment from 'moment';
 
-/**
- * service for shiftSchedue
- */
+/** service for shiftSchedue */
 @Injectable()
 export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
 
@@ -52,7 +50,7 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
 
   /**
    * create a new shift
-   * @param {IShiftSchedule} object, id, date, selectedShiftColumnOfEmployees
+   * @param {IShiftSchedule} object (id, date, selectedShiftColumnOfEmployees)
    * @returns {Promise<DocumentReference>}
    */
   public createShift(object: IShiftSchedule): Promise<DocumentReference> {
@@ -63,7 +61,7 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
 
   /**
    * update the changed shift
-   * @param {IShiftSchedule} object, id, date, selectedShiftColumnOfEmployees
+   * @param {IShiftSchedule} object (id, date, selectedShiftColumnOfEmployees)
    * @returns {Promise<void>}
    */
   public updateShift(object: IShiftSchedule): Promise<void> {
@@ -74,7 +72,7 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
   /**
    * Update a specific shift
    * @param {string} id
-   * @param {Partial<IShiftSchedule>} object, id, date, selectedShiftColumnOfEmployees
+   * @param {Partial<IShiftSchedule>} object (id, date, selectedShiftColumnOfEmployees)
    * @returns {Promise<void>}
    */
   public updatePartialShift(id: string, object: Partial<IShiftSchedule>): Promise<void> {
@@ -84,7 +82,7 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
 
   /**
    * delete a shift
-   * @param {IShiftSchedule} object, id, date, selectedShiftColumnOfEmployees
+   * @param {IShiftSchedule} object (id, date, selectedShiftColumnOfEmployees)
    * @returns {Promise<void>}
    */
   public deleteShift(object: IShiftSchedule): Promise<void> {
