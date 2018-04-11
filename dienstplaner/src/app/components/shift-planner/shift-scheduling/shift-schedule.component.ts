@@ -79,16 +79,31 @@ export class ShiftScheduleComponent implements OnInit {
     this.createDefaultShifts(this.selectedMonth);
   }
 
+  /**
+   * sets the text/caption in the datagrid cell from the datasource
+   * @param rowData
+   * @returns {any}
+   */
   setCellFromDatasource(rowData) {
     const column = this as any;
     const col = rowData.selectedShiftColumnOfEmployees.find(currentColumn => currentColumn.employeeId === column.dataField);
     return col.shiftItem.caption;
   }
 
+  /**
+   * date format for the date column in the datagrid, eg: column Datumn Mo, 02.04.2018
+   * @param rowData
+   * @returns {string}
+   */
   getFormattedDate(rowData) {
     return moment(rowData.date).format('dd, DD.MM.YYYY');
   }
 
+  /**
+   * sets the caption (employee name) for each employee column
+   * @param employeeId
+   * @returns {string}
+   */
   getEmployeeCaption(employeeId): string {
     return this.employees.find(x => x.id === employeeId).caption;
   }
@@ -155,8 +170,8 @@ export class ShiftScheduleComponent implements OnInit {
 
   /**
    * Sets the shift in the selected cell for that column
-   * @param rowData, the row and cell new selected value to be set
-   * @param value
+   * @param rowData, the row and cell of the new selection
+   * @param value, the value to set
    */
   onSetCellValue(rowData: any, value: any): void {
     (<any>this).defaultSetCellValue(rowData, value);
@@ -263,21 +278,27 @@ export class ShiftScheduleComponent implements OnInit {
     this.dataGrid.instance.refresh();
   }
 
+  /**
+   * navigation button (Mitarbeiter profile), navigates to the employees grid
+   */
   showEmployees() {
     this.router.navigateByUrl('/employees');
   }
 
+  /**
+   * navigation button (Schicht Templates), navigates to the shift template grid
+   */
   showShiftTemplates() {
     this.router.navigateByUrl('/shifttemplate');
   }
 
   /**
    * The toolbar and components in the toolbar above the datagrid
-   * @param e
+   * @param e, which component event has been clicked
    */
   onToolbarPreparing(e) {
 
-    e.toolbarOptions.items.forEach((item, index) => {
+    e.toolbarOptions.items.forEach((item) => {
       if (item.name === 'revertButton') {
         item.options.onClick = (x) => {
           this.dataGrid.instance.cancelEditData();

@@ -1,9 +1,9 @@
+import * as firebase from 'firebase/app';
 import {Injectable} from '@angular/core';
 import {FirestoreService} from '@services/firestore/firestore.service';
 import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
-import {IShiftSchedule, ShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
+import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {Observable} from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as moment from 'moment';
 
@@ -43,8 +43,7 @@ export class ShiftScheduleService extends FirestoreService<IShiftSchedule> {
 
   /**
    * gets all shifts of a month
-   * @param {string} year year, 4 digits
-   * @param {string} month human readable month index (jan = 1, dec = 12)
+   * @param {Date} date
    * @returns {Observable<IShiftSchedule[]>}
    */
   public readAllShifts(date: Date): Observable<IShiftSchedule[]> {
