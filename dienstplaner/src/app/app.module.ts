@@ -33,6 +33,7 @@ import {RegisterDialogComponent} from '@components/register-dialog/register-dial
 import {ClickDummyModule} from '@components/dev/click-dummy/click-dummy.module';
 import {HeaderModule} from '@components/header/header.module';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { PresentationComponent } from './components/presentation/presentation.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     UserAdministrationComponent,
     RegisterDialogComponent,
     NavBarComponent,
+    PresentationComponent,
   ],
   imports: [
     BrowserModule,
