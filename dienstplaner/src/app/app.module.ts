@@ -32,6 +32,7 @@ import {LogoutComponent} from '@components/logout/logout.component';
 import {RegisterDialogComponent} from '@components/register-dialog/register-dialog.component';
 import {ClickDummyModule} from '@components/dev/click-dummy/click-dummy.module';
 import {HeaderModule} from '@components/header/header.module';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {HeaderModule} from '@components/header/header.module';
     TestComponent,
     UserAdministrationComponent,
     RegisterDialogComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

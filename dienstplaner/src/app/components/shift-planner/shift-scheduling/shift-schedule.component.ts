@@ -316,7 +316,7 @@ export class ShiftScheduleComponent implements OnInit {
         };
       }
     });
-
+/*
     // controls on the toolbar
     e.toolbarOptions.items.unshift({
       location: 'before',
@@ -336,5 +336,6 @@ export class ShiftScheduleComponent implements OnInit {
         onClick: this.showShiftTemplates.bind(this)
       },
     });
+    */
   }
 }
