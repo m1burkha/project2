@@ -1,0 +1,17 @@
+
+/deep/ mat-icon {
+  cursor: pointer;
+}
+
+/deep/ app-root {
+  display: flex;
+
+  app-shift-template, app-login {
+    flex-grow: 1;
+    margin: 1rem;
+  }
+
+  app-employee-administration, app-shift-scheduling {
+    margin: 1rem;
+  }
+}

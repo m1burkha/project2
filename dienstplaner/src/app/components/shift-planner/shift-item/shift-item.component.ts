@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 
+
 @Component({
   selector: 'app-shift-item',
   templateUrl: './shift-item.component.html',

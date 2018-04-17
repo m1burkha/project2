@@ -1,12 +1,13 @@
 
 .dev-bar {
-  position: absolute;
+  position: fixed;
   padding: .2rem .4rem;
   left: 1rem;
   bottom: 1rem;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
   color: white;
+  z-index: 9999;
 
   ul,li {
     list-style: none;

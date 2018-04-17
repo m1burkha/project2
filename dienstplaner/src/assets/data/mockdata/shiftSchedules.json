@@ -1,0 +1,84 @@
+[
+  {
+    "date": "2018-03-31T23:00:00.000Z",
+    "id": "2018-04-01",
+    "selectedShiftColumnOfEmployees": [
+      {
+        "employeeId": "1FU8y4kVr6AQ8yP6vRX4",
+        "shiftItem": {
+          "caption": "",
+          "id": "",
+          "timeSpans": [          ]
+        }
+      },
+      {
+        "employeeId": "5MY69SV5cFEorxeGqtEa",
+        "shiftItem": {
+          "caption": "",
+          "id": "",
+          "timeSpans": [          ]
+        }
+      },
+      {
+        "employeeId": "9kTDXHvzJoPHnBT6H0R7",
+        "shiftItem": {
+          "caption": ""
+        }
+      },
+      {
+        "employeeId": "TAYJ0PXdlegdOBa3Tlcv",
+        "shiftItem": {
+          "caption": ""
+        }
+      }
+    ]
+  },
+  {
+    "date": "2018-04-02T23:00:00.000Z",
+    "id": "2018-04-03",
+    "selectedShiftColumnOfEmployees": [
+      {
+        "employeeId": "1FU8y4kVr6AQ8yP6vRX4",
+        "shiftItem": {
+          "caption": "Kompensation",
+          "id": "J9fqy7YE90I0FxvHbjYr",
+          "timeSpans": [          ],
+          "type": "compensation"
+        }
+      },
+      {
+        "employeeId": "5MY69SV5cFEorxeGqtEa",
+        "shiftItem": {
+          "caption": "Kompensation",
+          "id": "J9fqy7YE90I0FxvHbjYr",
+          "timeSpans": [          ],
+          "type": "compensation"
+        }
+      },
+      {
+        "employeeId": "9kTDXHvzJoPHnBT6H0R7",
+        "shiftItem": {
+          "caption": "07:00 - 16:30",
+          "id": "h3EGkzLYppZQUMaboQJ0",
+          "timeSpans": [
+            {
+              "endTime": "12:00",
+              "startTime": "07:00"
+            },
+            {
+              "endTime": "16:30",
+              "startTime": "13:00"
+            }
+          ],
+          "type": "workingShift"
+        }
+      },
+      {
+        "employeeId": "TAYJ0PXdlegdOBa3Tlcv",
+        "shiftItem": {
+          "caption": ""
+        }
+      }
+    ]
+  }
+  ]

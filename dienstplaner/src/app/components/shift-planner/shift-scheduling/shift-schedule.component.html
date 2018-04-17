@@ -1,60 +1,82 @@
-<div class="dashboard">top dashboard</div>
+<div class="example-container mat-elevation-z8">
+  <app-header [iconName]="'shift_clock3.png'" [headerText]="'Schichtplaner'"></app-header>
 
-<dx-select-box id="select-prefix"
-               [dataSource]="months"
-               placeholder="Select Month"
-               [value]="month"
-               (onValueChanged)="filterSelected($event)">
-</dx-select-box>
-<dx-data-grid
-  id="gridContainer"
-  [dataSource]="shiftList | async"
-  keyExpr="id"
-  [allowColumnReordering]="true"
-  [columnAutoWidth]="true"
-  (onToolbarPreparing)="onToolbarPreparing($event)">
-
-  <dxo-search-panel [visible]="true"></dxo-search-panel>
-  <dxo-scrolling mode="infinite"></dxo-scrolling>
-  <dxo-editing mode="cell"></dxo-editing>
-  <dxo-paging [enabled]="false"></dxo-paging>
-  <dxo-load-panel [enabled]="true"></dxo-load-panel>
-  <dxi-column dataField="id" [allowEditing]="false"></dxi-column>
-  <dxi-column dataField="date" dataType="date" caption="Datum" [allowEditing]="true"></dxi-column>
-  <!--<div>-->
-    <!--<dxi-column dataField="{{employee1}}" cellTemplate="cellTemplate"></dxi-column>-->
-    <!--<div *dxTemplate="let d of 'cellTemplate'">-->
-      <!--{{d.text}}-->
-      <!--<dx-button text="shift item" (onclick)="showShiftItem()" style="float: right"></dx-button>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <div *ngFor="let employee of employees | async">
-    <dxi-column dataField="{{employee.caption}}">
-      <dx-lookup  [items]="" displayExpr="caption" valueExpr="type"></dx-lookup>
-    </dxi-column>
-  </div>
-
-  <div *dxTemplate="let data of 'totalGroupCount'">
-    <div class="informer">
-      <h2 class="count">{{totalCount}}</h2>
-      <span class="name">Total Mitarbeiter</span>
+  <dx-select-box #selectMonthRef
+                 id="select-month"
+                 [dataSource]="months"
+                 placeholder="Select Month"
+                 (onValueChanged)="filterMonthSelection($event)">
+  </dx-select-box>
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="sheduleDataSource"
+    [allowColumnReordering]="true"
+    [allowColumnResizing]="true"
+    [columnAutoWidth]="true"
+    (onRowUpdating)="onPrepareShiftsForSave($event)"
+    (onEditorPreparing)="onShiftChangeEvent($event)"
+    (onToolbarPreparing)="onToolbarPreparing($event)">
+    <dxo-export [enabled]="true" fileName="ShiftSchedules"></dxo-export>
+    <dxo-scrolling mode="infinite"></dxo-scrolling>
+    <dxo-editing mode="batch" [allowUpdating]="true"></dxo-editing>
+    <dxo-paging [enabled]="false"></dxo-paging>
+    <dxi-column dataField="date" [calculateDisplayValue]="getFormattedDate" caption="Datum" [allowEditing]="false" [allowSorting]="false"></dxi-column>
+    <div *ngFor="let column of sheduleDataSource[0]?.selectedShiftColumnOfEmployees">
+      <dxi-column dataField="{{column.employeeId}}" caption="{{getEmployeeCaption(column.employeeId)}}" [calculateDisplayValue]="setCellFromDatasource" datatype="ShiftItem" [allowSorting]="false">
+        <dxo-lookup [dataSource]="shiftTemplates" displayExpr="caption" valueExpr="id"></dxo-lookup>
+      </dxi-column>
     </div>
-  </div>
-</dx-data-grid>
 
+    <dxo-summary [calculateCustomSummary]="calculateAllTotals">
+      <dxi-total-item
+        displayFormat="SollStunden"
+        column="date">
+      </dxi-total-item>
+      <div *ngFor="let employee of employees">
+        <dxi-total-item
+          column="{{employee.id}}"
+          summaryType="custom"
+          displayFormat="{0}"
+          alignment="center"
+          name="totalhours:{{employee.id}}"
+          [skipEmptyValues]="true">
+        </dxi-total-item>
+      </div>
+      <dxi-total-item
+        displayFormat="FeiertagSaldo"
+        column="date">
+      </dxi-total-item>
+      <div *ngFor="let employee of employees">
+        <dxi-total-item
+          column="{{employee.id}}"
+          summaryType="custom"
+          displayFormat="{0}"
+          [skipEmptyValues]="true"
+          name="total-public-holidays:{{employee.id}}"
+          alignment="center">
+        </dxi-total-item>
+      </div>
+      <dxi-total-item
+        displayFormat="UrlaubSaldo"
+        column="date">
+      </dxi-total-item>
+      <div *ngFor="let employee of employees">
+        <dxi-total-item
+          column="{{employee.id}}"
+          summaryType="custom"
+          displayFormat="{0}"
+          [skipEmptyValues]="true"
+          name="totalholidays:{{employee.id}}"
+          alignment="center">
+        </dxi-total-item>
+      </div>
+    </dxo-summary>
 
-
-
-<!--<dxi-column dataField="name" caption="{{'employee.caption' | translate }}"></dxi-column>-->
-
-<!--<dxo-selection mode="row" [selectAllMode]="allPages" [showCheckBoxesMode]="onClick"></dxo-selection>-->
-<!--<dxo-column-chooser [enabled]="true"></dxo-column-chooser>-->
-<!--<dx-date-box-->
-<!--[min]="minDate"-->
-<!--[max]="maxDate"-->
-<!--[(value)]="currentDate">-->
-<!--</dx-date-box>-->
-
-
-
+    <!--<div *dxTemplate="let data of 'totalGroupCount'">
+      <div class="informer">
+        <h2 class="count">{{totalEmployees}}</h2>
+        <span class="name">Mitarbeiter</span>
+      </div>
+    </div>-->
+  </dx-data-grid>
+</div>

@@ -1,0 +1,19 @@
+
+nav{
+  position: absolute;
+  padding: 1rem;
+  bottom: 3rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  min-width: 20rem;
+
+  li{
+    padding: .2rem 1rem;
+    text-align: center;
+    a{
+      display: block;
+      color: white;
+      text-decoration: none;
+    }
+  }
+}

@@ -1,37 +1,30 @@
-import {Time} from '@angular/common';
 
 export interface ITimeSpan {
-  /** id  */
-  id: string;
   /** start time  */
-  startTime: Time;
+  startTime: string;
   /** end time  */
-  endTime: Time;
-  /** month */
-  month: string;
+  endTime: string;
   /** total hours  */
   totalHours: number;
 }
 
 export class TimeSpan implements ITimeSpan {
-  /** id  */
-  id: string;
   /** start time  */
-  startTime: Time;
+  startTime: string;
   /** end time  */
-  endTime: Time;
+  endTime: string;
   /** total hours  */
   get totalHours(): number {
-    return (this.endTime.hours - this.startTime.hours) + (this.endTime.minutes - this.startTime.minutes) / 60;
+    const hours = +(this.endTime.substring(0, 2) || 0) - +(this.startTime.substring(0, 2) || 0);
+    const minutes = +(this.endTime.substring(3) || 0) - +(this.startTime.substring(3) || 0);
+
+    return hours + minutes / 60;
   }
-  /** month hours  */
-  month: string;
 
   /** create a new Timespan (constructor)
    * @param values (id, startTime, endTime, totalHours)
    */
   constructor(values: any = null) {
-    this.id = '';
     Object.assign(this, values);
   }
 }

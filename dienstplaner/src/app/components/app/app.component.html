@@ -1,4 +1,6 @@
 
+<app-nav-bar *ngIf="loggedIn"></app-nav-bar>
+
 <router-outlet></router-outlet>
 
 <app-dev-bar *ngIf="debugMode"></app-dev-bar>
