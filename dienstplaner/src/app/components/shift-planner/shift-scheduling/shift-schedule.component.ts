@@ -213,9 +213,45 @@ export class ShiftScheduleComponent implements OnInit {
     const totalItemName = options.name.split(':');
     const summaryItems = options.component._options.summary.totalItems;
     const column = summaryItems.find(item => item.name === options.name).column;
+
+    const daysPerMonth = options.component._options.dataSource && options.component._options.dataSource.length ?
+      moment(options.component._options.dataSource[0].date).daysInMonth() :
+      0;
+
     switch (totalItemName[0]) {
 
-      case 'totalhours':
+      case 'monthhours':
+        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
+          options.totalValue = 0;
+        }
+
+        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
+          const holidays = options.component._options.dataSource.reduce((acc, row) => {
+            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
+            if (columnValue
+              && (columnValue.shiftItem.type === ShiftType.vacation || columnValue.shiftItem.type === ShiftType.publicHoliday)) {
+              acc++;
+            }
+            return acc;
+          }, 0);
+
+          const absences = options.component._options.dataSource.reduce((acc, row) => {
+            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
+            if (columnValue
+              && (columnValue.shiftItem.type === ShiftType.sickLeave
+                || columnValue.shiftItem.type === ShiftType.studyLeave
+                || columnValue.shiftItem.type === ShiftType.other
+                || columnValue.shiftItem.type === ShiftType.military)) {
+              acc++;
+            }
+            return acc;
+          }, 0);
+
+          options.totalValue = ((daysPerMonth - holidays - absences) * 6).toFixed(2);
+        }
+        break;
+
+      case'totalhours':
         if (options.summaryProcess === 'start' && column === totalItemName[1]) {
           options.totalValue = 0;
         }
@@ -232,28 +268,7 @@ export class ShiftScheduleComponent implements OnInit {
               acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
             }
             return acc;
-          }, 0);
-        }
-        break;
-
-      case 'total-public-holidays':
-
-        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
-          options.totalValue = 0;
-        }
-
-        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
-
-          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
-            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue
-              && columnValue.shiftItem.type === ShiftType.publicHoliday
-              && columnValue.shiftItem.timeSpans
-              && columnValue.shiftItem.timeSpans.length) {
-              acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
-            }
-            return acc;
-          }, 0);
+          }, 0).toFixed(2);
         }
         break;
 
@@ -264,17 +279,34 @@ export class ShiftScheduleComponent implements OnInit {
         }
 
         if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
-
           options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
             const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
             if (columnValue
-              && columnValue.shiftItem.type === ShiftType.vacation
-              && columnValue.shiftItem.timeSpans
-              && columnValue.shiftItem.timeSpans.length) {
-              acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
+              && (columnValue.shiftItem.type === ShiftType.vacation || columnValue.shiftItem.type === ShiftType.publicHoliday)) {
+              acc--;
             }
             return acc;
-          }, 0);
+          }, (daysPerMonth * 31 / 365)).toFixed(2);
+        }
+        break;
+
+      case 'totalabsences':
+        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
+          options.totalValue = 0;
+        }
+
+        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
+          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
+            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
+            if (columnValue
+              && (columnValue.shiftItem.type === ShiftType.sickLeave
+                || columnValue.shiftItem.type === ShiftType.studyLeave
+                || columnValue.shiftItem.type === ShiftType.other
+                || columnValue.shiftItem.type === ShiftType.military)) {
+              acc++;
+            }
+            return acc;
+          }, 0).toFixed(2);
         }
         break;
 
@@ -316,26 +348,26 @@ export class ShiftScheduleComponent implements OnInit {
         };
       }
     });
-/*
-    // controls on the toolbar
-    e.toolbarOptions.items.unshift({
-      location: 'before',
-      template: 'totalGroupCount'
-    }, {
-      location: 'before',
-      widget: 'dxButton',
-      options: {
-        text: 'Mitarbeiter Profile',
-        onClick: this.showEmployees.bind(this)
-      },
-    }, {
-      location: 'before',
-      widget: 'dxButton',
-      options: {
-        text: 'SchichtTemplates',
-        onClick: this.showShiftTemplates.bind(this)
-      },
-    });
-    */
+    /*
+        // controls on the toolbar
+        e.toolbarOptions.items.unshift({
+          location: 'before',
+          template: 'totalGroupCount'
+        }, {
+          location: 'before',
+          widget: 'dxButton',
+          options: {
+            text: 'Mitarbeiter Profile',
+            onClick: this.showEmployees.bind(this)
+          },
+        }, {
+          location: 'before',
+          widget: 'dxButton',
+          options: {
+            text: 'SchichtTemplates',
+            onClick: this.showShiftTemplates.bind(this)
+          },
+        });
+        */
   }
 }
