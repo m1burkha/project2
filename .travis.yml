@@ -6,4 +6,4 @@ script:
 install:
  — npm install -g firebase-tools
 after_success:
- — firebase deploy — project cas-fee-projekt-2-mbmi — token 1/8UdeL6gTEIV2HaaC2N20jXERpCMrS_2l4irSq4wsKyDdg-IDIdzNskVqQ7kgykoJ
+ — firebase deploy — project cas-fee-projekt-2-mbmi — token $FIREBASE_TOKEN
