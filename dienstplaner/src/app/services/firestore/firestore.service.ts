@@ -83,7 +83,6 @@ export class FirestoreService<T> {
     if (!this.collection) {
       throw Error('collection not set');
     }
-    console.log(this.collection.valueChanges());
     return this.collection.valueChanges();
   }
 

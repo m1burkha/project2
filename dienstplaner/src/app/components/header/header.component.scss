@@ -50,26 +50,26 @@ $headerbackground: #fed70d;
   @include threedeetext(#da915a);
 }
 
-@media screen and (max-width: 805px)  {
+@media screen and (max-width: 50em)  {
   .header-text span {
-    font: bold 50px/1.5 Helvetica, sans-serif;
+    font: bold 3em/1.5 Helvetica, sans-serif;
     text-transform: uppercase;
     @include threedeetext(#da915a);
   }
   .header-icon {
-    @include control-properties($width: 80px, $height: 79px, $padding: 0 0 3px 7px);
+    @include control-properties($width: 5em, $height: 4.9em, $padding: 0 0 3px 7px);
   }
 }
 
-@media screen and (max-width: 630px)  {
+@media screen and (max-width: 39em)  {
   .header-text span {
-    font: bold 35px/1.5 Helvetica, sans-serif;
+    font: bold 2.3em/1.5 Helvetica, sans-serif;
     text-transform: uppercase;
     @include threedeetext(#da915a);
   }
 
   .header-icon {
-    @include control-properties($width: 70px, $height: 69px, $padding: 0 0 3px 7px);
+    @include control-properties($width: 4.3em, $height: 4.3em, $padding: 0 0 3px 7px);
   }
 }
 

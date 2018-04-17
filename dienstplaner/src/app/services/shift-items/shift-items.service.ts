@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FirestoreService} from '@services/firestore/firestore.service';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {AngularFirestore} from 'angularfire2/firestore';
@@ -7,7 +7,7 @@ import {AngularFirestore} from 'angularfire2/firestore';
  * service for shift items
  */
 @Injectable()
-export class ShiftItemsService extends FirestoreService<ShiftItem>{
+export class ShiftItemsService extends FirestoreService<ShiftItem> {
 
   /**
    * initializes ShiftItem service
