@@ -204,114 +204,122 @@ export class ShiftScheduleComponent implements OnInit {
   }
 
   /**
+   * gets the employee by id
+   * @param {string} employeeId
+   * @returns {Employee} employee
+   */
+  getEmployee(employeeId: string): Employee {
+    return this.employees.find(e => e.id === employeeId);
+  }
+
+  /**
+   * gets the monthly hours an employee has to work
+   * @param {string} employeeId
+   * @returns {number} hours
+   */
+  getEmployeeMonthHours(employeeId: string): number {
+    const employee = this.getEmployee(employeeId);
+    return moment({month: this.selectedMonth}).daysInMonth() * (employee.weekHours / 7) * (employee.workLoad / 100);
+  }
+
+  /**
+   * gets the amount of vacation days an employee has per month
+   * @param {string} employeeId
+   * @returns {number} days
+   */
+  getEmployeeMonthVacation(employeeId: string): number {
+    const employee = this.getEmployee(employeeId);
+    return moment({month: this.selectedMonth}).daysInMonth() * (employee.vacationDays / 365);
+  }
+
+  /**
+   * gets all shift items of an employee
+   * @param {string} employeeId
+   * @returns {ShiftItem[]} shiftitems
+   */
+  getShifts(employeeId: string): ShiftItem[] {
+    return this.sheduleDataSource
+      .map(e => e.selectedShiftColumnOfEmployees.find(f => f.employeeId === employeeId).shiftItem);
+  }
+
+  /**
+   * gets the planned working hours of an employee
+   * @param {string} employeeId
+   * @returns {number} hours
+   */
+  getShiftWorkingHours(employeeId: string): number {
+    const shifts = this.getShifts(employeeId);
+    return shifts.reduce((a, b) => a + (b && b.timeSpans && b.timeSpans.length > 0 ? b.timeSpans.map(e => new TimeSpan(e)).reduce((c, d) => c + d.totalHours, 0) : 0), 0);
+  }
+
+  /**
+   * gets the amount of days of certain types of an employee
+   * @param {string} employeeId
+   * @param {ShiftType[]} shiftTypes
+   * @returns {number} days
+   */
+  getShiftdaysByType(employeeId: string, shiftTypes: ShiftType[]): number {
+    const shifts = this.getShifts(employeeId);
+    return shifts.reduce((a, b) => a + (b && shiftTypes.indexOf(b.type) >= 0 ? 1 : 0), 0);
+  }
+
+  /**
+   * gets the amount of vacation days of an employee
+   * @param {string} employeeId
+   * @returns {number} days
+   */
+  getShiftHolidays(employeeId: string): number {
+    return this.getShiftdaysByType(employeeId, [ShiftType.publicHoliday, ShiftType.vacation]);
+  }
+
+  /**
+   * gets the amount of absence days of an employee
+   * @param {string} employeeId
+   * @returns {number} days
+   */
+  getShiftAbsences(employeeId: string): number {
+    return this.getShiftdaysByType(employeeId, [ShiftType.military, ShiftType.studyLeave, ShiftType.sickLeave, ShiftType.other]);
+  }
+
+  /**
    * Calculates all the summary totals for Total hours, total public holidays, total holidays
    * Each row and colummn that is selected, the employee rowId is added to the selectedShiftColumnOfEmployees array,
    * the summaries are then calculated for each column selected or changed
    * @param options
    */
-  calculateAllTotals(options) {
+  calculateAllTotals = (options) => {
     const totalItemName = options.name.split(':');
-    const summaryItems = options.component._options.summary.totalItems;
-    const column = summaryItems.find(item => item.name === options.name).column;
-
-    const daysPerMonth = options.component._options.dataSource && options.component._options.dataSource.length ?
-      moment(options.component._options.dataSource[0].date).daysInMonth() :
-      0;
+    const employeeId = totalItemName[1];
 
     switch (totalItemName[0]) {
 
       case 'monthhours':
-        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
-          options.totalValue = 0;
-        }
-
-        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
-          const holidays = options.component._options.dataSource.reduce((acc, row) => {
-            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue
-              && (columnValue.shiftItem.type === ShiftType.vacation || columnValue.shiftItem.type === ShiftType.publicHoliday)) {
-              acc++;
-            }
-            return acc;
-          }, 0);
-
-          const absences = options.component._options.dataSource.reduce((acc, row) => {
-            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue
-              && (columnValue.shiftItem.type === ShiftType.sickLeave
-                || columnValue.shiftItem.type === ShiftType.studyLeave
-                || columnValue.shiftItem.type === ShiftType.other
-                || columnValue.shiftItem.type === ShiftType.military)) {
-              acc++;
-            }
-            return acc;
-          }, 0);
-
-          options.totalValue = ((daysPerMonth - holidays - absences) * 6).toFixed(2);
-        }
+        options.totalValue = options.summaryProcess === 'finalize' ?
+          (this.getEmployeeMonthHours(employeeId) - this.getShiftHolidays(employeeId) - this.getShiftAbsences(employeeId)).toFixed(2) :
+          '0.00';
         break;
 
       case'totalhours':
-        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
-          options.totalValue = 0;
-        }
-
-        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
-
-          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
-            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue
-              && columnValue.shiftItem.type !== ShiftType.vacation
-              && columnValue.shiftItem.type !== ShiftType.publicHoliday
-              && columnValue.shiftItem.timeSpans
-              && columnValue.shiftItem.timeSpans.length) {
-              acc = acc + columnValue.shiftItem.timeSpans.map(e => new TimeSpan(e)).reduce((a, b) => a + b.totalHours, 0);
-            }
-            return acc;
-          }, 0).toFixed(2);
-        }
+        options.totalValue = options.summaryProcess === 'finalize' ?
+          this.getShiftWorkingHours(employeeId).toFixed(2) :
+          '0.00';
         break;
 
       case 'totalholidays':
-
-        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
-          options.totalValue = 0;
-        }
-
-        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
-          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
-            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue
-              && (columnValue.shiftItem.type === ShiftType.vacation || columnValue.shiftItem.type === ShiftType.publicHoliday)) {
-              acc--;
-            }
-            return acc;
-          }, (daysPerMonth * 31 / 365)).toFixed(2);
-        }
+        options.totalValue = options.summaryProcess === 'finalize' ?
+          (this.getEmployeeMonthVacation(employeeId) - this.getShiftHolidays(employeeId)).toFixed(2) :
+          '0.00';
         break;
 
       case 'totalabsences':
-        if (options.summaryProcess === 'start' && column === totalItemName[1]) {
-          options.totalValue = 0;
-        }
-
-        if (options.summaryProcess === 'finalize' && column === totalItemName[1]) {
-          options.totalValue = options.component._options.dataSource.reduce((acc, row) => {
-            const columnValue = row.selectedShiftColumnOfEmployees.find(cell => cell.employeeId === column);
-            if (columnValue
-              && (columnValue.shiftItem.type === ShiftType.sickLeave
-                || columnValue.shiftItem.type === ShiftType.studyLeave
-                || columnValue.shiftItem.type === ShiftType.other
-                || columnValue.shiftItem.type === ShiftType.military)) {
-              acc++;
-            }
-            return acc;
-          }, 0).toFixed(2);
-        }
+        options.totalValue = options.summaryProcess === 'finalize' ?
+          this.getShiftAbsences(employeeId).toFixed(2) :
+          '0.00';
         break;
 
       default:
         options.totalValue = 0;
+        break;
     }
   }
 
@@ -348,26 +356,5 @@ export class ShiftScheduleComponent implements OnInit {
         };
       }
     });
-    /*
-        // controls on the toolbar
-        e.toolbarOptions.items.unshift({
-          location: 'before',
-          template: 'totalGroupCount'
-        }, {
-          location: 'before',
-          widget: 'dxButton',
-          options: {
-            text: 'Mitarbeiter Profile',
-            onClick: this.showEmployees.bind(this)
-          },
-        }, {
-          location: 'before',
-          widget: 'dxButton',
-          options: {
-            text: 'SchichtTemplates',
-            onClick: this.showShiftTemplates.bind(this)
-          },
-        });
-        */
   }
 }
