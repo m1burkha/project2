@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShiftItemComponent } from './shift-item.component';
-import {ShiftScheduleService} from '@services/shift-scheduling/shift-schedule.service';
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 
 describe('ShiftItemComponent', () => {
   let component: ShiftItemComponent;

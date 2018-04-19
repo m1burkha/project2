@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
-import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,7 +14,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule, HttpClientModule],
       declarations: [LoginComponent],
-      providers: [AuthenticationService, HttpClient]
+      providers: [HttpClient]
     })
       .compileComponents();
   }));
