@@ -4,10 +4,9 @@ import {Observable} from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import {UserService} from '@services/user/user.service';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
-import {IShiftSchedule} from "@domain-models/shift-scheduling/shift-schedule";
-import {ShiftType} from "@domain-models/shift-scheduling/shift-type.enum";
-import {EmployeeShiftItem} from "@domain-models/shift-scheduling/employee-shift-item";
-import {ShiftItem} from "@domain-models/shift-scheduling/shift-item";
+import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
+import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
+import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 
 
 class TestItem {

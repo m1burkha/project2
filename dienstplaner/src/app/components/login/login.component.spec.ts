@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
-import {UserService} from "@services/user/user.service";
+import {UserService} from '@services/user/user.service';
 import {
   MatCardModule,
   MatDialogModule,
@@ -12,12 +12,12 @@ import {
   MatIconModule,
   MatInputModule,
   MatSnackBarModule
-} from "@angular/material";
-import {AngularFireAuthModule} from "angularfire2/auth";
-import {environment} from "../../../environments/environment";
-import {AngularFireModule} from "angularfire2";
-import {RouterTestingModule} from "@angular/router/testing";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+} from '@angular/material';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {environment} from '../../../environments/environment';
+import {AngularFireModule} from 'angularfire2';
+import {RouterTestingModule} from '@angular/router/testing';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -74,7 +74,6 @@ describe('LoginComponent', () => {
   });
 
   it('submit login form valid ,  submit login form invalid', () => {
-    const button = component.form.controls['button'];
     component.form.controls['username'].setValue('test@test.com');
     component.form.controls['password'].setValue('123456');
     fixture.detectChanges();

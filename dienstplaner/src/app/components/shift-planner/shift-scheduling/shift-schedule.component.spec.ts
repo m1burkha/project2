@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling/shift-schedule.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {HttpClientModule} from '@angular/common/http';
@@ -6,24 +6,22 @@ import {HeaderComponent} from '@components/header/header.component';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {By} from '@angular/platform-browser';
-import * as moment from 'moment';
 import {
   DxButtonModule,
   DxDataGridComponent,
   DxDataGridModule,
   DxLookupModule,
-  DxSelectBoxComponent,
   DxSelectBoxModule
-} from "devextreme-angular";
-import {RouterTestingModule} from "@angular/router/testing";
-import {AngularFirestoreModule} from "angularfire2/firestore";
-import {AngularFireModule} from "angularfire2";
-import {environment} from "../../../../environments/environment";
-import {Observable} from "rxjs/Observable";
-import {IShiftSchedule} from "@domain-models/shift-scheduling/shift-schedule";
-import {IEmployee} from "@domain-models/employee/employee";
-import {IShiftItem} from "@domain-models/shift-scheduling/shift-item";
-import {ShiftType} from "@domain-models/shift-scheduling/shift-type.enum";
+} from 'devextreme-angular';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../../../../environments/environment';
+import {Observable} from 'rxjs/Observable';
+import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
+import {IEmployee} from '@domain-models/employee/employee';
+import {IShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 
 
 describe('ShiftScheduleComponent', () => {

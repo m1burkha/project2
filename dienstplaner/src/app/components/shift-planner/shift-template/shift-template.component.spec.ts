@@ -1,21 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ShiftTemplateComponent } from './shift-template.component';
-import {HeaderModule} from "@components/header/header.module";
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ShiftTemplateComponent} from './shift-template.component';
+import {HeaderModule} from '@components/header/header.module';
 import {
   MatButtonModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatSelectModule, MatSnackBarModule, MatTableModule, MatTabsModule, MatTooltipModule
-} from "@angular/material";
-import {ShiftItemsService} from "@services/shift-items/shift-items.service";
-import {Observable} from "rxjs/Observable";
-import {IShiftItem} from "@domain-models/shift-scheduling/shift-item";
-import {AngularFireModule} from "angularfire2";
-import {AngularFirestoreModule} from "angularfire2/firestore";
-import {environment} from "../../../../environments/environment";
+  MatSelectModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule,
+  MatTooltipModule
+} from '@angular/material';
+import {ShiftItemsService} from '@services/shift-items/shift-items.service';
+import {Observable} from 'rxjs/Observable';
+import {IShiftItem} from '@domain-models/shift-scheduling/shift-item';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {environment} from '../../../../environments/environment';
 
 describe('ShiftTemplateComponent', () => {
   let component: ShiftTemplateComponent;
@@ -43,10 +46,10 @@ describe('ShiftTemplateComponent', () => {
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule
       ],
-      declarations: [ ShiftTemplateComponent],
+      declarations: [ShiftTemplateComponent],
       providers: [ShiftItemsService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

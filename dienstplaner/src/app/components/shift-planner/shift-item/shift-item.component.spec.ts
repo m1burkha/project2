@@ -1,12 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ShiftItemComponent } from './shift-item.component';
-import {ShiftScheduleService} from "@services/shift-scheduling/shift-scheduling.service";
-import {AngularFireDatabaseModule} from "angularfire2/database";
-import {AngularFireModule} from "angularfire2";
-import {environment} from "../../../../environments/environment";
-import {AngularFirestoreModule} from "angularfire2/firestore";
-
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ShiftItemComponent} from './shift-item.component';
+import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../../../../environments/environment';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
 
 describe('ShiftItemComponent', () => {
   let component: ShiftItemComponent;
@@ -14,14 +11,14 @@ describe('ShiftItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[
+      imports: [
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule
       ],
-      declarations: [ ShiftItemComponent ],
+      declarations: [ShiftItemComponent],
       providers: [ShiftScheduleService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

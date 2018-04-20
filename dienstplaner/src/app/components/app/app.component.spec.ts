@@ -1,8 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {AppComponent} from './app.component';
-import {NavBarComponent} from "@components/nav-bar/nav-bar.component";
-import {RouterTestingModule} from "@angular/router/testing";
+import {NavBarComponent} from '@components/nav-bar/nav-bar.component';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -13,7 +12,7 @@ describe('AppComponent', () => {
       imports: [RouterTestingModule.withRoutes([])],
       declarations: [AppComponent, NavBarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

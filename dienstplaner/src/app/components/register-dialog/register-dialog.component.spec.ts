@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {RegisterDialogComponent} from './register-dialog.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   MatDialogModule,
   MatDialogRef,
@@ -9,12 +8,12 @@ import {
   MatIconModule,
   MatInputModule,
   MatSnackBarModule
-} from "@angular/material";
-import {UserService} from "@services/user/user.service";
-import {AngularFireModule} from "angularfire2";
-import {environment} from "../../../environments/environment";
-import {AngularFireAuthModule} from "angularfire2/auth";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+} from '@angular/material';
+import {UserService} from '@services/user/user.service';
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../../../environments/environment';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('RegisterDialogComponent', () => {
   let component: RegisterDialogComponent;
