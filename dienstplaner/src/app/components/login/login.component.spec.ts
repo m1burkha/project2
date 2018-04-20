@@ -4,6 +4,20 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
+import {UserService} from "@services/user/user.service";
+import {
+  MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatSnackBarModule
+} from "@angular/material";
+import {AngularFireAuthModule} from "angularfire2/auth";
+import {environment} from "../../../environments/environment";
+import {AngularFireModule} from "angularfire2";
+import {RouterTestingModule} from "@angular/router/testing";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -12,9 +26,23 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule, HttpClientModule],
+      imports: [
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([]),
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatCardModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule],
       declarations: [LoginComponent],
-      providers: [HttpClient]
+      providers: [UserService, HttpClient]
     })
       .compileComponents();
   }));
@@ -42,22 +70,19 @@ describe('LoginComponent', () => {
   it('password field invalid when empty', () => {
     const password = component.form.controls['password'];
     expect(password.valid).toBeFalsy();
-    // expect()
+
   });
 
-  it('submit login button valid when fields valid,  disabled when fields invalid', () => {
+  it('submit login form valid ,  submit login form invalid', () => {
     const button = component.form.controls['button'];
     component.form.controls['username'].setValue('test@test.com');
     component.form.controls['password'].setValue('123456');
     fixture.detectChanges();
-    expect(submitLogin.nativeElement.disabled).toBeFalsy();
+    expect(component.form.invalid).toBeFalsy();
     component.form.controls['username'].setValue('');
-    component.form.controls['username'].setValue('');
+    component.form.controls['password'].setValue('');
     fixture.detectChanges();
-    expect(submitLogin.nativeElement.disabled).toBeTruthy();
+    expect(component.form.invalid).toBeTruthy();
   });
 
-  it('test login', () => {
-
-  });
 });

@@ -12,17 +12,17 @@ describe('ShiftScheduleService', () => {
 
   const mockSchedules = new Observable<IShiftSchedule[]>(sub => sub.next(require('../../../assets/data/mockdata/shiftSchedules.json')));
   const serviceMock: any = {
-    readAllShifts: jasmine.createSpy('readAllShifts')
+    readAllShifts: jasmine.createSpy('subscribe')
       .and.returnValue(mockSchedules),
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule
+        // AngularFireModule.initializeApp(environment.firebase),
+        // AngularFireDatabaseModule
       ],
-      providers: [AngularFirestore, HttpTestingController, /*ShiftScheduleService,*/
+      providers: [HttpTestingController,
         {provide: ShiftScheduleService, useValue: serviceMock}
       ]
     });
@@ -34,9 +34,8 @@ describe('ShiftScheduleService', () => {
 
   it('service should return an Observable<ShiftSchedule[]> array',
     inject([ShiftScheduleService], (service: ShiftScheduleService) => {
-      const currentdate = new Date((new Date).getFullYear(), 3);
 
-      service.readAllShifts(currentdate).subscribe(shifts => {
+      service.readAllShifts(new Date()).subscribe(shifts => {
         expect(shifts.length).toBe(2);
         expect(shifts[0].date.toString()).toEqual('2018-03-31T23:00:00.000Z');
         expect(shifts[1].date.toString()).toEqual('2018-04-02T23:00:00.000Z');
