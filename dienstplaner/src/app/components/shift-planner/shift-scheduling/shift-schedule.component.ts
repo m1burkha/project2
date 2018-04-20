@@ -17,6 +17,10 @@ import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {zip} from 'rxjs/observable/zip';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
+import {EmployeeMonthBalance} from '@domain-models/employee-month-balance/employee-month-balance';
+import {MatDialog} from '@angular/material';
+import {SetEmployeeBalanceDialogComponent} from '@components/shift-planner/shift-scheduling/set-employee-balance-dialog/set-employee-balance-dialog.component';
+import {EmployeeMonthBalanceService} from '@services/employee-month-balance/employee-month-balance.service';
 
 /** The ShiftSchedule component */
 @Component({
@@ -30,21 +34,36 @@ export class ShiftScheduleComponent implements OnInit {
 
   /** the schedule datasource for the grid */
   sheduleDataSource: ShiftSchedule[] = [];
+  /** years holder for the year drop down */
+  years: number[];
   /** months holder for the month drop down */
   months: string[];
   /** the list of employees, displays all the columns in the datagrid */
   employees: Employee[] = [];
   /** template holder for all the templates created */
   shiftTemplates: ShiftItem[];
+  /**
+   * balances from month before
+   */
+  employeeMonthBalances: EmployeeMonthBalance[];
   /** total amount of employees, displayed tin the toolbar */
   totalEmployees: number;
+  /** the year selected from the dropdown */
+  selectedYear: number;
   /** the month selected from the dropdown */
   selectedMonth: number;
+
+  /** selected date (1. of month) */
+  get selectedDate(): Date {
+    return moment({year: this.selectedYear, month: this.selectedMonth, day: 1}).toDate();
+  }
 
   /** reference to the datagrid component */
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
   /** reference to the month select component */
   @ViewChild('selectMonthRef') selectMonthRef: DxSelectBoxComponent;
+  /** reference to the year select component */
+  @ViewChild('selectYearRef') selectYearRef: DxSelectBoxComponent;
 
   /**
    * Constructor
@@ -56,7 +75,9 @@ export class ShiftScheduleComponent implements OnInit {
   constructor(private scheduleService: ShiftScheduleService,
               private employeeService: EmployeeService,
               private shiftTemplateService: ShiftItemsService,
-              private router: Router) {
+              private employeeMonthBalanceService: EmployeeMonthBalanceService,
+              private router: Router,
+              private dialog: MatDialog) {
   }
 
   /** Initialise the shift schedule component variables / instances */
@@ -65,6 +86,14 @@ export class ShiftScheduleComponent implements OnInit {
     this.months = moment.months();
     this.selectedMonth = moment().month(); // current month for selection by startup
     this.selectMonthRef.value = this.months[this.selectedMonth];
+
+    this.years = [];
+    for (let i = 2017; i <= moment().year() + 1; i++) {
+      this.years.push(i);
+    }
+    this.selectedYear = this.years[this.years.length - 2]; // current year for selection by startup
+    this.selectYearRef.value = this.years[this.years.length - 2];
+
     zip(
       this.shiftTemplateService.readAll(),
       this.employeeService.readAll())
@@ -75,8 +104,13 @@ export class ShiftScheduleComponent implements OnInit {
         this.totalEmployees = this.employees.length;
       })
       .subscribe(() => {
-        this.createDefaultShifts(moment().month());
+        this.createDefaultShifts();
       });
+
+    const monthBefore = moment(this.selectedDate).subtract(1, 'months');
+    this.employeeMonthBalanceService
+      .readAllBalances(monthBefore.year().toString(), monthBefore.month().toString())
+      .subscribe(e => this.employeeMonthBalances = e);
   }
 
   /**
@@ -86,7 +120,16 @@ export class ShiftScheduleComponent implements OnInit {
   filterMonthSelection(event): void {
     this.selectedMonth = this.months.findIndex(month => month === event.value);
     event.value = this.months[this.selectedMonth];
-    this.createDefaultShifts(this.selectedMonth);
+    this.createDefaultShifts();
+  }
+
+  /**
+   * Select the shift year, create the default values, retrieve and filter the data from the service for that year
+   * @param event , the selected year
+   */
+  filterYearSelection(event): void {
+    this.selectedYear = event.value;
+    this.createDefaultShifts();
   }
 
   /**
@@ -121,14 +164,14 @@ export class ShiftScheduleComponent implements OnInit {
   /**
    * Create default values for each day of the month.
    * The number of employees will determine the number of columns. Each column has a unique employeeId as a datafield
-   * @param monthIndex, the month index
    * @returns void
    */
-  createDefaultShifts(monthIndex: number): void {
+  createDefaultShifts(): void {
     const shifts: ShiftSchedule[] = [];
+    const first = moment({year: this.selectedYear, month: this.selectedMonth, date: 1});
     // populate the datagrid with default values
-    for (let i = 1; i < moment().month(monthIndex).daysInMonth() + 1; i++) {
-      const date = moment({year: moment().year(), month: monthIndex, day: i});
+    for (let i = 0; i < first.daysInMonth(); i++) {
+      const date = moment(first).add(i, 'days');
       const scheduleRow = new ShiftSchedule();
       scheduleRow.id = date.format('YYYY-MM-DD');
       scheduleRow.date = date.toDate();
@@ -145,16 +188,20 @@ export class ShiftScheduleComponent implements OnInit {
       });
       shifts.push(scheduleRow);
     }
-    this.populateDatagridWithData(monthIndex, shifts);
+    this.populateDatagridWithData(shifts);
+
+    const monthBefore = moment(this.selectedDate).subtract(1, 'months');
+    this.employeeMonthBalanceService
+      .readAllBalances(monthBefore.year().toString(), monthBefore.month().toString())
+      .subscribe(e => this.employeeMonthBalances = e);
   }
 
   /**
    * Retrieve data from the DB, filter to the chosen month and populate the datagrid
-   * @param {number} monthIndex
    * @param {ShiftSchedule[]} shifts
    */
-  populateDatagridWithData(monthIndex: number, shifts: ShiftSchedule[]): void {
-    this.scheduleService.readAllShifts(new Date((new Date).getFullYear(), monthIndex))
+  populateDatagridWithData(shifts: ShiftSchedule[]): void {
+    this.scheduleService.readAllShifts(moment().year(this.selectedYear).month(this.selectedMonth).toDate())
       .subscribe((monthlylist: ShiftSchedule[]) => {
         monthlylist
           .forEach(dayShedule => {
@@ -213,13 +260,27 @@ export class ShiftScheduleComponent implements OnInit {
   }
 
   /**
+   * gets the employee month balance of the month before
+   * @param {string} employeeId
+   * @returns {EmployeeMonthBalance}
+   */
+  getEmployeeBalance(employeeId: string): EmployeeMonthBalance {
+    const result = this.employeeMonthBalances.find(e => e.employeeId === employeeId);
+    return result === undefined ? new EmployeeMonthBalance({
+      employeeId: employeeId,
+      hoursBalance: 0,
+      vacationBalance: 0
+    }) : result;
+  }
+
+  /**
    * gets the monthly hours an employee has to work
    * @param {string} employeeId
    * @returns {number} hours
    */
   getEmployeeMonthHours(employeeId: string): number {
     const employee = this.getEmployee(employeeId);
-    return moment({month: this.selectedMonth}).daysInMonth() * (employee.weekHours / 7) * (employee.workLoad / 100);
+    return moment({month: this.selectedMonth}).daysInMonth() * (employee.weekHours / 7) * (employee.workLoad / 100) - this.getEmployeeBalance(employeeId).hoursBalance;
   }
 
   /**
@@ -229,7 +290,7 @@ export class ShiftScheduleComponent implements OnInit {
    */
   getEmployeeMonthVacation(employeeId: string): number {
     const employee = this.getEmployee(employeeId);
-    return moment({month: this.selectedMonth}).daysInMonth() * (employee.vacationDays / 365);
+    return moment({month: this.selectedMonth}).daysInMonth() * (employee.vacationDays / 365) + this.getEmployeeBalance(employeeId).vacationBalance;
   }
 
   /**
@@ -249,7 +310,9 @@ export class ShiftScheduleComponent implements OnInit {
    */
   getShiftWorkingHours(employeeId: string): number {
     const shifts = this.getShifts(employeeId);
-    return shifts.reduce((a, b) => a + (b && b.timeSpans && b.timeSpans.length > 0 ? b.timeSpans.map(e => new TimeSpan(e)).reduce((c, d) => c + d.totalHours, 0) : 0), 0);
+    return shifts.reduce((a, b) => a + (b && b.timeSpans && b.timeSpans.length > 0 ?
+      b.timeSpans.map(e => new TimeSpan(e)).reduce((c, d) => c + d.totalHours, 0) :
+      0), 0);
   }
 
   /**
@@ -282,44 +345,39 @@ export class ShiftScheduleComponent implements OnInit {
   }
 
   /**
-   * Calculates all the summary totals for Total hours, total public holidays, total holidays
    * Each row and colummn that is selected, the employee rowId is added to the selectedShiftColumnOfEmployees array,
    * the summaries are then calculated for each column selected or changed
    * @param options
    */
   calculateAllTotals = (options) => {
     const totalItemName = options.name.split(':');
-    const employeeId = totalItemName[1];
+    options.totalValue = options.summaryProcess === 'finalize' ? this.getTotalValuesByEmployee(totalItemName[0], totalItemName[1]).toFixed(2) : '0.00';
+  }
 
-    switch (totalItemName[0]) {
+  /**
+   * Calculates all the summary totals for Total hours, total public holidays, total holidays
+   * @param type hours or days
+   * @param employeeId employee id
+   */
+  getTotalValuesByEmployee(type: string, employeeId: string): number {
+    switch (type) {
 
       case 'monthhours':
-        options.totalValue = options.summaryProcess === 'finalize' ?
-          (this.getEmployeeMonthHours(employeeId) - this.getShiftHolidays(employeeId) - this.getShiftAbsences(employeeId)).toFixed(2) :
-          '0.00';
-        break;
+        const employee = this.getEmployee(employeeId);
+        const dailyHours = employee.weekHours / 5 * employee.workLoad / 100;
+        return (this.getEmployeeMonthHours(employeeId) - (this.getShiftHolidays(employeeId) + this.getShiftAbsences(employeeId)) * dailyHours);
 
       case'totalhours':
-        options.totalValue = options.summaryProcess === 'finalize' ?
-          this.getShiftWorkingHours(employeeId).toFixed(2) :
-          '0.00';
-        break;
+        return this.getShiftWorkingHours(employeeId);
 
       case 'totalholidays':
-        options.totalValue = options.summaryProcess === 'finalize' ?
-          (this.getEmployeeMonthVacation(employeeId) - this.getShiftHolidays(employeeId)).toFixed(2) :
-          '0.00';
-        break;
+        return (this.getEmployeeMonthVacation(employeeId) - this.getShiftHolidays(employeeId));
 
       case 'totalabsences':
-        options.totalValue = options.summaryProcess === 'finalize' ?
-          this.getShiftAbsences(employeeId).toFixed(2) :
-          '0.00';
-        break;
+        return this.getShiftAbsences(employeeId);
 
       default:
-        options.totalValue = 0;
-        break;
+        return 0;
     }
   }
 
@@ -352,9 +410,27 @@ export class ShiftScheduleComponent implements OnInit {
       if (item.name === 'revertButton') {
         item.options.onClick = (x) => {
           this.dataGrid.instance.cancelEditData();
-          this.createDefaultShifts(this.selectedMonth); // reload after reverting
+          this.createDefaultShifts(); // reload after reverting
         };
       }
+    });
+  }
+
+  /**
+   * opens balance dialog
+   */
+  setBalance() {
+    const possibleBalances: EmployeeMonthBalance[] = this.employees.map(employee => new EmployeeMonthBalance({
+      employeeId: employee.id,
+      employeeCaption: employee.caption,
+      year: moment().year(),
+      month: this.selectedMonth,
+      hoursBalance: this.getTotalValuesByEmployee('totalhours', employee.id) - this.getTotalValuesByEmployee('monthhours', employee.id),
+      vacationBalance: this.getTotalValuesByEmployee('totalholidays', employee.id),
+      absenceBalance: this.getTotalValuesByEmployee('totalabsences', employee.id)
+    }));
+    const dialogRef = this.dialog.open(SetEmployeeBalanceDialogComponent, {
+      data: { possibleBalances: possibleBalances }
     });
   }
 }

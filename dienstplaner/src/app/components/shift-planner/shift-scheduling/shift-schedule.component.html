@@ -1,12 +1,21 @@
 <div class="example-container mat-elevation-z8">
   <app-header [iconName]="'shift_clock3.png'" [headerText]="'Schichtplaner'"></app-header>
 
+  <div class="flex">
   <dx-select-box #selectMonthRef
                  id="select-month"
                  [dataSource]="months"
                  placeholder="Select Month"
                  (onValueChanged)="filterMonthSelection($event)">
   </dx-select-box>
+  <dx-select-box #selectYearRef
+                 id="select-year"
+                 [dataSource]="years"
+                 placeholder="Select Year"
+                 (onValueChanged)="filterYearSelection($event)">
+  </dx-select-box>
+  </div>
+
   <dx-data-grid
     id="gridContainer"
     [dataSource]="sheduleDataSource"
@@ -89,11 +98,9 @@
       </div>
     </dxo-summary>
 
-    <!--<div *dxTemplate="let data of 'totalGroupCount'">
-      <div class="informer">
-        <h2 class="count">{{totalEmployees}}</h2>
-        <span class="name">Mitarbeiter</span>
-      </div>
-    </div>-->
   </dx-data-grid>
+
+  <div class="action">
+    <button mat-raised-button color="primary" (click)="setBalance()">Monatssaldi festlegen</button>
+  </div>
 </div>

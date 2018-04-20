@@ -34,8 +34,10 @@ import {
 } from '@angular/material';
 import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {AddDialogComponent} from './shift-template/add-dialog/add-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderModule} from '@components/header/header.module';
+import { SetEmployeeBalanceDialogComponent } from './shift-scheduling/set-employee-balance-dialog/set-employee-balance-dialog.component';
+import {EmployeeMonthBalanceService} from '@services/employee-month-balance/employee-month-balance.service';
 
 const plannerRoutes: Routes = [
   {path: '', component: ShiftScheduleComponent, canActivate: [LoginGuard]},
@@ -46,6 +48,7 @@ const plannerRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     HeaderModule,
     DxDataGridModule,
     DxPivotGridModule,
@@ -70,17 +73,18 @@ const plannerRoutes: Routes = [
     MatIconModule,
     MatSelectModule,
     ReactiveFormsModule,
-    RouterModule.forChild(plannerRoutes)
+    RouterModule.forChild(plannerRoutes),
   ],
   declarations: [
     ShiftScheduleComponent,
     ShiftItemComponent,
     ShiftTemplateComponent,
     ShiftTimeSpanComponent,
-    AddDialogComponent
+    AddDialogComponent,
+    SetEmployeeBalanceDialogComponent
   ],
-  entryComponents: [AddDialogComponent],
-  providers: [ShiftScheduleService, ShiftItemsService, LoginGuard],
+  entryComponents: [AddDialogComponent, SetEmployeeBalanceDialogComponent],
+  providers: [ShiftScheduleService, ShiftItemsService, EmployeeMonthBalanceService, LoginGuard],
   exports: [RouterModule],
 })
 export class ShiftPlannerModule {
