@@ -1,0 +1,38 @@
+<section *ngIf="presentationIndex % 5 == 0">
+  <h1>Thema</h1>
+    <ul>
+      <li>Arbeitszeitplanung</li>
+      <li>Ferienzeitberechnung</li>
+      <li>Schweizer Arbeitsrecht</li>
+    </ul>
+</section>
+
+<section *ngIf="presentationIndex % 5 == 1">
+  <h1>gut gelöst</h1>
+  <ul>
+    <li>Einsatz verschiedener Libraries</li>
+    <li>User Centered Design</li>
+  </ul>
+</section>
+
+<section *ngIf="presentationIndex % 5 == 2">
+  <h1>verbesserungswürdig</h1>
+  <ul>
+    <li>Zusammenarbeit</li>
+    <li>Arbeitsteilung</li>
+    <li>Wissensgleichstand</li>
+  </ul>
+</section>
+
+<section *ngIf="presentationIndex % 5 == 3">
+  <h1>gelernt</h1>
+  <ul>
+    <li>Einsatz und Funktionsweise diverser Libraries</li>
+    <li>externe Backend-Lösungen</li>
+  </ul>
+</section>
+
+<section *ngIf="presentationIndex % 5 == 4">
+  <h1>Demo</h1>
+  <a [routerLink]="['/login']">zum login</a>
+</section>

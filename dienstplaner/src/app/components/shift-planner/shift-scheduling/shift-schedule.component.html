@@ -38,12 +38,13 @@
           summaryType="custom"
           displayFormat="{0}"
           alignment="center"
-          name="totalhours:{{employee.id}}"
+          name="monthhours:{{employee.id}}"
           [skipEmptyValues]="true">
         </dxi-total-item>
       </div>
+
       <dxi-total-item
-        displayFormat="FeiertagSaldo"
+        displayFormat="verplante Stunden"
         column="date">
       </dxi-total-item>
       <div *ngFor="let employee of employees">
@@ -51,13 +52,14 @@
           column="{{employee.id}}"
           summaryType="custom"
           displayFormat="{0}"
-          [skipEmptyValues]="true"
-          name="total-public-holidays:{{employee.id}}"
-          alignment="center">
+          alignment="center"
+          name="totalhours:{{employee.id}}"
+          [skipEmptyValues]="true">
         </dxi-total-item>
       </div>
+
       <dxi-total-item
-        displayFormat="UrlaubSaldo"
+        displayFormat="Urlaubssaldo"
         column="date">
       </dxi-total-item>
       <div *ngFor="let employee of employees">
@@ -67,6 +69,21 @@
           displayFormat="{0}"
           [skipEmptyValues]="true"
           name="totalholidays:{{employee.id}}"
+          alignment="center">
+        </dxi-total-item>
+      </div>
+
+      <dxi-total-item
+        displayFormat="Saldo übrige Absenzen"
+        column="date">
+      </dxi-total-item>
+      <div *ngFor="let employee of employees">
+        <dxi-total-item
+          column="{{employee.id}}"
+          summaryType="custom"
+          displayFormat="{0}"
+          [skipEmptyValues]="true"
+          name="totalabsences:{{employee.id}}"
           alignment="center">
         </dxi-total-item>
       </div>

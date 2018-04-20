@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';

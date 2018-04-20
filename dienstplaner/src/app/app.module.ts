@@ -13,7 +13,6 @@ import {TestComponent} from '@components/db/test/test.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from '@services/user/user.service';
 import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
-import {UserAdministrationComponent} from '@components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 import {
@@ -33,6 +32,7 @@ import {RegisterDialogComponent} from '@components/register-dialog/register-dial
 import {ClickDummyModule} from '@components/dev/click-dummy/click-dummy.module';
 import {HeaderModule} from '@components/header/header.module';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { PresentationComponent } from './components/presentation/presentation.component';
 
 
 @NgModule({
@@ -41,9 +41,9 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     LoginComponent,
     LogoutComponent,
     TestComponent,
-    UserAdministrationComponent,
     RegisterDialogComponent,
     NavBarComponent,
+    PresentationComponent,
   ],
   imports: [
     BrowserModule,
