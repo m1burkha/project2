@@ -11,6 +11,7 @@ import {
   DxDataGridComponent,
   DxDataGridModule,
   DxLookupModule,
+  DxSelectBoxComponent,
   DxSelectBoxModule
 } from 'devextreme-angular';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -22,7 +23,7 @@ import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {IEmployee} from '@domain-models/employee/employee';
 import {IShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
-
+import * as moment from 'moment';
 
 describe('ShiftScheduleComponent', () => {
   let component: ShiftScheduleComponent;
@@ -81,25 +82,46 @@ describe('ShiftScheduleComponent', () => {
     expect(dataGridComponent).toBeTruthy();
   }));
 
-  it('should retrieve shiftSchedule list with 2 shift schedules', inject([ShiftScheduleService], (service: ShiftScheduleService) => {
+  it('should retrieve shiftSchedule list', inject([ShiftScheduleService], (service: ShiftScheduleService) => {
     service.readAllShifts(new Date()).subscribe(shift => {
       console.log('mock shiftSchedule list', shift);
       expect(shift.length > 0).toBeGreaterThan(0);
     });
   }));
 
-  it('employee must contain employee id of 1FU8y4kVr6AQ8yP6vRX4', inject([EmployeeService], (service: EmployeeService) => {
+  it('employee list must contain employee id of 1FU8y4kVr6AQ8yP6vRX4', inject([EmployeeService], (service: EmployeeService) => {
     service.readAll().subscribe(emplist => {
       console.log('first mock employee', emplist[0]);
       expect(emplist[0].id === '1FU8y4kVr6AQ8yP6vRX4').toBe(true);
     });
   }));
 
-  it('shift template list must contain shift caption workingshift', inject([ShiftItemsService], (service: ShiftItemsService) => {
+  it('shift template list must contain shift caption of workingshift', inject([ShiftItemsService], (service: ShiftItemsService) => {
     service.readAll().subscribe(items => {
       console.log('working shift item', items[6]);
       expect(items[6].type === ShiftType.workingShift).toBe(true);
     });
   }));
+
+  it('should be datagrid column caption (Employee name) and column count', inject([ShiftScheduleService], (service: ShiftScheduleService) => {
+    service.readAllShifts(new Date()).subscribe(shifts => {
+      dataGridComponent.dataSource = shifts;
+      expect(dataGridComponent.instance.columnCount()).toBe(5);
+      expect(dataGridComponent.columns[3].caption).toBe('Kollege Essig');
+    });
+  }));
+
+  it('month dropdown selection should return month July',  () => {
+    const selectElement = fixture.debugElement.query(By.css('dx-select-box'));
+    const nativeSelectElement = selectElement.nativeElement;
+    const monthSelectComponent = <DxSelectBoxComponent>selectElement.componentInstance;
+    fixture.detectChanges();
+    moment.locale('de');
+    monthSelectComponent.items = moment.months();
+    monthSelectComponent.value = monthSelectComponent.items[6];
+    nativeSelectElement.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    expect(monthSelectComponent.displayValue).toBe('Juli');
+  });
 });
 
