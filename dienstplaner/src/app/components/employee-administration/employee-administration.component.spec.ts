@@ -38,4 +38,13 @@ describe('EmployeeAdministrationComponent', () => {
   it('should create employee datagrid', inject([EmployeeService], (service: EmployeeService) => {
     expect(dataGridComponent).toBeTruthy();
   }));
+
+  it('should be datagrid column caption (Employee name) and column count', inject([EmployeeService], (service: EmployeeService) => {
+    service.readAll().subscribe(employees => {
+      dataGridComponent.dataSource = employees;
+      expect(dataGridComponent.instance.columnCount()).toBe(6);
+      expect(dataGridComponent.columns[3].caption).toBe('Wochenstunden');
+    });
+  }));
+
 });

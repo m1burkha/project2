@@ -11,6 +11,7 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {By} from "@angular/platform-browser";
 
 describe('AddPopupComponent', () => {
   let component: AddDialogComponent;
@@ -45,4 +46,27 @@ describe('AddPopupComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('validate input control Bezeichnung', () => {
+    const inputfield = fixture.debugElement.query(By.css('input')).nativeElement;
+    inputfield.value = '';
+    expect(inputfield.validity.valid).toBeFalsy();
+    fixture.detectChanges();
+    inputfield.value = '1234';
+    expect(inputfield.validity.valid).toBeTruthy();
+  });
+
+  it('detect value change on select', () => {
+    const select = fixture.debugElement.query(By.css('mat-select'));
+    const options = select.componentInstance.options.toArray();
+    const selectComponent = select.componentInstance;
+    select.nativeElement.click();
+    fixture.detectChanges();
+    expect(selectComponent.panelOpen).toBe(true);
+    // const option2 = fixture.debugElement.query(By.css('md-option-2'));
+    // option2.nativeElement.getAttribute('aria-selected').value = true;
+
+  });
+
+
 });
