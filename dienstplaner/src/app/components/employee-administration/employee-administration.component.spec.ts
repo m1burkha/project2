@@ -42,8 +42,8 @@ describe('EmployeeAdministrationComponent', () => {
   it('should be datagrid column caption (Employee name) and column count', inject([EmployeeService], (service: EmployeeService) => {
     service.readAll().subscribe(employees => {
       dataGridComponent.dataSource = employees;
-      expect(dataGridComponent.instance.columnCount()).toBe(6);
-      expect(dataGridComponent.columns[3].caption).toBe('Wochenstunden');
+      expect(dataGridComponent.instance.columnCount()).toBe(5);
+      expect(dataGridComponent.columns[3].caption).toBe('Pensum');
     });
   }));
 

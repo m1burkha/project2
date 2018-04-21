@@ -1,6 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {EmployeeMonthBalance} from '@domain-models/employee-month-balance/employee-month-balance';
+import {
+  EmployeeMonthBalance,
+  IEmployeeMonthBalance
+} from '@domain-models/employee-month-balance/employee-month-balance';
 import {EmployeeMonthBalanceService} from '@services/employee-month-balance/employee-month-balance.service';
 
 /**
@@ -13,9 +16,9 @@ import {EmployeeMonthBalanceService} from '@services/employee-month-balance/empl
 })
 export class SetEmployeeBalanceDialogComponent {
   /** actual employee balances */
-  public balances: EmployeeMonthBalance[];
+  public balances: IEmployeeMonthBalance[];
   /** balances calculated by this month */
-  public possibleBalances: EmployeeMonthBalance[];
+  public possibleBalances: IEmployeeMonthBalance[];
 
   /**
    * constructor

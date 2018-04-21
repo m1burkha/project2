@@ -24,6 +24,9 @@ import {IEmployee} from '@domain-models/employee/employee';
 import {IShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import * as moment from 'moment';
+import {EmployeeMonthBalanceService} from '@services/employee-month-balance/employee-month-balance.service';
+import {MatDialogModule} from '@angular/material';
+import {IEmployeeMonthBalance} from '@domain-models/employee-month-balance/employee-month-balance';
 
 describe('ShiftScheduleComponent', () => {
   let component: ShiftScheduleComponent;
@@ -45,7 +48,10 @@ describe('ShiftScheduleComponent', () => {
       .and.returnValue(new Observable<IShiftItem[]>(ob => ob.next(require('../../../../assets/data/mockdata/shift-templates.json'))))
   };
 
-  console.log('x', mockTemplateService);
+  const mockEmployeeMonthBalanceService: any = {
+    readAll: jasmine.createSpy('readAllBalances')
+      .and.returnValue(new Observable<IEmployeeMonthBalance[]>(ob => ob.next(require('../../../../assets/data/mockdata/employee-month-balances.json'))))
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -56,6 +62,7 @@ describe('ShiftScheduleComponent', () => {
         DxSelectBoxModule,
         DxDataGridModule,
         HttpClientModule,
+        MatDialogModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule
       ],
@@ -64,6 +71,7 @@ describe('ShiftScheduleComponent', () => {
         {provide: EmployeeService, useValue: mockEmployeeService},
         {provide: ShiftScheduleService, useValue: mockScheduleService},
         {provide: ShiftItemsService, useValue: mockTemplateService},
+        {provide: EmployeeMonthBalanceService, useValue: mockEmployeeMonthBalanceService},
       ]
     })
       .compileComponents();

@@ -2,8 +2,10 @@ import {Injectable} from '@angular/core';
 import {FirestoreService} from '@services/firestore/firestore.service';
 import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
-import * as moment from 'moment';
-import {EmployeeMonthBalance} from '@domain-models/employee-month-balance/employee-month-balance';
+import {
+  EmployeeMonthBalance,
+  IEmployeeMonthBalance
+} from '@domain-models/employee-month-balance/employee-month-balance';
 import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
 
@@ -11,7 +13,7 @@ import DocumentReference = firebase.firestore.DocumentReference;
  * service for employees
  */
 @Injectable()
-export class EmployeeMonthBalanceService extends FirestoreService<EmployeeMonthBalance> {
+export class EmployeeMonthBalanceService extends FirestoreService<IEmployeeMonthBalance> {
 
   /**
    * initializes employee month balance service
@@ -33,9 +35,9 @@ export class EmployeeMonthBalanceService extends FirestoreService<EmployeeMonthB
   /**
    * gets the balances of a month of an employee
    * @param {string} id date 'YYYY-MM-DD'
-   * @returns {AngularFirestoreDocument<EmployeeMonthBalance>}
+   * @returns {AngularFirestoreDocument<IEmployeeMonthBalance>}
    */
-  public readBalances(year: string, month: string, id: string): AngularFirestoreDocument<EmployeeMonthBalance> {
+  public readBalances(year: string, month: string, id: string): AngularFirestoreDocument<IEmployeeMonthBalance> {
     this.setAltCollection(year, month);
     return this.read(id);
   }
@@ -43,9 +45,9 @@ export class EmployeeMonthBalanceService extends FirestoreService<EmployeeMonthB
   /**
    * gets all balances of a month
    * @param {Date} date
-   * @returns {Observable<EmployeeMonthBalance[]>}
+   * @returns {Observable<IEmployeeMonthBalance[]>}
    */
-  public readAllBalances(year: string, month: string): Observable<EmployeeMonthBalance[]> {
+  public readAllBalances(year: string, month: string): Observable<IEmployeeMonthBalance[]> {
     this.setAltCollection(year, month);
     return this.readAll();
   }
@@ -73,10 +75,10 @@ export class EmployeeMonthBalanceService extends FirestoreService<EmployeeMonthB
   /**
    * Update a specific balance
    * @param {string} id
-   * @param {Partial<EmployeeMonthBalance>} object
+   * @param {Partial<IEmployeeMonthBalance>} object
    * @returns {Promise<void>}
    */
-  public updatePartialBalance(id: string, object: Partial<EmployeeMonthBalance>): Promise<void> {
+  public updatePartialBalance(id: string, object: Partial<IEmployeeMonthBalance>): Promise<void> {
     this.setAltCollection(object.year.toString(), object.month.toString());
     return this.updatePartial(id, object);
   }

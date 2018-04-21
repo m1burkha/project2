@@ -17,7 +17,10 @@ import {ShiftItemsService} from '@services/shift-items/shift-items.service';
 import {zip} from 'rxjs/observable/zip';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
-import {EmployeeMonthBalance} from '@domain-models/employee-month-balance/employee-month-balance';
+import {
+  EmployeeMonthBalance,
+  IEmployeeMonthBalance
+} from '@domain-models/employee-month-balance/employee-month-balance';
 import {MatDialog} from '@angular/material';
 import {SetEmployeeBalanceDialogComponent} from '@components/shift-planner/shift-scheduling/set-employee-balance-dialog/set-employee-balance-dialog.component';
 import {EmployeeMonthBalanceService} from '@services/employee-month-balance/employee-month-balance.service';
@@ -45,7 +48,7 @@ export class ShiftScheduleComponent implements OnInit {
   /**
    * balances from month before
    */
-  employeeMonthBalances: EmployeeMonthBalance[];
+  employeeMonthBalances: IEmployeeMonthBalance[];
   /** total amount of employees, displayed tin the toolbar */
   totalEmployees: number;
   /** the year selected from the dropdown */
@@ -264,7 +267,7 @@ export class ShiftScheduleComponent implements OnInit {
    * @param {string} employeeId
    * @returns {EmployeeMonthBalance}
    */
-  getEmployeeBalance(employeeId: string): EmployeeMonthBalance {
+  getEmployeeBalance(employeeId: string): IEmployeeMonthBalance {
     const result = this.employeeMonthBalances.find(e => e.employeeId === employeeId);
     return result === undefined ? new EmployeeMonthBalance({
       employeeId: employeeId,
@@ -420,7 +423,7 @@ export class ShiftScheduleComponent implements OnInit {
    * opens balance dialog
    */
   setBalance() {
-    const possibleBalances: EmployeeMonthBalance[] = this.employees.map(employee => new EmployeeMonthBalance({
+    const possibleBalances: IEmployeeMonthBalance[] = this.employees.map(employee => new EmployeeMonthBalance({
       employeeId: employee.id,
       employeeCaption: employee.caption,
       year: moment().year(),
