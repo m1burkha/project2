@@ -13,7 +13,6 @@ import {TestComponent} from '@components/db/test/test.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from '@services/user/user.service';
 import {ShiftPlannerModule} from '@components/shift-planner/shift-planner.module';
-import {UserAdministrationComponent} from '@components/user-administration/user-administration.component';
 import {EmployeeService} from '@services/employee/employee.service';
 import {EmployeeAdministrationModule} from '@components/employee-administration/employee-administration.module';
 import {
@@ -42,7 +41,6 @@ import { PresentationComponent } from './components/presentation/presentation.co
     LoginComponent,
     LogoutComponent,
     TestComponent,
-    UserAdministrationComponent,
     RegisterDialogComponent,
     NavBarComponent,
     PresentationComponent,

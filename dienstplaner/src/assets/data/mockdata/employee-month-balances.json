@@ -1,0 +1,22 @@
+[
+  {
+    "absenceBalance": 0,
+    "employeeCaption": "Harry Hasler",
+    "employeeId": "1FU8y4kVr6AQ8yP6vRX4",
+    "hoursBalance": 3,
+    "id": "1FU8y4kVr6AQ8yP6vRX4",
+    "month": 3,
+    "vacationBalance": 1,
+    "year": 2018
+  },
+  {
+    "absenceBalance": 0,
+    "employeeCaption": "Marco Polo",
+    "employeeId": "5MY69SV5cFEorxeGqtEa",
+    "hoursBalance": 4.5,
+    "id": "5MY69SV5cFEorxeGqtEa",
+    "month": 3,
+    "vacationBalance": 2.75,
+    "year": 2018
+  }
+]

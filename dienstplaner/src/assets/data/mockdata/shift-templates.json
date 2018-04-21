@@ -1,69 +1,80 @@
-{
-  "templates": [
-    {
-      "id": "10",
-      "caption": "WorkingShift",
-      "type": "workingShift",
-      "timeSpans": [
-        {
-          "id": "1",
-          "startTime": "07:00",
-          "endTime": "11:30",
-          "totalHours": 4.5,
-          "month": 2
-        },
-        {
-          "id": "2",
-          "startTime": "12:30",
-          "endTime": "16:30",
-          "totalHours": 4,
-          "month": 2
-        }
-      ],
-      "totalHours": 8.5
-    },
-    {
-      "id": "20",
-      "caption": "Other",
-      "type": "other",
-      "timeSpans": [
-        {
-          "id": "3",
-          "startTime": "09:00",
-          "endTime": "12:30",
-          "totalHours": 3.5,
-          "month": 2
-        },
-        {
-          "id": "4",
-          "startTime": "13:30",
-          "endTime": "18:30",
-          "totalHours": 2,
-          "month": 2
-        }
-      ],
-      "totalHours": 5.5
-    },
-    {
-      "id": "50",
-      "caption": "compensation",
-      "type": "compensation",
-      "timeSpans": [],
-      "totalHours": 3
-    },
-    {
-      "id": "60",
-      "caption": "Sick leave",
-      "type": "sickLeave",
-      "timeSpans": [],
-      "totalHours": 8.5
-    },
-    {
-      "id": "80",
-      "caption": "Vacation",
-      "type": "vacation",
-      "timeSpans": [],
-      "totalHours": 6.5
-    }
-  ]
-}
+[
+  {
+    "caption": "10:00 - 19:00",
+    "id": "8YMGr99T6VUgxBFJhvTH",
+    "timeSpans": [
+      {
+        "endTime": "12:00",
+        "startTime": "10:00"
+      },
+      {
+        "endTime": "19:00",
+        "startTime": "14:00"
+      }
+    ],
+    "type": "workingShift"
+  },
+  {
+    "caption": "Kompensation",
+    "id": "J9fqy7YE90I0FxvHbjYr",
+    "timeSpans": [],
+    "type": "compensation"
+  },
+  {
+    "caption": "Krank",
+    "id": "KaZs9kIH5XOniE3jRhSl",
+    "timeSpans": [],
+    "type": "sickLeave"
+  },
+  {
+    "caption": "Militär",
+    "id": "YkEGXIFkVaoP9qAixidd",
+    "timeSpans": [],
+    "type": "military"
+  },
+  {
+    "caption": "Urlaub",
+    "id": "eKUB7xDp93l7bR0TOGv8",
+    "timeSpans": [
+      {
+        "endTime": "12:00",
+        "startTime": "08:00"
+      },
+      {
+        "endTime": "17:00",
+        "startTime": "13:00"
+      }
+    ],
+    "type": "vacation"
+  },
+  {
+    "caption": "07:00 - 16:30",
+    "id": "h3EGkzLYppZQUMaboQJ0",
+    "timeSpans": [
+      {
+        "endTime": "12:00",
+        "startTime": "07:00"
+      },
+      {
+        "endTime": "16:30",
+        "startTime": "13:00"
+      }
+    ],
+    "type": "workingShift"
+  },
+  {
+    "caption": "08:00 - 17:30",
+    "id": "wFFfWMzrmqvpLMtDZdsw",
+    "timeSpans": [
+      {
+        "endTime": "12:00",
+        "startTime": "08:00"
+      },
+      {
+        "endTime": "17:30",
+        "startTime": "13:00"
+      }
+    ],
+    "type": "workingShift"
+  }
+]

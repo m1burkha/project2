@@ -1,18 +1,18 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {TimeSpan} from '@domain-models/shift-scheduling/time-span';
 
 /**
- * add dialog
+ * AddDialogComponent component
  */
 @Component({
   selector: 'app-add-dialog',
   templateUrl: './add-dialog.component.html',
   styleUrls: ['./add-dialog.component.scss']
 })
+/** AddDialogComponent class */
 export class AddDialogComponent {
   /** shift item */
   shiftItem: ShiftItem;
@@ -31,6 +31,10 @@ export class AddDialogComponent {
     {value: ShiftType.workingShift, viewValue: 'Arbeitszeit'},
   ];
 
+  /**
+   * total hours calculated for all the shifts
+   * @returns {number}
+   */
   get totalHours(): number {
     return this.shiftItem ? this.shiftItem.timeSpans.reduce((a, b) => a + b.totalHours, 0) : 0;
   }
@@ -51,36 +55,69 @@ export class AddDialogComponent {
     }
   }
 
+  /**
+   *caption changes by selection
+   * @param event
+   */
   captionChanged(event) {
     this.shiftItem.caption = event.target.value;
   }
 
+  /**
+   * get the hour from the string 07:00 - 12:00
+   * @param {string} time
+   * @returns {string}
+   */
   getHour(time: string): string {
     return time ? time.substring(0, 2) : '05';
   }
 
+  /**
+   * sets the shift hours
+   * @param {string} time
+   * @param {MatSelectChange} event
+   * @returns {string}
+   */
   setHour(time: string, event: MatSelectChange): string {
     return event.value + (time ? time.substring(2) : ':00');
   }
 
+  /**
+   * get the shift minutes from string
+   * @param {string} time
+   * @returns {string}
+   */
   getMinute(time: string): string {
     return time ? time.substring(3) : '00';
   }
 
+  /**
+   * set the shift minutes
+   * @param {string} time
+   * @param {MatSelectChange} event
+   * @returns {string}
+   */
   setMinute(time: string, event: MatSelectChange): string {
     return (time ? time.substring(0, 3) : '05:') + event.value;
   }
 
+  /**
+   * Add the shift time span {startTime} and {endTime}
+   */
   addTimeSpan() {
     this.shiftItem.timeSpans.push(new TimeSpan({startTime: '07:00', endTime: '12:00'}));
   }
 
+  /**
+   * remove the shift time span
+   * @param ts
+   */
   removeTimeSpan(ts) {
     this.shiftItem.timeSpans.splice(this.shiftItem.timeSpans.indexOf(ts), 1);
   }
 
   /**
-   * adds item
+   * adds shift item
    */
   add(): void {
     this.dialogRef.close(this.shiftItem);

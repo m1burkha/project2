@@ -5,6 +5,7 @@ import {CanActivate, Router} from '@angular/router';
 import * as firebase from 'firebase/app';
 import {environment} from '../../../environments/environment';
 
+/**  login class*/
 @Injectable()
 export class LoginGuard implements CanActivate {
 
@@ -26,6 +27,7 @@ export class LoginGuard implements CanActivate {
       resultObserver = observer;
     });
 
+    /** firebase authorization state   */
     firebase.auth().onAuthStateChanged(user => {
       resultObserver.next(!!user);
       if (!user) {

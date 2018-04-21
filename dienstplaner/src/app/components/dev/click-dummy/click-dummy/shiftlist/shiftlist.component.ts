@@ -1,12 +1,15 @@
 import {Component} from '@angular/core';
-
+/** ShiftlistComponent component */
 @Component({
   selector: 'app-shiftlist',
   templateUrl: './shiftlist.component.html',
   styleUrls: ['./shiftlist.component.scss']
 })
+/** ShiftlistComponent class */
 export class ShiftlistComponent {
+  /** column array  */
   displayedColumns = ['date', 'person1', 'person2'];
+  /** employee datasource array */
   dataSource = [
     {
       date: 'Do, 01.02.2018',
@@ -54,6 +57,7 @@ export class ShiftlistComponent {
       tooltip_person2: 'wird aus den Werten in der Liste berechnet'
     },
   ];
+  /** templates */
   templates = [
     'Frühschicht',
     'Spätschicht',
