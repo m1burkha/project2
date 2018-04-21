@@ -12,7 +12,9 @@ import {EmployeeMonthBalanceService} from '@services/employee-month-balance/empl
   styleUrls: ['./set-employee-balance-dialog.component.scss']
 })
 export class SetEmployeeBalanceDialogComponent {
+  /** actual employee balances */
   public balances: EmployeeMonthBalance[];
+  /** balances calculated by this month */
   public possibleBalances: EmployeeMonthBalance[];
 
   /**
@@ -20,8 +22,8 @@ export class SetEmployeeBalanceDialogComponent {
    * @param {MatDialogRef<SetEmployeeBalanceDialogComponent>} dialogRef
    * @param data
    */
-  constructor(public dialogRef: MatDialogRef<SetEmployeeBalanceDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(private dialogRef: MatDialogRef<SetEmployeeBalanceDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: any,
               private employeeMonthBalanceService: EmployeeMonthBalanceService) {
     this.possibleBalances = data.possibleBalances;
     this.employeeMonthBalanceService
