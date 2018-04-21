@@ -63,10 +63,12 @@ describe('AddPopupComponent', () => {
     select.nativeElement.click();
     fixture.detectChanges();
     expect(selectComponent.panelOpen).toBe(true);
-    // const option2 = fixture.debugElement.query(By.css('md-option-2'));
-    // option2.nativeElement.getAttribute('aria-selected').value = true;
-
+    const option = fixture.debugElement.query(By.css('mat-option'));
+    option.nativeElement.value = 'compensation';
+    option.nativeElement['aria-selected'] = true;
+    option.nativeElement.click();
+    fixture.detectChanges();
+    const mm = option.nativeElement.value;
+    expect(option.nativeElement.value).toEqual('compensation');
   });
-
-
 });
