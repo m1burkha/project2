@@ -44,7 +44,7 @@ ng serve
 
 Nun ist das Projekt im Browser unter der URL [localhost:4200](http://localhost:4200) erreichbar.
 
-##Demo
+## Demo
 
 Die [Demo-Version](https://cas-fee-projekt-2-mbmi.firebaseapp.com/) kann frei genutzt werden.
 Als Benutzer kann man sich neu registrieren und hat vollen Zugriff auf alle Funktionen.
