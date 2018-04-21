@@ -24,6 +24,8 @@ import {IEmployee} from '@domain-models/employee/employee';
 import {IShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import * as moment from 'moment';
+import {EmployeeMonthBalanceService} from "@services/employee-month-balance/employee-month-balance.service";
+import {MatDialogModule} from "@angular/material";
 
 describe('ShiftScheduleComponent', () => {
   let component: ShiftScheduleComponent;
@@ -55,6 +57,7 @@ describe('ShiftScheduleComponent', () => {
         DxLookupModule,
         DxSelectBoxModule,
         DxDataGridModule,
+        MatDialogModule,
         HttpClientModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule
@@ -64,6 +67,7 @@ describe('ShiftScheduleComponent', () => {
         {provide: EmployeeService, useValue: mockEmployeeService},
         {provide: ShiftScheduleService, useValue: mockScheduleService},
         {provide: ShiftItemsService, useValue: mockTemplateService},
+        EmployeeMonthBalanceService
       ]
     })
       .compileComponents();
