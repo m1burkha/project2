@@ -8,25 +8,41 @@ import {IShiftSchedule} from '@domain-models/shift-scheduling/shift-schedule';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 
-
+/** TestItem class */
 class TestItem {
+  /** name */
   name: string;
+  /** prename  */
   prename: string;
+  /** age */
   age: number;
+  /**date of birth */
   dateOfBirth: Date;
 }
 
+/** TestComponent component */
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
+/** TestComponent class */
 export class TestComponent implements OnInit {
+  /**  items array*/
   items: Observable<TestItem[]>;
+  /** usename*/
   username: string;
+  /** firebase user*/
   user: firebase.User;
+  /** authentication sate*/
   authState: Observable<firebase.User>;
 
+  /**
+   * constructor
+   * @param {AngularFirestore} db
+   * @param {UserService} userService
+   * @param {ShiftScheduleService} shiftSchedulingService
+   */
   constructor(db: AngularFirestore, private userService: UserService, private shiftSchedulingService: ShiftScheduleService) {
     const collection = db.collection<TestItem>('items');
     this.items = collection.valueChanges();
@@ -37,6 +53,7 @@ export class TestComponent implements OnInit {
     test.then(e => console.log('test', e));
   }
 
+  /** ng oninit */
   ngOnInit() {
     this.authState = this.userService.authState;
     this.userService.authState.subscribe(e => {
@@ -47,6 +64,7 @@ export class TestComponent implements OnInit {
     this.readAllShiftSchedulingItems();
   }
 
+  /**  create and test service*/
   create() {
     this.userService.create('Marc', 'info@marc-iten.ch', 'Q"w3Eçr5')
       .catch(error => {
@@ -60,6 +78,7 @@ export class TestComponent implements OnInit {
       });
   }
 
+  /** test signin */
   signin() {
     this.userService.login(this.user.email === 'info@marc-iten.ch' ? 'marc@iten.ch' : 'info@marc-iten.ch', 'Q"w3Eçr5')
       .then(e => {
@@ -76,6 +95,7 @@ export class TestComponent implements OnInit {
       });
   }
 
+  /** test update user */
   updateUser() {
     this.userService.updateUserName(this.username)
       .then(e => {
@@ -85,12 +105,14 @@ export class TestComponent implements OnInit {
       });
   }
 
+  /** test read all shifschedules */
   readAllShiftSchedulingItems() {
     this.shiftSchedulingService.readAll().subscribe(e => {
       console.log('items', e);
     });
   }
 
+  /** test create a shift schedule  */
   createShiftScheduling() {
     const employeeShiftItem = [Object.assign(EmployeeShiftItem.prototype,
       {employeeId: ''}, {shiftItem: {type: ShiftType.workingShift}})];
@@ -105,10 +127,12 @@ export class TestComponent implements OnInit {
     });
   }
 
+  /**login */
   login() {
 
   }
 
+  /**logout */
   logout() {
 
   }

@@ -6,16 +6,23 @@ import {ShiftItem} from '@domain-models/shift-scheduling/shift-item';
 import {ShiftType} from '@domain-models/shift-scheduling/shift-type.enum';
 import {EmployeeShiftItem} from '@domain-models/shift-scheduling/employee-shift-item';
 
+/** ServerCommComponent component */
 @Component({
   selector: 'app-server-comm',
   templateUrl: './server-comm.component.html',
   styleUrls: ['./server-comm.component.scss']
 })
+/** ServerCommComponent class */
 export class ServerCommComponent {
 
+  /**
+   * constructor
+   * @param {ShiftScheduleService} scheduleService
+   */
   constructor(private scheduleService: ShiftScheduleService) {
   }
 
+  /** create a shiftschedule entry */
   saveEntry() {
     const shift = new ShiftSchedule({
       id: Moment().format('YYYY-MM-DD'), date: new Date(), selectedShiftColumnOfEmployees: [

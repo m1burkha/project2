@@ -9,23 +9,15 @@ export interface IShiftSchedule {
   id: string;
   /** date */
   date: Date;
-  /** shiftItem */
-//  shiftItem: ShiftItem;
-  /** employee Id */
-//  employeeId: string;
   /** selectedShiftColumnOfEmployees */
   selectedShiftColumnOfEmployees: EmployeeShiftItem[];
 }
-
+/** ShiftSchedule class*/
 export class ShiftSchedule implements IShiftSchedule {
   /** id */
   id: string;
   /** date */
   date: Date;
-  /** shiftItem */
-  // shiftItem: ShiftItem;
-  /** employee Id */
-//  employeeId: string;
   /** selectedShiftColumnOfEmployees */
   selectedShiftColumnOfEmployees: EmployeeShiftItem[];
 
@@ -41,6 +33,13 @@ export class ShiftSchedule implements IShiftSchedule {
     Object.assign(this, values);
   }
 
+  /**
+   * static method to create shiftschedule
+   * @param {Date} date
+   * @param {string} employeeId
+   * @param {IShiftItem} shiftItem
+   * @returns {ShiftSchedule}
+   */
   static create(date: Date, employeeId: string, shiftItem: IShiftItem): ShiftSchedule {
     return new ShiftSchedule({
       id: moment(date).format('YYYY-MM-DD'),

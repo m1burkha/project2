@@ -1,4 +1,4 @@
-
+/** The Timespan interface */
 export interface ITimeSpan {
   /** start time  */
   startTime: string;
@@ -7,7 +7,7 @@ export interface ITimeSpan {
   /** total hours  */
   totalHours: number;
 }
-
+/** The timespan class */
 export class TimeSpan implements ITimeSpan {
   /** start time  */
   startTime: string;
