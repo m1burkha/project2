@@ -13,6 +13,7 @@ Im Ordner [./docs](./docs) befinden sich diverse Dokumentationen zu folgenden Th
 - [Modulübersicht](./docs/MODULES.md)
 - [Tools und Plugins](./docs/TOOLING.md)
 - [Tests und Code-Dokumentation](./docs/DOCUMENTATION.md)
+- [Benutzer-Tests](./docs/UXTEST.md)
 
 ## Installation
 

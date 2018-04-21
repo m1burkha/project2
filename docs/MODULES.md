@@ -14,16 +14,19 @@ Die folgenden Module wurden für dieses Projekt umgesetzt.
     - Das können Zeit-Vorlagen mit mehreren Arbeitsblöcken pro Tag sein (z.B.: 0800-1200 & 1330-1700)
 - Dienstplaner
     - hier werden Dienste erstellt. Dazu wird pro Tag eine Vorlage ausgewählt und einem Mitarbeiter zugewiesen.
+- Dienstplaner Export
+    - Der Dienstplaner kann als Excel-Datei heruntergeladen werden.
 
 ## mögliche weitere Module
 
-Je nach Zeit und Aufwand, kann das Projekt noch um folgende Module erweitert werden.
+Je nach Zeit und Aufwand, könnte das Projekt noch um folgende Module erweitert werden.
 
 - Benutzer-Verwaltung (mit Benutzergruppen)
     - die verschiedenen Benutzer haben können in drei verschiedenen Benutzergruppen sein. Admin, Editor und User. Diese Gruppen können den Accounts hinzugefügt werden.
     - neue Benutzer können der eigenen Umgebung hinzugefügt werden (Admin & Editor).
 - Urlaubs- / Feiertagsverwaltung
     - hier können für Mitarbeiter vereinfacht Urlaubs- und Feiertage eingetragen werden (für die ganzjährige Urlaubsübersicht).
+- Grafische Ansicht der Schichten
 - Arbeitszeiterfassung
     - die Benutzer tragen die täglich geleistete Arbeitszeit ein und diese wird danach mit der Planung abgeglichen.
 - Arbeitszeitauswertung
