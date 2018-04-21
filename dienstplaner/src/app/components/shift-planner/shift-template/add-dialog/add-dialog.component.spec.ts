@@ -11,7 +11,7 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 
 describe('AddPopupComponent', () => {
   let component: AddDialogComponent;

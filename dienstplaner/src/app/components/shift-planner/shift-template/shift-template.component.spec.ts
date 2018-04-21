@@ -19,7 +19,7 @@ import {IShiftItem, ShiftItem} from '@domain-models/shift-scheduling/shift-item'
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {environment} from '../../../../environments/environment';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 
 describe('ShiftTemplateComponent', () => {
   let component: ShiftTemplateComponent;
