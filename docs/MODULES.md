@@ -6,14 +6,25 @@ Die folgenden Module wurden für dieses Projekt umgesetzt.
 
 - Benutzer-Authentifizierung   
     - Login-Formular mit verschiedenen Login-Möglichkeiten (über E-Mail + Passwort, Google-Account, Facebook-Account, etc.)
+        - Login mit Benutzername, Passwort
+        - Modal zur Registrierung
 - Mitarbeiter-Verwaltung
     - Mitarbeiter der Umgebung können verwaltet werden (CRUD). Diese Mitarbeiter werden mit dem jeweiligen Dienst im Planer verknüpft.
+        - Mitarbeiter anlegen
+        - Mitarbeiter bearbeiten
+        - Mitarbeiter löschen
+        - Wochenarbeitszeit pro Mitarbeiter festlegen
+        - Arbeitspensum pro Mitarbeiter festlegen
+        - Urlaubsanspruch pro Mitarbeiter festlegen
 - Dienstvorlagen-Verwaltung
-    - hier werden Vorlagen für den Dienstplan verwaltet (CRUD). Diese können dann im Dienstplan ausgewählt werden. 
-    - Das können Tages-Vorlagen sein (Urlaub, Kompensation, Militär, Krank, etc.)
-    - Das können Zeit-Vorlagen mit mehreren Arbeitsblöcken pro Tag sein (z.B.: 0800-1200 & 1330-1700)
+    - hier werden Vorlagen für den Dienstplan verwaltet (CRUD). Diese können dann im Dienstplan ausgewählt werden. Das können Tages-Vorlagen sein (Urlaub, Kompensation, Militär, Krank, etc.). Das können Zeit-Vorlagen mit mehreren Arbeitsblöcken pro Tag sein (z.B.: 0800-1200 & 1330-1700)
+        - Vorlage anlegen
+        - Vorlage bearbeiten
+        - Vorlage löschen
+        - Stundenblöcke pro Vorlage festlegen
 - Dienstplaner
     - hier werden Dienste erstellt. Dazu wird pro Tag eine Vorlage ausgewählt und einem Mitarbeiter zugewiesen.
+        - Vorlage aus- oder abwählen
 - Dienstplaner Export
     - Der Dienstplaner kann als Excel-Datei heruntergeladen werden.
 
