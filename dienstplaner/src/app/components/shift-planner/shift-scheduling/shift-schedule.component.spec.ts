@@ -49,7 +49,7 @@ describe('ShiftScheduleComponent', () => {
   };
 
   const mockEmployeeMonthBalanceService: any = {
-    readAll: jasmine.createSpy('readAllBalances')
+    readAllBalances: jasmine.createSpy('readAllBalances')
       .and.returnValue(new Observable<IEmployeeMonthBalance[]>(ob => ob.next(require('../../../../assets/data/mockdata/employee-month-balances.json'))))
   };
 
