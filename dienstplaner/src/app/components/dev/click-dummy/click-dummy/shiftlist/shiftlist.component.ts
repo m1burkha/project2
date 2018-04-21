@@ -57,6 +57,7 @@ export class ShiftlistComponent {
       tooltip_person2: 'wird aus den Werten in der Liste berechnet'
     },
   ];
+  /** templates */
   templates = [
     'Frühschicht',
     'Spätschicht',
