@@ -1,12 +1,15 @@
 import {Component} from '@angular/core';
-
+/** TemplateComponent component */
 @Component({
   selector: 'app-templates',
   templateUrl: './templates.component.html',
   styleUrls: ['./templates.component.scss']
 })
+/** TemplateComponent class */
 export class TemplatesComponent {
+  /** columns array */
   displayedColumns = ['caption', 'type', 'timespans', 'totalhours'];
+  /** shift data array */
   dataSource = [
     {
       caption: 'Frühschicht', type: 'working', timespans: [

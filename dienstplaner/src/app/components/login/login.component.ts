@@ -6,23 +6,30 @@ import {UserService} from '@services/user/user.service';
 import * as firebase from 'firebase/app';
 import {RegisterDialogComponent} from '@components/register-dialog/register-dialog.component';
 
+/** The login component */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
+/** The login class */
 export class LoginComponent implements OnInit {
+  /** username control*/
   username: FormControl = new FormControl('', [Validators.required]);
+  /** password control */
   password: FormControl = new FormControl('', [Validators.required]);
+  /**  form group*/
   form: FormGroup;
+  /** hide */
   hide = true;
 
+  /** error validation message if username not entered */
   getUsernameErrorMessage() {
     return this.username.hasError('required') ? 'You must enter a value' :
       this.username.hasError('username') ? 'Not a valid username' :
         '';
   }
-
+  /** error validation message if password not entered*/
   getPasswordErrorMessage() {
     return this.password.hasError('required') ? 'You must enter a value' :
       this.password.hasError('password') ? 'Not a valid password' :
@@ -30,7 +37,13 @@ export class LoginComponent implements OnInit {
   }
 
   /**
+   *
    * Login coconstructor injecting the FormBuilder for forms and UserService for login
+   * @param {UserService} userService
+   * @param {Router} router
+   * @param {FormBuilder} formBuilder
+   * @param {MatSnackBar} snackBar
+   * @param {MatDialog} dialog
    */
   constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder,
               private snackBar: MatSnackBar, private dialog: MatDialog) {
@@ -39,7 +52,7 @@ export class LoginComponent implements OnInit {
       password: this.password
     });
   }
-
+  /** init of the login component with firebase */
   ngOnInit() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -64,9 +77,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  /**
-   * opens register dialog
-   */
+  /** opens register dialog  */
   register() {
     const dialogRef = this.dialog.open(RegisterDialogComponent);
   }
