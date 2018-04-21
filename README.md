@@ -2,33 +2,49 @@
 
 Das Projekt besteht in der Erstellung einer Webseite zur vereinfachten Mitarbeiterplanung.
 
-## geplante Module
+## WebApplikation
 
-Die folgenden Module sind verpflichtend für das funktioniern der Webseite und werden zwingend umgesetzt.
+Die Webapplikation ist ein [Angular CLI](https://cli.angular.io/) Projekt. Die Projektdateien befinden sich im Unterordner [./dienstplaner](./dienstplaner)
 
-- Benutzer-Authentifizierung   
-    - Login-Formular mit verschiedenen Login-Möglichkeiten (über E-Mail + Passwort, Google-Account, Facebook-Account, etc.)
-- Benutzer-Verwaltung (mit Benutzergruppen)
-    - die verschiedenen Benutzer haben können in drei verschiedenen Benutzergruppen sein. Admin, Editor und User. Diese Gruppen können den Accounts hinzugefügt werden.
-    - neue Benutzer können der eigenen Umgebung hinzugefügt werden (Admin & Editor).
-- Mitarbeiter-Verwaltung
-    - Mitarbeiter der Umgebung können verwaltet werden (CRUD). Diese Mitarbeiter werden mit dem jeweiligen Dienst im Planer verknüpft.
-- Dienstvorlagen-Verwaltung
-    - hier werden Vorlagen für den Dienstplan verwaltet (CRUD). Diese können dann im Dienstplan ausgewählt werden. 
-    - Das können Tages-Vorlagen sein (Urlaub, Kompensation, Militär, Krank, etc.)
-    - Das können Zeit-Vorlagen sein (z.B.: 0800-1200 & 1330-1700)
-- Dienstplaner
-    - hier werden Dienste erstellt. Dazu wird pro Tag eine Vorlage ausgewählt und einem Mitarbeiter zugewiesen.
-- Urlaubs- / Feiertagsverwaltung
-    - hier können für Mitarbeiter vereinfacht Urlaubs- und Feiertage eingetragen werden (für die ganzjährige Urlaubsübersicht).
+## Dokumentation
 
-## mögliche weitere Module
+Im Ordner [./docs](./docs) befinden sich diverse Dokumentationen zu folgenden Themen:
+- [Über das Projekt](./docs/ABOUT.md)
+- [Modulübersicht](./docs/MODULES.md)
+- [Tools und Plugins](./docs/TOOLING.md)
+- [Tests und Code-Dokumentation](./docs/DOCUMENTATION.md)
 
-Je nach Zeit und Aufwand, kann das Projekt noch um folgende Module erweitert werden.
+## Installation
 
-- Arbeitszeiterfassung
-- Arbeitszeitauswertung
-- Arbeitszeit-Verwaltung
-- mobile Arbeitszeiterfassung (mit NFC-Modul)
-- persönliche Mitarbeiterkonten (mit Login)
-- Benachrichtigungen (Mail / SMS / Notifications)
+Die Installation und das Starten der Applikation ist in 4 einfachen Schritten zu machen.
+
+#### Repository klonen
+
+```
+git clone https://github.com/m1burkha/project2.git
+```
+
+#### Verzeichnis wechseln
+
+```
+cd dienstplaner 
+```
+
+#### NPM Packages installieren
+
+```
+npm install
+```
+
+#### Entwicklungsserver starten
+
+```
+ng serve
+```
+
+Nun ist das Projekt im Browser unter der URL [localhost:4200](http://localhost:4200) erreichbar.
+
+##Demo
+
+Die [Demo-Version](https://cas-fee-projekt-2-mbmi.firebaseapp.com/) kann frei genutzt werden.
+Als Benutzer kann man sich neu registrieren und hat vollen Zugriff auf alle Funktionen.
