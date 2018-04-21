@@ -18,7 +18,6 @@ import {ShiftScheduleComponent} from '@components/shift-planner/shift-scheduling
 import {ShiftItemComponent} from '@components/shift-planner/shift-item/shift-item.component';
 import {ShiftScheduleService} from '@services/shift-scheduling/shift-scheduling.service';
 import {ShiftTemplateComponent} from '@components/shift-planner/shift-template/shift-template.component';
-import {ShiftTimeSpanComponent} from '@components/shift-planner/shift-time-span/shift-time-span.component';
 
 import {DevModule} from '@components/dev/dev.module';
 import {
@@ -79,7 +78,6 @@ const plannerRoutes: Routes = [
     ShiftScheduleComponent,
     ShiftItemComponent,
     ShiftTemplateComponent,
-    ShiftTimeSpanComponent,
     AddDialogComponent,
     SetEmployeeBalanceDialogComponent
   ],
