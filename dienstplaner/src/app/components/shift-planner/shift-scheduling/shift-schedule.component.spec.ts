@@ -61,6 +61,7 @@ describe('ShiftScheduleComponent', () => {
         DxLookupModule,
         DxSelectBoxModule,
         DxDataGridModule,
+        MatDialogModule,
         HttpClientModule,
         MatDialogModule,
         AngularFireModule.initializeApp(environment.firebase),
