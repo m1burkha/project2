@@ -6,7 +6,7 @@
 /deep/ app-root {
   display: flex;
 
-  app-shift-template, app-login {
+  app-shift-template, app-login, app-click-dummy {
     flex-grow: 1;
     margin: 1rem;
   }

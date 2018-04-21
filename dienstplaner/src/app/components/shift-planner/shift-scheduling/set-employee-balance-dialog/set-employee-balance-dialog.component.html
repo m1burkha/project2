@@ -1,0 +1,21 @@
+<h1>Monatssaldi festlegen</h1>
+
+<div class="flex">
+  <div class="saldi" *ngFor="let item of balances">
+    <h2>{{item.employeeCaption}}</h2>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Überstunden ({{getHoursBalance(item.employeeId)}})" type="number" step="0.01" [(ngModel)]="item.hoursBalance">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Urlaubstage ({{getVacationBalance(item.employeeId)}})" type="number" step="0.01" [(ngModel)]="item.vacationBalance">
+    </mat-form-field>
+
+  </div>
+</div>
+
+<div class="actions">
+  <button mat-raised-button color="primary" (click)="save()">speichern</button>
+  <button mat-raised-button (click)="cancel()">abbrechen</button>
+</div>
